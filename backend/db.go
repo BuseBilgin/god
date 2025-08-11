@@ -21,7 +21,7 @@ func ConnectDB() {
 	pass := os.Getenv("MYSQLPASSWORD")
 	name := os.Getenv("MYSQLDATABASE")
 
-	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true&charset=utf8mb4&tls=true",
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true&charset=utf8mb4&tls=skip-verify",
 		user, pass, host, port, name)
 
 	DB, err = sql.Open("mysql", dsn)
