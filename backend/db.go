@@ -23,10 +23,13 @@ func ConnectDB() {
 	var err error
 	var dsn string
 
-	// Option 1: Use DATABASE_URL if available (full connection string)
+	// Option 1: Use DATABASE_URL or MYSQL_PUBLIC_URL if available
 	if databaseURL := os.Getenv("DATABASE_URL"); databaseURL != "" {
 		dsn = databaseURL
 		fmt.Println("Using DATABASE_URL connection")
+	} else if mysqlURL := os.Getenv("MYSQL_PUBLIC_URL"); mysqlURL != "" {
+		dsn = mysqlURL
+		fmt.Println("Using MYSQL_PUBLIC_URL connection")
 	} else {
 		// Option 2: Use individual environment variables
 		host := getenv("MYSQLHOST", "maglev.proxy.rlwy.net")
