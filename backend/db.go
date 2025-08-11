@@ -25,7 +25,7 @@ func ConnectDB() {
 
 	// Option 1: Use DATABASE_URL if available (full connection string)
 	if databaseURL := os.Getenv("DATABASE_URL"); databaseURL != "" {
-		dsn = databaseURL + "?parseTime=true&charset=utf8mb4&tls=true"
+		dsn = databaseURL
 		fmt.Println("Using DATABASE_URL connection")
 	} else {
 		// Option 2: Use individual environment variables
