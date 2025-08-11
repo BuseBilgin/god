@@ -1,1 +1,18 @@
-/    /sign-in.html    200
+# Ana sayfa sign-in.html'e yönlendir
+/           /sign-in.html    200
+
+# Login rotalarını sign-in.html'e yönlendir
+/login      /sign-in.html    200
+/signin     /sign-in.html    200
+
+# Dashboard rotası
+/dashboard  /dashboard.html  200
+
+# Diğer rotalar
+/signup     /sign-up.html    200
+/register   /sign-up.html    200
+/settings   /settings.html   200
+/list       /list.html       200
+
+# SPA için catch-all (eğer JavaScript routing kullanıyorsanız)
+# /*        /sign-in.html    200
