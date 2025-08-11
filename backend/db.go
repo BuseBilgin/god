@@ -56,5 +56,13 @@ func ConnectDB() {
 		log.Fatal("Database ping failed:", err)
 	}
 
-	fmt.Println("Railway MySQL bağlantısı başarılı! Database: vize")
+	// Use vize database after connection
+	if _, err = DB.Exec("USE vize"); err != nil {
+		log.Printf("Could not use vize database: %v", err)
+		// Continue with default database
+	} else {
+		fmt.Println("Successfully switched to vize database")
+	}
+
+	fmt.Println("Railway MySQL bağlantısı başarılı!")
 }
