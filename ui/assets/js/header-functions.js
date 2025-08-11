@@ -9,7 +9,7 @@ let lastApplicationCount = 0;
 let notificationPollingInterval = null;
 
 // API Base URL
-const API_BASE_URL = 'http://localhost:8080';
+const API_BASE_URL = 'https://god-1-lsu5.onrender.com';
 
 // Header fonksiyonları için init
 document.addEventListener('DOMContentLoaded', function() {

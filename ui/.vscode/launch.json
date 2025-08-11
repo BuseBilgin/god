@@ -8,7 +8,7 @@
             "type": "chrome",
             "request": "launch",
             "name": "Chrome'u localhost'ta başlat",
-            "url": "http://localhost:8080",
+            "url": "https://god-1-lsu5.onrender.com",
             "webRoot": "${workspaceFolder}"
         }
     ]

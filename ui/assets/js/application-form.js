@@ -55,7 +55,7 @@ function checkAuthentication() {
     return true;
 }
 
-const API_BASE_URL = 'http://localhost:8080';
+const API_BASE_URL = 'https://god-1-lsu5.onrender.com';
 
 // Navigation functions - Header ile uyumlu
 function goToApplications() {

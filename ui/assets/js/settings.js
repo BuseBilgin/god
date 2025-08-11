@@ -1,5 +1,5 @@
 // API Base URL - Backend URL'nizi buraya güncelleyin
-const API_BASE_URL = 'http://localhost:8080';
+const API_BASE_URL = 'https://god-1-lsu5.onrender.com';
 
 // Password strength checker - İyileştirilmiş sade versiyon
 function checkPasswordStrength(password) {

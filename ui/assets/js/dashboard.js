@@ -1,7 +1,7 @@
 "use strict";
 
 // Configuration
-const API_BASE_URL = 'http://localhost:8080';
+const API_BASE_URL = 'https://god-1-lsu5.onrender.com';
 const TOKEN = localStorage.getItem('token');
 
 // Charts instances
