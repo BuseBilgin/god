@@ -1,0 +1,1632 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <title>Vize Başvurusu Görüntüle | Guide of Dubai</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    
+    <style>
+        body {
+            background-color: #f4f6f9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #1a1a1a;
+        }
+        
+        .header-section {
+            background: white;
+            padding: 20px 0;
+            border-bottom: 1px solid #e1e5e9;
+        }
+        
+        .logo {
+            color: #e30613;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .user-menu {
+            background: #f8f9fa;
+            border: 1px solid #e1e5e9;
+            border-radius: 8px;
+            padding: 8px 16px;
+            color: #5e6278;
+        }
+        
+        .user-menu .dropdown-toggle {
+            background: #f8f9fa !important;
+            border: 1px solid #e1e5e9 !important;
+            color: #5e6278 !important;
+            border-radius: 8px !important;
+            font-size: 14px !important;
+        }
+        
+        .user-menu .dropdown-toggle:hover {
+            background: #e9ecef !important;
+            border-color: #e30613 !important;
+            color: #e30613 !important;
+        }
+        
+        .user-menu .dropdown-menu {
+            border: none !important;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
+            border-radius: 8px !important;
+            min-width: 180px !important;
+        }
+        
+        .user-menu .dropdown-header {
+            color: #a1a5b7 !important;
+            font-size: 11px !important;
+            font-weight: 600 !important;
+            text-transform: uppercase !important;
+        }
+        
+        .user-menu .dropdown-item {
+            color: #5e6278 !important;
+            font-size: 14px !important;
+        }
+        
+        .user-menu .dropdown-item:hover {
+            background: #f5f8fa !important;
+            color: #181c32 !important;
+        }
+        
+        .user-menu .dropdown-item.text-danger {
+            color: #dc3545 !important;
+        }
+        
+        .user-menu .dropdown-item.text-danger:hover {
+            background: #fef2f2 !important;
+            color: #dc3545 !important;
+        }
+        
+        .breadcrumb {
+            background: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+        
+        .breadcrumb-item {
+            color: #a1a5b7;
+            font-size: 14px;
+        }
+        
+        .breadcrumb-item + .breadcrumb-item::before {
+            content: "-";
+            color: #a1a5b7;
+        }
+        
+        .breadcrumb-item a {
+            color: #a1a5b7;
+            text-decoration: none;
+        }
+        
+        .breadcrumb-item.active {
+            color: #181c32;
+        }
+        
+        .main-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+            overflow: hidden;
+        }
+        
+        .card-header-custom {
+            background: white;
+            padding: 24px;
+            border-bottom: 1px solid #e1e5e9;
+            position: relative;
+        }
+        
+        .card-header-custom h2 {
+            color: #181c32;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0;
+        }
+        
+        .card-header-custom .subtitle {
+            color: #7e8299;
+            font-size: 14px;
+            margin: 4px 0 0 0;
+        }
+        
+        .card-body-custom {
+            padding: 24px;
+        }
+        
+        .person-section {
+            padding: 20px 0;
+            border-bottom: 1px solid #e1e5e9;
+            margin-bottom: 24px;
+            position: relative;
+        }
+        
+        .person-title {
+            color: #181c32;
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .person-badge {
+            background: #e8f4f8;
+            color: #3f4254;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            display: inline-block;
+            margin-bottom: 16px;
+        }
+        
+        .person-badge.status-pending { background-color: #fff3cd; color: #856404; }
+        .person-badge.status-processing { background-color: #cce5ff; color: #0066cc; }
+        .person-badge.status-approved { background-color: #d4edda; color: #155724; }
+        .person-badge.status-rejected { background-color: #f8d7da; color: #721c24; }
+        .person-badge.status-cancelled { background-color: #e2e3e5; color: #383d41; }
+        
+        .info-row {
+            margin-bottom: 16px;
+        }
+        
+        .info-label {
+            color: #181c32;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+        
+        .info-value {
+            color: #7e8299;
+            font-size: 14px;
+        }
+        
+        .phone-edit-btn {
+            background: #e30613;
+            color: white;
+            border: none;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            margin-left: 8px;
+            cursor: pointer;
+        }
+        
+        .phone-edit-btn:hover {
+            background: #c4050f;
+            color: white;
+        }
+        
+        .file-section {
+            margin-bottom: 24px;
+        }
+        
+        .file-label {
+            color: #181c32;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+        
+        .file-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .file-btn {
+            background: #f1f3f6;
+            border: 1px solid #e1e5e9;
+            color: #7e8299;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+        }
+        
+        .file-btn:hover {
+            background: #e8eaed;
+            color: #5e6278;
+            text-decoration: none;
+        }
+        
+        .btn-outline-primary {
+            border-color: #e30613;
+            color: #e30613;
+        }
+        
+        .btn-outline-primary:hover {
+            background-color: #e30613;
+            border-color: #e30613;
+            color: white;
+        }
+        
+        /* Three dots menu */
+        .three-dots-menu {
+            position: absolute;
+            top: 24px;
+            right: 80px;
+        }
+        
+        .status-menu {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+        }
+        
+        .three-dots-btn {
+            background: none;
+            border: none;
+            color: #a1a5b7;
+            font-size: 18px;
+            padding: 8px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        
+        .three-dots-btn:hover {
+            background: #f1f3f6;
+            color: #5e6278;
+        }
+        
+        .three-dots-dropdown {
+            background: white;
+            border: 1px solid #e1e5e9;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            min-width: 200px;
+            padding: 8px 0;
+        }
+        
+        .three-dots-dropdown .dropdown-header {
+            color: #a1a5b7;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            padding: 8px 16px 4px;
+            letter-spacing: 0.5px;
+        }
+        
+        .three-dots-dropdown .dropdown-item {
+            padding: 10px 16px;
+            color: #5e6278;
+            font-size: 14px;
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .three-dots-dropdown .dropdown-item:hover {
+            background: #f5f8fa;
+            color: #181c32;
+        }
+        
+        .three-dots-dropdown .dropdown-divider {
+            height: 1px;
+            background: #e1e5e9;
+            margin: 8px 0;
+            display: none; /* Hidden since we separated menus */
+        }
+        
+        .status-options {
+            padding: 8px 0;
+        }
+        
+        .status-option {
+            padding: 8px 16px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #5e6278;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .status-option:hover {
+            background: #f5f8fa;
+            color: #181c32;
+        }
+        
+        .status-option.active {
+            background: #e8f4f8;
+            color: #181c32;
+            font-weight: 600;
+        }
+        
+        .date-info {
+            position: absolute;
+            top: 24px;
+            right: 140px;
+            color: #7e8299;
+            font-size: 14px;
+        }
+        
+        .comment-section {
+            border-top: 1px solid #e1e5e9;
+            padding-top: 24px;
+            margin-top: 24px;
+        }
+        
+        .comment-title {
+            color: #181c32;
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        
+        .comment-item {
+            display: flex;
+            margin-bottom: 20px;
+            padding: 16px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .comment-avatar {
+            width: 40px;
+            height: 40px;
+            background: #6c757d;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+        
+        .comment-content {
+            flex: 1;
+        }
+        
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .comment-author {
+            font-weight: 600;
+            color: #181c32;
+            font-size: 14px;
+        }
+        
+        .comment-date {
+            color: #7e8299;
+            font-size: 12px;
+        }
+        
+        .comment-text {
+            color: #5e6278;
+            font-size: 14px;
+            line-height: 1.5;
+            margin: 0;
+        }
+        
+        .comment-file {
+            margin-top: 8px;
+        }
+        
+        .comment-file a {
+            color: #e30613;
+            text-decoration: none;
+            font-size: 13px;
+        }
+        
+        .comment-file a:hover {
+            text-decoration: underline;
+        }
+        
+        .reply-form {
+            margin-top: 20px;
+        }
+        
+        .form-label-custom {
+            color: #181c32;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 8px;
+            display: block;
+        }
+        
+        .form-control-custom {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #e1e5e9;
+            border-radius: 6px;
+            font-size: 14px;
+            background: white;
+            color: #181c32;
+            margin-bottom: 16px;
+        }
+        
+        .form-control-custom:focus {
+            border-color: #e30613;
+            box-shadow: 0 0 0 0.2rem rgba(227, 6, 19, 0.25);
+            outline: none;
+        }
+        
+        .file-upload-info {
+            color: #7e8299;
+            font-size: 13px;
+            margin-bottom: 16px;
+        }
+        
+        .file-upload-btn {
+            background: #f1f3f6;
+            border: 1px solid #e1e5e9;
+            color: #7e8299;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 13px;
+            margin-right: 8px;
+            margin-bottom: 16px;
+            cursor: pointer;
+        }
+        
+        .reply-btn {
+            background: #e30613;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            float: right;
+        }
+        
+        .reply-btn:hover {
+            background: #c4050f;
+            color: white;
+        }
+        
+        .loading, .error {
+            text-align: center;
+            padding: 40px 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        }
+        
+        .error {
+            color: #dc3545;
+        }
+        
+        .no-comments {
+            text-align: center;
+            color: #7e8299;
+            font-style: italic;
+            padding: 20px;
+        }
+        
+        /* Application Edit Modal */
+        .phone-edit-modal .modal-dialog {
+            max-width: 800px;
+        }
+        
+        .phone-edit-modal .form-control {
+            border: 1px solid #e1e5e9;
+            border-radius: 6px;
+            padding: 12px 16px;
+        }
+        
+        .phone-edit-modal .form-control:focus {
+            border-color: #e30613;
+            box-shadow: 0 0 0 0.2rem rgba(227, 6, 19, 0.25);
+        }
+        
+        .phone-edit-modal .btn-primary {
+            background: #e30613;
+            border-color: #e30613;
+        }
+        
+        .phone-edit-modal .btn-primary:hover {
+            background: #c4050f;
+            border-color: #c4050f;
+        }
+        
+        /* Container width limitations for better readability */
+        .container-fluid {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .container-fluid {
+                max-width: 100%;
+                padding: 15px;
+                margin: 0 15px;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .container-fluid {
+                margin: 0 10px;
+                padding: 15px;
+            }
+            
+            .card-header-custom {
+                padding: 24px 20px;
+            }
+            
+            .card-body-custom {
+                padding: 24px 20px;
+            }
+            
+            .date-info {
+                position: static;
+                text-align: left;
+                margin-bottom: 16px;
+                margin-top: 10px;
+            }
+            
+            .three-dots-menu {
+                top: 20px;
+                right: 20px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container-fluid {
+                padding: 15px;
+                margin: 0 5px;
+            }
+            
+            .card-header-custom {
+                padding: 16px;
+            }
+            
+            .card-body-custom {
+                padding: 16px;
+            }
+            
+            .person-section {
+                padding: 16px 0;
+            }
+            
+            .row .col-md-6 {
+                margin-bottom: 12px;
+            }
+            
+            .file-section {
+                margin-bottom: 20px;
+            }
+            
+            .comment-item {
+                padding: 12px;
+            }
+            
+            .comment-avatar {
+                width: 35px;
+                height: 35px;
+                font-size: 12px;
+            }
+            
+            .three-dots-dropdown {
+                min-width: 180px;
+            }
+            
+            .reply-btn {
+                width: 100%;
+                float: none;
+                margin-top: 10px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .container-fluid {
+                margin: 0;
+                padding: 10px;
+            }
+            
+            .person-title {
+                font-size: 1.1rem;
+            }
+            
+            .btn-outline-primary {
+                font-size: 12px;
+                padding: 6px 12px;
+            }
+            
+            .info-label, .file-label {
+                font-size: 13px;
+            }
+            
+            .info-value {
+                font-size: 13px;
+            }
+            
+            .phone-edit-btn {
+                padding: 3px 8px;
+                font-size: 11px;
+            }
+            
+            .file-btn {
+                padding: 6px 10px;
+                font-size: 11px;
+            }
+            
+            .comment-text {
+                font-size: 13px;
+            }
+            
+            .form-control-custom {
+                padding: 10px 12px;
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header-section">
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="logo">
+                <i class="fas fa-map-marker-alt"></i> GUIDE OF DUBAI
+            </div>
+            <div class="user-menu">
+                <div class="dropdown">
+                    <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        <i class="fas fa-user-circle"></i> Menü
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><h6 class="dropdown-header">Kullanıcı Menüsü</h6></li>
+                        <li>
+                            <a class="dropdown-item" href="list.html">
+                                <i class="fas fa-list me-2"></i>
+                                Başvurular
+                            </a>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <a class="dropdown-item text-danger" href="sign-in.html">
+                                <i class="fas fa-sign-out-alt me-2"></i>
+                                Çıkış Yap
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb-nav">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="list.html">Ana sayfa</a></li>
+            <li class="breadcrumb-item"><a href="list.html">Vize Başvuruları</a></li>
+            <li class="breadcrumb-item active">Vize Başvurusu Görüntüle</li>
+        </ol>
+    </nav>
+
+    <!-- Loading State -->
+    <div id="loadingState" class="loading">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Yükleniyor...</span>
+        </div>
+        <p class="mt-3">Başvuru bilgileri yükleniyor...</p>
+    </div>
+
+    <!-- Error State -->
+    <div id="errorState" class="error d-none">
+        <i class="fas fa-exclamation-triangle fa-3x mb-3"></i>
+        <h4>Hata Oluştu</h4>
+        <p id="errorMessage">Başvuru bilgileri yüklenirken bir hata oluştu.</p>
+    </div>
+
+    <!-- Main Content -->
+    <div id="mainContent" class="d-none">
+        <div class="row">
+            <!-- Main Card -->
+            <div class="col-12">
+                <div class="main-card">
+                    <div class="card-header-custom">
+                        <h2>Vize Başvurusu Görüntüle</h2>
+                        
+                        <!-- Date Info -->
+                        <div class="date-info" id="applicationDate">-</div>
+                        
+                        <!-- Actions Menu -->
+                        <div class="three-dots-menu">
+                            <div class="dropdown me-2">
+                                <button class="three-dots-btn" type="button" data-bs-toggle="dropdown" title="Aksiyonlar">
+                                    <i class="fas fa-cog"></i>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-end three-dots-dropdown">
+                                    <div class="dropdown-header">AKSIYONLAR</div>
+                                    <button class="dropdown-item" onclick="closeApplication()">
+                                        Cevabı Kapat
+                                    </button>
+                                    <button class="dropdown-item" onclick="deleteApplication()">
+                                        Başvuruyu Sil
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Status Menu -->
+                        <div class="status-menu">
+                            <div class="dropdown">
+                                <button class="three-dots-btn" type="button" data-bs-toggle="dropdown" title="Durum">
+                                    <i class="fas fa-tasks"></i>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-end three-dots-dropdown">
+                                    <div class="dropdown-header">DURUM</div>
+                                    <div class="status-options">
+                                        <div class="status-option" data-status="pending">
+                                            İşleme alınmadı
+                                        </div>
+                                        <div class="status-option" data-status="processing">
+                                            İşleme alındı
+                                        </div>
+                                        <div class="status-option" data-status="approved">
+                                            Vize onaylandı
+                                        </div>
+                                        <div class="status-option" data-status="rejected">
+                                            Vize reddedildi
+                                        </div>
+                                        <div class="status-option" data-status="cancelled">
+                                            İptal edildi
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card-body-custom">
+                        <!-- Person Section -->
+                        <div class="person-section">
+                            <div class="person-title" id="personTitle">Kişi 1 (Uğur İdris İlhan)</div>
+                            <div class="person-badge" id="personBadge">İşleme alınmadı</div>
+                            
+                            <!-- Edit Button -->
+                            <div class="mb-3">
+                                <button class="btn btn-outline-primary btn-sm" onclick="editApplication()">
+                                    <i class="fas fa-edit"></i> Başvuruyu Düzenle
+                                </button>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="info-row">
+                                        <div class="info-label">İsim Soyisim:</div>
+                                        <div class="info-value" id="fullName">-</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="info-row">
+                                        <div class="info-label">Telefon Numarası:</div>
+                                        <div class="info-value">
+                                            <span id="phoneNumber">-</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="info-row">
+                                        <div class="info-label">E-Posta Adresi:</div>
+                                        <div class="info-value" id="emailAddress">-</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="info-row">
+                                        <div class="info-label">Kişi Tipi:</div>
+                                        <div class="info-value" id="personType">-</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Files Section -->
+                        <div class="file-section">
+                            <div class="file-label">Pasaport Fotoğrafı:</div>
+                            <div class="file-actions" id="passportFile">
+                                <span class="text-muted">Dosya yok</span>
+                            </div>
+                        </div>
+
+                        <div class="file-section">
+                            <div class="file-label">Biyometrik Fotoğraf:</div>
+                            <div class="file-actions" id="biometricFile">
+                                <span class="text-muted">Dosya yok</span>
+                            </div>
+                        </div>
+
+                        <div class="file-section">
+                            <div class="file-label">Otel Rezervasyonu:</div>
+                            <div class="file-actions" id="hotelFile">
+                                <span class="text-muted">Dosya yok</span>
+                            </div>
+                        </div>
+
+                        <div class="file-section">
+                            <div class="file-label">Uçak Bileti:</div>
+                            <div class="file-actions" id="flightFile">
+                                <span class="text-muted">Dosya yok</span>
+                            </div>
+                        </div>
+
+                        <div class="file-section">
+                            <div class="file-label">İndir:</div>
+                            <div class="file-actions">
+                                <a href="#" class="file-btn" onclick="downloadAllFiles()">
+                                    <i class="fas fa-download"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Comments Section -->
+                        <div class="comment-section">
+                            <div id="commentsContainer">
+                                <!-- Comments will be loaded here -->
+                            </div>
+
+                            <div class="comment-title">Cevapla</div>
+                            
+                            <form id="commentForm" class="reply-form">
+                                <label class="form-label-custom">Mesajınız</label>
+                                <textarea class="form-control-custom" id="commentText" rows="8" placeholder="Mesajınız"></textarea>
+                                
+                                <div class="file-upload-info">
+                                    Eklenti (PDF, Word, Excel, CSV, TXT, RTF veya resim seçebilirsiniz)
+                                </div>
+                                
+                                <button type="button" class="file-upload-btn" onclick="document.getElementById('commentFile').click()">Dosyaları seç</button>
+                                <span class="file-upload-btn" id="selectedFileName">Dosya seçilmedi</span>
+                                <input type="file" class="d-none" id="commentFile" accept=".pdf,.doc,.docx,.xls,.xlsx,.csv,.txt,.rtf,.jpg,.jpeg,.png,.gif">
+                                
+                                <div class="clearfix">
+                                    <button type="submit" class="reply-btn">Cevapla</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Application Edit Modal -->
+<div class="modal fade phone-edit-modal" id="applicationEditModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Başvuruyu Düzenle</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="applicationEditForm">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="editAd" class="form-label">Ad</label>
+                                <input type="text" class="form-control" id="editAd" name="ad" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="editSoyad" class="form-label">Soyad</label>
+                                <input type="text" class="form-control" id="editSoyad" name="soyad" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="editEmail" class="form-label">E-posta</label>
+                                <input type="email" class="form-control" id="editEmail" name="email" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="editTelefon" class="form-label">Telefon Numarası</label>
+                                <input type="text" class="form-control" id="editTelefon" name="telefon" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="editVizeTipi" class="form-label">Vize Tipi</label>
+                                <select class="form-control" id="editVizeTipi" name="vize_tipi" required>
+                                    <option value="Tourist">Tourist</option>
+                                    <option value="Business">Business</option>
+                                    <option value="Transit">Transit</option>
+                                    <option value="Student">Student</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="editVizeGiris" class="form-label">Vize Giriş</label>
+                                <select class="form-control" id="editVizeGiris" name="vize_giris" required>
+                                    <option value="Single Entry">Single Entry</option>
+                                    <option value="Multiple Entry">Multiple Entry</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="editExpress" class="form-label">Express</label>
+                                <select class="form-control" id="editExpress" name="express">
+                                    <option value="">Seçiniz</option>
+                                    <option value="Evet">Evet</option>
+                                    <option value="Hayır">Hayır</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="editSigorta" class="form-label">Sigorta</label>
+                                <select class="form-control" id="editSigorta" name="sigorta">
+                                    <option value="">Seçiniz</option>
+                                    <option value="Evet">Evet</option>
+                                    <option value="Hayır">Hayır</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <hr>
+                    <h6>Dosya Güncelleme (Opsiyonel)</h6>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="editPassport" class="form-label">Pasaport Fotoğrafı</label>
+                                <input type="file" class="form-control" id="editPassport" name="passport" accept="image/*">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="editBiometric" class="form-label">Biyometrik Fotoğraf</label>
+                                <input type="file" class="form-control" id="editBiometric" name="biometric_photo" accept="image/*">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="editHotel" class="form-label">Otel Rezervasyonu</label>
+                                <input type="file" class="form-control" id="editHotel" name="hotel_reservation" accept=".pdf,.doc,.docx">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="editFlight" class="form-label">Uçak Bileti</label>
+                                <input type="file" class="form-control" id="editFlight" name="flight_ticket" accept=".pdf,.doc,.docx">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+                <button type="button" class="btn btn-primary" onclick="saveApplication()">Kaydet</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript Libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.7.0/sweetalert2.all.min.js"></script>
+
+<script>
+"use strict";
+
+// API base URL
+const API_BASE_URL = 'https://god-1-lsu5.onrender.com';
+
+// Application data
+let currentApplication = null;
+let currentUser = null;
+
+// Initialize page
+$(document).ready(function() {
+    const applicationId = getApplicationIdFromUrl();
+    if (applicationId) {
+        loadCurrentUser(); // ✅ Kullanıcı bilgisini yükle
+        loadApplicationDetails(applicationId);
+        loadComments(applicationId);
+    } else {
+        showError('Geçersiz başvuru ID\'si');
+    }
+    
+    // Event listeners
+    $('#commentForm').on('submit', addComment);
+    
+    // File selection handler
+    $('#commentFile').on('change', function() {
+        const fileName = this.files[0] ? this.files[0].name : 'Dosya seçilmedi';
+        $('#selectedFileName').text(fileName);
+    });
+    
+    // Status option click handler
+    $('.status-option').on('click', function() {
+        const newStatus = $(this).data('status');
+        updateApplicationStatus(newStatus);
+    });
+});
+
+// ✅ Load current user info - removed processor name display
+function loadCurrentUser() {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        window.location.href = 'sign-in.html';
+        return;
+    }
+
+    fetch(API_BASE_URL + '/me', {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        currentUser = data;
+        // User info loaded for other purposes if needed
+    })
+    .catch(error => {
+        console.error('User info error:', error);
+    });
+}
+
+// Get application ID from URL
+function getApplicationIdFromUrl() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('id');
+}
+
+// Load application details
+function loadApplicationDetails(id) {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        window.location.href = 'sign-in.html';
+        return;
+    }
+
+    fetch(API_BASE_URL + `/applications/${id}`, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Başvuru bulunamadı');
+        }
+        return response.json();
+    })
+    .then(data => {
+        currentApplication = data;
+        displayApplicationDetails(data);
+        $('#loadingState').addClass('d-none');
+        $('#mainContent').removeClass('d-none');
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        showError(error.message);
+    });
+}
+
+// Load comments from API
+function loadComments(applicationId) {
+    const token = localStorage.getItem('token');
+    
+    fetch(API_BASE_URL + `/applications/${applicationId}/comments`, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Yorumlar yüklenemedi');
+        }
+        return response.json();
+    })
+    .then(comments => {
+        displayComments(comments);
+    })
+    .catch(error => {
+        console.error('Comments error:', error);
+        $('#commentsContainer').html('<div class="no-comments">Henüz yorum yapılmamış.</div>');
+    });
+}
+
+// Display comments dynamically
+function displayComments(comments) {
+    const container = $('#commentsContainer');
+    
+    if (!comments || comments.length === 0) {
+        container.html('<div class="no-comments">Henüz yorum yapılmamış.</div>');
+        return;
+    }
+    
+    let html = '';
+    comments.forEach(comment => {
+        // ✅ Gerçek tarih formatı
+        const commentDate = new Date(comment.created_at).toLocaleDateString('tr-TR', {
+            day: '2-digit',
+            month: '2-digit', 
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+        
+        const avatar = comment.user.charAt(0).toUpperCase();
+        
+        html += `
+            <div class="comment-item">
+                <div class="comment-avatar">${avatar}</div>
+                <div class="comment-content">
+                    <div class="comment-header">
+                        <span class="comment-author">${comment.user}</span>
+                        <span class="comment-date">${commentDate}</span>
+                    </div>
+                    <div class="comment-text">${comment.comment || ''}</div>
+                    ${comment.file ? `<div class="comment-file"><a href="${API_BASE_URL}${comment.file}" target="_blank"><i class="fas fa-paperclip"></i> Ek dosya</a></div>` : ''}
+                </div>
+            </div>
+        `;
+    });
+    
+    container.html(html);
+}
+
+// Display application details
+function displayApplicationDetails(app) {
+    // Person info
+    $('#personTitle').text(`Kişi ${app.id} (${app.ad} ${app.soyad})`);
+    $('#fullName').text(`${app.ad} ${app.soyad}`);
+    $('#phoneNumber').text(app.telefon);
+    $('#emailAddress').text(app.email);
+    $('#personType').text(app.vize_tipi || 'Yetişkin');
+
+    // ✅ Show additional info that can be edited
+    const additionalInfo = [];
+    if (app.vize_giris) additionalInfo.push(`Giriş: ${app.vize_giris}`);
+    if (app.express) additionalInfo.push(`Express: ${app.express}`);  
+    if (app.sigorta) additionalInfo.push(`Sigorta: ${app.sigorta}`);
+    
+    if (additionalInfo.length > 0) {
+        $('#personType').html(
+            (app.vize_tipi || 'Yetişkin') + 
+            '<br><small class="text-muted">' + 
+            additionalInfo.join(' • ') + 
+            '</small>'
+        );
+    }
+
+    // ✅ Gerçek tarih (varsayılan tarih yerine)
+    const currentDate = new Date().toLocaleDateString('tr-TR', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    });
+    $('#applicationDate').text(currentDate);
+
+    // Status badge and dropdown
+    const statusText = getStatusText(app.status);
+    const statusBadge = $('#personBadge');
+    statusBadge.text(statusText);
+    statusBadge.removeClass('status-pending status-processing status-approved status-rejected status-cancelled');
+    statusBadge.addClass(`status-${app.status}`);
+    
+    // Update status options active state
+    $('.status-option').removeClass('active');
+    $(`.status-option[data-status="${app.status}"]`).addClass('active');
+
+    // Files
+    displayFileItem('passportFile', app.passport);
+    displayFileItem('biometricFile', app.biometric_photo);
+    displayFileItem('hotelFile', app.hotel_reservation);
+    displayFileItem('flightFile', app.flight_ticket);
+}
+
+// Display file item
+function displayFileItem(containerId, filePath) {
+    const container = $(`#${containerId}`);
+    if (filePath && filePath.trim() !== '') {
+        container.html(`
+            <a href="#" class="file-btn" onclick="downloadFile('${filePath}')">
+                <i class="fas fa-download"></i>
+            </a>
+            <a href="#" class="file-btn" onclick="previewFile('${filePath}')">
+                <i class="fas fa-eye"></i>
+            </a>
+        `);
+    } else {
+        container.html('<span class="text-muted">Dosya yok</span>');
+    }
+}
+
+// ✅ Edit full application
+function editApplication() {
+    if (!currentApplication) return;
+    
+    // Fill form with current data
+    $('#editAd').val(currentApplication.ad);
+    $('#editSoyad').val(currentApplication.soyad);
+    $('#editEmail').val(currentApplication.email);
+    $('#editTelefon').val(currentApplication.telefon);
+    $('#editVizeTipi').val(currentApplication.vize_tipi || '');
+    $('#editVizeGiris').val(currentApplication.vize_giris || '');
+    $('#editExpress').val(currentApplication.express || '');
+    $('#editSigorta').val(currentApplication.sigorta || '');
+    
+    $('#applicationEditModal').modal('show');
+}
+
+// ✅ Save full application
+function saveApplication() {
+    if (!currentApplication) return;
+    
+    const form = document.getElementById('applicationEditForm');
+    const formData = new FormData(form);
+    
+    const token = localStorage.getItem('token');
+    
+    fetch(API_BASE_URL + `/applications/${currentApplication.id}`, {
+        method: 'PUT',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        },
+        body: formData
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Başvuru güncellenemedi');
+        }
+        return response.text();
+    })
+    .then(data => {
+        Swal.fire({
+            icon: 'success',
+            title: 'Başarılı',
+            text: 'Başvuru güncellendi',
+            timer: 2000,
+            showConfirmButton: false
+        });
+        
+        // Update local data and UI
+        currentApplication.ad = $('#editAd').val();
+        currentApplication.soyad = $('#editSoyad').val();
+        currentApplication.email = $('#editEmail').val();
+        currentApplication.telefon = $('#editTelefon').val();
+        currentApplication.vize_tipi = $('#editVizeTipi').val();
+        currentApplication.vize_giris = $('#editVizeGiris').val();
+        currentApplication.express = $('#editExpress').val();
+        currentApplication.sigorta = $('#editSigorta').val();
+        
+        // Update displayed info
+        displayApplicationDetails(currentApplication);
+        
+        $('#applicationEditModal').modal('hide');
+        
+        // ✅ Notify list.html to refresh
+        localStorage.setItem('applications_needs_refresh', 'true');
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Hata',
+            text: 'Başvuru güncellenemedi'
+        });
+    });
+}
+
+// Download file
+function downloadFile(url) {
+    try {
+        const fullUrl = API_BASE_URL + url;
+        const link = document.createElement('a');
+        link.href = fullUrl;
+        link.download = url.split('/').pop();
+        link.target = '_blank';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    } catch (error) {
+        console.error('Download error:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'İndirme Hatası',
+            text: 'Dosya indirilemedi'
+        });
+    }
+}
+
+// Download all files
+function downloadAllFiles() {
+    if (!currentApplication) return;
+    
+    const files = [
+        currentApplication.passport,
+        currentApplication.biometric_photo,
+        currentApplication.hotel_reservation,
+        currentApplication.flight_ticket
+    ].filter(file => file && file.trim() !== '');
+    
+    if (files.length === 0) {
+        Swal.fire({
+            icon: 'info',
+            title: 'Bilgi',
+            text: 'İndirilecek dosya bulunamadı'
+        });
+        return;
+    }
+    
+    files.forEach((file, index) => {
+        setTimeout(() => downloadFile(file), index * 500);
+    });
+}
+
+// Preview file
+function previewFile(url) {
+    try {
+        const fullUrl = API_BASE_URL + url;
+        Swal.fire({
+            imageUrl: fullUrl,
+            imageAlt: "Dosya Önizleme",
+            showCloseButton: true,
+            showConfirmButton: false,
+            width: 600,
+            imageWidth: 500,
+            imageHeight: 400,
+            customClass: {
+                image: 'img-fluid'
+            }
+        });
+    } catch (error) {
+        console.error('Preview error:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Önizleme Hatası',
+            text: 'Dosya görüntülenemedi'
+        });
+    }
+}
+
+// ✅ Update application status (from dropdown)
+function updateApplicationStatus(newStatus) {
+    if (!currentApplication) return;
+    
+    const token = localStorage.getItem('token');
+    
+    fetch(API_BASE_URL + `/applications/${currentApplication.id}/status`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ status: newStatus })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Durum güncellenemedi');
+        }
+        return response.json();
+    })
+    .then(data => {
+        Swal.fire({
+            icon: 'success',
+            title: 'Başarılı',
+            text: 'Durum başarıyla güncellendi',
+            timer: 2000,
+            showConfirmButton: false
+        });
+        
+        // Update the badge
+        const statusText = getStatusText(newStatus);
+        const statusBadge = $('#personBadge');
+        statusBadge.text(statusText);
+        statusBadge.removeClass('status-pending status-processing status-approved status-rejected status-cancelled');
+        statusBadge.addClass(`status-${newStatus}`);
+        
+        // Update dropdown active state
+        $('.status-option').removeClass('active');
+        $(`.status-option[data-status="${newStatus}"]`).addClass('active');
+        
+        currentApplication.status = newStatus;
+        
+        // ✅ Notify list.html to refresh
+        localStorage.setItem('applications_needs_refresh', 'true');
+        
+        // Reload comments to show any automatic status update messages
+        loadComments(currentApplication.id);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Hata',
+            text: 'Durum güncellenemedi'
+        });
+    });
+}
+
+// Add comment (real API call with multipart form)
+function addComment(e) {
+    e.preventDefault();
+    
+    if (!currentApplication) return;
+    
+    const commentText = $('#commentText').val().trim();
+    const commentFile = $('#commentFile')[0].files[0];
+    
+    if (!commentText && !commentFile) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Uyarı',
+            text: 'Lütfen bir mesaj yazın veya dosya seçin'
+        });
+        return;
+    }
+    
+    const token = localStorage.getItem('token');
+    const formData = new FormData();
+    
+    if (commentText) {
+        formData.append('comment', commentText);
+    }
+    
+    if (commentFile) {
+        formData.append('file', commentFile);
+    }
+    
+    fetch(API_BASE_URL + `/applications/${currentApplication.id}/comments`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        },
+        body: formData
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Yorum eklenemedi');
+        }
+        return response.json();
+    })
+    .then(data => {
+        Swal.fire({
+            icon: 'success',
+            title: 'Başarılı',
+            text: 'Yorumunuz eklendi',
+            timer: 2000,
+            showConfirmButton: false
+        });
+        
+        // Clear form
+        $('#commentText').val('');
+        $('#commentFile').val('');
+        $('#selectedFileName').text('Dosya seçilmedi');
+        
+        // ✅ Notify list.html to refresh
+        localStorage.setItem('applications_needs_refresh', 'true');
+        
+        // Reload comments to show the new comment
+        loadComments(currentApplication.id);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Hata',
+            text: 'Yorum eklenemedi'
+        });
+    });
+}
+
+// Close application
+function closeApplication() {
+    Swal.fire({
+        title: 'Başvuruyu Kapat',
+        text: 'Bu başvuruyu kapatmak istediğinizden emin misiniz?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#e30613',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Evet, Kapat',
+        cancelButtonText: 'İptal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Başarılı',
+                text: 'Başvuru kapatıldı'
+            });
+        }
+    });
+}
+
+// Delete application
+function deleteApplication() {
+    if (!currentApplication) return;
+    
+    Swal.fire({
+        title: 'Başvuruyu Sil',
+        text: 'Bu işlem geri alınamaz!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Evet, Sil',
+        cancelButtonText: 'İptal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const token = localStorage.getItem('token');
+            
+            fetch(API_BASE_URL + `/applications/${currentApplication.id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Silindi',
+                        text: 'Başvuru başarıyla silindi'
+                    }).then(() => {
+                        window.location.href = 'list.html';
+                    });
+                } else {
+                    throw new Error('Silme işlemi başarısız');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Hata',
+                    text: 'Başvuru silinemedi'
+                });
+            });
+        }
+    });
+}
+
+// Show error
+function showError(message) {
+    $('#loadingState').addClass('d-none');
+    $('#errorMessage').text(message);
+    $('#errorState').removeClass('d-none');
+}
+
+// Status text mapping
+function getStatusText(status) {
+    const statusMap = {
+        'pending': 'İşleme alınmadı',
+        'processing': 'İşleme alındı',
+        'approved': 'Vize onaylandı',
+        'rejected': 'Vize reddedildi',
+        'cancelled': 'İptal edildi'
+    };
+    return statusMap[status] || status;
+}
+</script>
+
+</body>
+</html>
