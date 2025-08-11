@@ -17,13 +17,14 @@ func main() {
 	r := mux.NewRouter()
 	r.Use(corsMiddleware)
 
+	// ✅ Health check (Render Settings > Health Check Path: /healthz)
+	r.HandleFunc("/healthz", func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte("ok"))
+	}).Methods("GET")
+
 	// ✅ uploads klasörünü public sun
 	r.PathPrefix("/uploads/").Handler(http.StripPrefix("/uploads/", http.FileServer(http.Dir("uploads"))))
-
-	// ✅ OPTIONS istekleri için cevap
-	r.Methods("OPTIONS").HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		w.WriteHeader(http.StatusOK)
-	})
 
 	// 🔹 Kimlik doğrulama işlemleri
 	r.HandleFunc("/register", RegisterHandler).Methods("POST", "OPTIONS")
@@ -55,12 +56,9 @@ func main() {
 	r.HandleFunc("/change-password", AuthenticateMiddleware(ChangePassword)).Methods("POST", "OPTIONS")
 	r.HandleFunc("/system-stats", AuthenticateMiddleware(GetSystemStats)).Methods("GET", "OPTIONS")
 
-	// main.go içindeki route tanımlamalarına ekleyin:
-
 	// 🔹 Bildirim ayarları
 	r.HandleFunc("/notification-settings", AuthenticateMiddleware(GetNotificationSettings)).Methods("GET", "OPTIONS")
 	r.HandleFunc("/notification-settings", AuthenticateMiddleware(UpdateNotificationSettings)).Methods("PUT", "OPTIONS")
-
 	r.HandleFunc("/notifications", AuthenticateMiddleware(GetUserNotifications)).Methods("GET", "OPTIONS")
 
 	// 🔹 Admin kullanıcı işlemleri
@@ -69,7 +67,7 @@ func main() {
 	r.HandleFunc("/users/{id}/role", AuthenticateMiddleware(UpdateUserRole)).Methods("PUT", "OPTIONS")
 	r.HandleFunc("/users/{id}", AuthenticateMiddleware(DeleteUser)).Methods("DELETE", "OPTIONS")
 
-	// Metronic HTML serve
+	// 🔹 SPA/Metronic dosyaları (en sonda kalsın)
 	r.PathPrefix("/").Handler(http.FileServer(http.Dir("./ui")))
 
 	// ✅ Render PORT environment variable'ını kullan
@@ -78,36 +76,45 @@ func main() {
 		port = "8080" // Local development için default
 	}
 
-	// ✅ Sunucuyu başlat
 	log.Printf("🚀 Sunucu %s portunda çalışıyor...", port)
 	log.Fatal(http.ListenAndServe(":"+port, r))
 }
 
-// ✅ Gelişmiş CORS middleware – localhost ve tüm domain'lere izin verir
+// ✅ Gelişmiş CORS middleware – credentials ile güvenli whitelist
 func corsMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		origin := r.Header.Get("Origin")
 
-		// ✅ DÜZELTME: localhost:8080 ve diğer localhost portlarını da dahil et
-		if origin == "http://localhost:3000" ||
-			origin == "http://localhost:8080" ||
-			origin == "http://127.0.0.1:8080" ||
-			strings.Contains(origin, "localhost") ||
-			strings.Contains(origin, ".netlify.app") {
+		allowed := false
+		if origin != "" {
+			if strings.HasPrefix(origin, "http://localhost") ||
+				strings.HasPrefix(origin, "http://127.0.0.1") ||
+				strings.Contains(origin, ".netlify.app") ||
+				strings.Contains(origin, ".onrender.com") {
+				allowed = true
+			}
+		}
+
+		if allowed {
+			// Credentials kullanılacaksa * OLMAZ; istekteki origin'i yansıt
 			w.Header().Set("Access-Control-Allow-Origin", origin)
+			w.Header().Set("Vary", "Origin")
+			w.Header().Set("Access-Control-Allow-Credentials", "true")
+		} else if origin == "" {
+			// Same-origin isteklerde sorun yaşamamak için herhangi bir header set etme
 		} else {
-			// Eğer hiç origin yoksa (same-origin) ya da test için tüm origin'lere izin ver
+			// İzinli değilse generic ama credentials'sız cevap ver (tarayıcı reddeder)
 			w.Header().Set("Access-Control-Allow-Origin", "*")
 		}
 
 		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
-		w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
-		w.Header().Set("Access-Control-Allow-Credentials", "true")
+		w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization, Accept, Accept-Language, Content-Language, X-Requested-With")
 
 		if r.Method == http.MethodOptions {
 			w.WriteHeader(http.StatusOK)
 			return
 		}
+
 		next.ServeHTTP(w, r)
 	})
 }
