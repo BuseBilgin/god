@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"net/http"
+	"os"
 	"strings"
 
 	"github.com/gorilla/mux"
@@ -71,9 +72,15 @@ func main() {
 	// Metronic HTML serve
 	r.PathPrefix("/").Handler(http.FileServer(http.Dir("./ui")))
 
+	// ✅ Render PORT environment variable'ını kullan
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080" // Local development için default
+	}
+
 	// ✅ Sunucuyu başlat
-	log.Println("🚀 Sunucu 8080 portunda çalışıyor...")
-	log.Fatal(http.ListenAndServe(":8080", r))
+	log.Printf("🚀 Sunucu %s portunda çalışıyor...", port)
+	log.Fatal(http.ListenAndServe(":"+port, r))
 }
 
 // ✅ Gelişmiş CORS middleware – localhost ve tüm domain'lere izin verir
