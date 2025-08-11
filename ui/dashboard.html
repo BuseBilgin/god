@@ -1,0 +1,1969 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <title>Vize Takip Dashboard | Guide of Dubai</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <!-- Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
+    
+    <!-- Metronic CSS Bundle -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    
+    <style>
+        /* Updated Color Palette - Red & Gray */
+        :root {
+            --kt-primary: #e30613;
+            --kt-primary-active: #b3050f;
+            --kt-red: #e30613;
+            --kt-red-active: #b3050f;
+            --kt-gray-900: #1e2129;
+            --kt-gray-800: #3f4254;
+            --kt-gray-700: #5e6278;
+            --kt-gray-600: #7e8299;
+            --kt-gray-500: #a1a5b7;
+            --kt-gray-400: #b5b5c3;
+            --kt-gray-300: #e4e6ea;
+            --kt-gray-200: #eff2f5;
+            --kt-gray-100: #f5f8fa;
+            --kt-white: #ffffff;
+            --kt-primary-light: #fef2f2;
+            --kt-primary-inverse: #ffffff;
+            --kt-secondary: #6c757d;
+            --kt-secondary-light: #f8f9fa;
+            --kt-success: #10b981;
+            --kt-success-light: #ecfdf5;
+            --kt-info: #6b7280;
+            --kt-info-light: #f9fafb;
+            --kt-warning: #f59e0b;
+            --kt-warning-light: #fffbeb;
+            --kt-danger: #ef4444;
+            --kt-danger-light: #fef2f2;
+            --kt-light: #f9fafb;
+            --kt-dark: #1f2937;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Header Styles */
+        .header {
+            background: var(--kt-white);
+            box-shadow: 0 0.5rem 1.5rem 0.5rem rgba(0, 0, 0, 0.075);
+            position: relative;
+            z-index: 100;
+        }
+        
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            min-height: 70px;
+        }
+        
+        .header-brand {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+        
+        .header-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .header-logo img {
+            max-height: 40px;
+            width: auto;
+            object-fit: contain;
+        }
+        
+        .header-title {
+            color: var(--kt-gray-900);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: -0.025em;
+        }
+        
+        .header-subtitle {
+            color: var(--kt-gray-600);
+            font-size: 0.875rem;
+            margin: 0;
+            margin-top: -2px;
+        }
+        
+        .header-nav {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+        
+        .nav-item {
+            position: relative;
+        }
+        
+        .nav-link {
+            color: var(--kt-gray-700);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            padding: 0.5rem 0;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            color: var(--kt-primary);
+        }
+        
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--kt-primary);
+            border-radius: 2px;
+        }
+        
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .header-search {
+            position: relative;
+            display: none;
+        }
+        
+        .search-input {
+            background: var(--kt-gray-100);
+            border: 1px solid var(--kt-gray-200);
+            border-radius: 8px;
+            padding: 0.5rem 1rem 0.5rem 2.5rem;
+            font-size: 0.875rem;
+            color: var(--kt-gray-800);
+            width: 250px;
+            transition: all 0.2s ease;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: var(--kt-primary);
+            background: var(--kt-white);
+            box-shadow: 0 0 0 0.2rem rgba(227, 6, 19, 0.15);
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--kt-gray-600);
+            font-size: 0.875rem;
+        }
+        
+        .notifications {
+            position: relative;
+            background: var(--kt-gray-100);
+            border: 1px solid var(--kt-gray-200);
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--kt-gray-700);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .notifications:hover {
+            background: var(--kt-white);
+            border-color: var(--kt-primary);
+            color: var(--kt-primary);
+        }
+        
+        .notifications .badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--kt-primary);
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 2px 6px;
+            border-radius: 10px;
+            min-width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .user-menu {
+            position: relative;
+        }
+        
+        .user-menu-btn {
+            background: var(--kt-white) !important;
+            border: 1px solid var(--kt-gray-200) !important;
+            border-radius: 8px !important;
+            padding: 8px 16px !important;
+            font-size: 14px !important;
+            font-weight: 500 !important;
+            color: var(--kt-gray-700) !important;
+            box-shadow: none !important;
+            transition: all 0.2s ease;
+        }
+        
+        .user-menu-btn:hover {
+            background: var(--kt-gray-100) !important;
+            border-color: var(--kt-primary) !important;
+            color: var(--kt-primary) !important;
+        }
+        
+        .user-avatar {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--kt-primary) 0%, var(--kt-primary-active) 100%);
+            border-radius: 6px;
+            margin-right: 8px;
+        }
+        
+        .user-avatar i {
+            font-size: 16px;
+            color: white;
+        }
+        
+        .user-dropdown {
+            border: none !important;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15) !important;
+            border-radius: 8px !important;
+            min-width: 200px !important;
+            padding: 8px 0 !important;
+            margin-top: 8px !important;
+        }
+        
+        .user-dropdown .dropdown-header {
+            color: var(--kt-gray-400) !important;
+            font-size: 11px !important;
+            font-weight: 600 !important;
+            text-transform: uppercase !important;
+            padding: 8px 16px 4px !important;
+            margin-bottom: 4px !important;
+        }
+        
+        .user-dropdown .dropdown-item {
+            padding: 10px 16px !important;
+            font-size: 14px !important;
+            color: var(--kt-gray-700) !important;
+            border-radius: 0 !important;
+            transition: all 0.15s ease !important;
+        }
+        
+        .user-dropdown .dropdown-item:hover {
+            background: var(--kt-gray-100) !important;
+            color: var(--kt-primary) !important;
+        }
+        
+        .user-dropdown .dropdown-item.text-danger {
+            color: var(--kt-danger) !important;
+        }
+        
+        .user-dropdown .dropdown-item.text-danger:hover {
+            background: var(--kt-danger-light) !important;
+            color: var(--kt-danger) !important;
+        }
+        
+        .user-dropdown .dropdown-divider {
+            margin: 8px 0 !important;
+            border-color: var(--kt-gray-200) !important;
+        }
+        
+        /* Mobile Header */
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--kt-gray-700);
+            font-size: 1.25rem;
+            padding: 0.5rem;
+            cursor: pointer;
+        }
+        
+        .mobile-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--kt-white);
+            box-shadow: 0 0.5rem 1.5rem 0.5rem rgba(0, 0, 0, 0.075);
+            border-radius: 0 0 8px 8px;
+            padding: 1rem 2rem;
+            z-index: 99;
+        }
+        
+        .mobile-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .mobile-nav .nav-link {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--kt-gray-200);
+        }
+        
+        .mobile-nav .nav-link:last-child {
+            border-bottom: none;
+        }
+
+        /* Metronic Base */
+        body {
+            font-family: Inter, Helvetica, "sans-serif";
+            font-weight: 400;
+            line-height: 1.5;
+            color: var(--kt-gray-700);
+            background-color: var(--kt-light);
+        }
+        
+        /* Metronic Container */
+        .kt-app-content-container {
+            max-width: 1400px;
+            margin: 0 auto !important;
+            padding: 2.5rem;
+            width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        /* Row ve column ortalama */
+        .row {
+            margin-left: auto !important;
+            margin-right: auto !important;
+            justify-content: center !important;
+        }
+
+        .col-xl-4, .col-xl-8, .col-xxl-4 {
+            display: flex !important;
+            justify-content: center !important;
+        }
+
+        .col-xl-4 .kt-card, 
+        .col-xl-8 .kt-card,
+        .col-xxl-4 .kt-card {
+            width: 100% !important;
+            margin: 0 auto !important;
+        }
+        
+        /* Metronic Page Title */
+        .kt-page-title {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: center !important;
+            margin-bottom: 2.5rem;
+            text-align: center !important;
+            position: relative;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--kt-gray-200);
+        }
+
+        .kt-page-title::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50% !important;
+            transform: translateX(-50%) !important;
+            width: 60px;
+            height: 3px;
+            background: var(--kt-primary);
+            border-radius: 2px;
+        }
+        
+        .kt-page-title .kt-page-title-heading {
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: var(--kt-gray-900);
+            margin: 0 auto !important;
+            text-align: center !important;
+        }
+        
+        .kt-page-title .kt-page-title-description {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--kt-gray-600);
+            margin: 0.25rem auto 0 auto !important;
+            text-align: center !important;
+        }
+        
+        /* Metronic Cards */
+        .kt-card {
+            display: flex;
+            flex-direction: column;
+            background-color: var(--kt-white);
+            background-clip: padding-box;
+            border: 1px solid var(--kt-gray-200);
+            border-radius: 0.75rem;
+            box-shadow: 0 0.5rem 1.5rem 0.5rem rgba(0, 0, 0, 0.075);
+            position: relative;
+            word-wrap: break-word;
+            background-clip: border-box;
+            min-height: 125px;
+            transition: all 0.2s ease;
+            overflow: hidden;
+        }
+        
+        .kt-card:hover {
+            box-shadow: 0 0.75rem 2rem 0.75rem rgba(0, 0, 0, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .kt-card .kt-card-body {
+            flex: 1 1 auto;
+            padding: 1.75rem 1.75rem;
+        }
+
+        /* Statistics Cards */
+        .kt-statistics-card {
+            background: var(--kt-white);
+            border: 1px solid var(--kt-gray-200);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .kt-statistics-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--kt-gray-600);
+        }
+
+        .kt-statistics-card.warning::before {
+            background: var(--kt-warning);
+        }
+
+        .kt-statistics-card.success::before {
+            background: var(--kt-success);
+        }
+
+        .kt-statistics-card.danger::before {
+            background: var(--kt-danger);
+        }
+
+        .kt-statistics-card.info::before {
+            background: var(--kt-gray-500);
+        }
+        
+        .kt-card .kt-card-body {
+            flex: 1 1 auto;
+            padding: 2.25rem 2.25rem;
+        }
+        
+        /* Statistics Cards Widget */
+        .kt-statistics-widget-1 {
+            position: relative;
+            overflow: hidden;
+            height: 100%;
+        }
+        
+        .kt-statistics-widget-1 .kt-statistics-widget-1-number {
+            font-size: 2rem;
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--kt-gray-900);
+            margin-bottom: 0.5rem;
+        }
+        
+        .kt-statistics-widget-1 .kt-statistics-widget-1-desc {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--kt-gray-600);
+            margin-bottom: 1rem;
+        }
+        
+        .kt-statistics-widget-1 .kt-statistics-widget-1-icon {
+            position: absolute;
+            top: 1.75rem;
+            right: 1.75rem;
+            font-size: 2.5rem;
+            opacity: 0.1;
+            color: var(--kt-gray-500);
+        }
+        
+        .kt-statistics-widget-1 .kt-statistics-widget-1-progress {
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .kt-statistics-widget-1 .kt-statistics-widget-1-progress .kt-badge {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.375rem;
+            font-weight: 500;
+        }
+        
+        /* Updated Badges - Red & Gray Theme */
+        .kt-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            line-height: 1;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: baseline;
+            border-radius: 2rem;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+        
+        .kt-badge.kt-badge-light-success {
+            background: var(--kt-success-light);
+            color: var(--kt-success);
+            border-color: rgba(16, 185, 129, 0.2);
+        }
+        
+        .kt-badge.kt-badge-light-danger {
+            background: var(--kt-danger-light);
+            color: var(--kt-danger);
+            border-color: rgba(239, 68, 68, 0.2);
+        }
+        
+        .kt-badge.kt-badge-light-primary {
+            background: var(--kt-primary-light);
+            color: var(--kt-primary);
+            border-color: rgba(227, 6, 19, 0.2);
+        }
+        
+        .kt-badge.kt-badge-light-warning {
+            background: var(--kt-warning-light);
+            color: var(--kt-warning);
+            border-color: rgba(245, 158, 11, 0.2);
+        }
+        
+        .kt-badge.kt-badge-light-info {
+            background: var(--kt-info-light);
+            color: var(--kt-info);
+            border-color: rgba(107, 114, 128, 0.2);
+        }
+        
+        /* Updated Buttons - Red & Gray Theme */
+        .kt-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.875rem 1.75rem;
+            margin: 0;
+            font-size: 0.95rem;
+            font-weight: 600;
+            line-height: 1.5;
+            color: var(--kt-gray-900);
+            text-align: center;
+            text-decoration: none;
+            vertical-align: middle;
+            cursor: pointer;
+            user-select: none;
+            background-color: transparent;
+            border: 1px solid transparent;
+            border-radius: 0.75rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .kt-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .kt-btn:hover::before {
+            left: 100%;
+        }
+        
+        .kt-btn.kt-btn-primary {
+            background: linear-gradient(135deg, var(--kt-primary) 0%, var(--kt-primary-active) 100%);
+            border-color: var(--kt-primary);
+            color: var(--kt-primary-inverse);
+            box-shadow: 0 4px 12px rgba(227, 6, 19, 0.3);
+        }
+        
+        .kt-btn.kt-btn-primary:hover {
+            background: linear-gradient(135deg, var(--kt-primary-active) 0%, #8b0000 100%);
+            border-color: var(--kt-primary-active);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(227, 6, 19, 0.4);
+        }
+        
+        .kt-btn.kt-btn-light-primary {
+            background: linear-gradient(135deg, var(--kt-primary-light) 0%, rgba(254, 242, 242, 0.8) 100%);
+            border-color: var(--kt-primary-light);
+            color: var(--kt-primary);
+            box-shadow: 0 2px 8px rgba(227, 6, 19, 0.15);
+        }
+        
+        .kt-btn.kt-btn-light-primary:hover {
+            background: linear-gradient(135deg, var(--kt-primary) 0%, var(--kt-primary-active) 100%);
+            border-color: var(--kt-primary);
+            color: var(--kt-primary-inverse);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(227, 6, 19, 0.3);
+        }
+        
+        /* Icons */
+        .kt-menu-icon,
+        .kt-nav-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            height: 20px;
+        }
+        
+        /* Table */
+        .kt-table {
+            --kt-table-color: var(--kt-gray-600);
+            --kt-table-bg: transparent;
+            --kt-table-border-color: var(--kt-gray-200);
+            --kt-table-accent-bg: transparent;
+            --kt-table-striped-color: var(--kt-gray-600);
+            --kt-table-striped-bg: rgba(0, 0, 0, 0.05);
+            --kt-table-active-color: var(--kt-gray-600);
+            --kt-table-active-bg: rgba(0, 0, 0, 0.1);
+            --kt-table-hover-color: var(--kt-gray-600);
+            --kt-table-hover-bg: rgba(0, 0, 0, 0.075);
+            width: 100%;
+            margin-bottom: 1rem;
+            color: var(--kt-table-color);
+            vertical-align: top;
+            border-color: var(--kt-table-border-color);
+        }
+        
+        .kt-table > :not(caption) > * > * {
+            padding: 1rem;
+            background-color: var(--kt-table-bg);
+            border-bottom-width: 1px;
+            box-shadow: inset 0 0 0 9999px var(--kt-table-accent-bg);
+        }
+        
+        .kt-table > thead {
+            vertical-align: bottom;
+        }
+        
+        .kt-table > thead > tr > th {
+            font-weight: 600;
+            color: var(--kt-gray-500);
+            vertical-align: bottom;
+            border-bottom: 2px solid var(--kt-gray-200);
+        }
+        
+        /* Symbol */
+        .kt-symbol {
+            display: inline-flex;
+            flex-shrink: 0;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            border-radius: 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .kt-symbol::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+            border-radius: inherit;
+        }
+        
+        .kt-symbol.kt-symbol-50 {
+            width: 60px;
+            height: 60px;
+        }
+        
+        .kt-symbol.kt-symbol-circle {
+            border-radius: 50%;
+        }
+        
+        .kt-symbol .kt-symbol-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            color: var(--kt-white);
+            font-size: 1.25rem;
+            font-weight: 700;
+            border-radius: inherit;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .kt-symbol .kt-symbol-label.kt-symbol-label-primary {
+            background: linear-gradient(135deg, var(--kt-gray-600) 0%, var(--kt-gray-700) 100%);
+            box-shadow: 0 4px 12px rgba(107, 114, 128, 0.3);
+        }
+        
+        .kt-symbol .kt-symbol-label.kt-symbol-label-success {
+            background: linear-gradient(135deg, var(--kt-success) 0%, #059669 100%);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+        
+        .kt-symbol .kt-symbol-label.kt-symbol-label-warning {
+            background: linear-gradient(135deg, var(--kt-warning) 0%, #d97706 100%);
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+        
+        .kt-symbol .kt-symbol-label.kt-symbol-label-danger {
+            background: linear-gradient(135deg, var(--kt-danger) 0%, #dc2626 100%);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        }
+        
+        .kt-symbol .kt-symbol-label.kt-symbol-label-info {
+            background: linear-gradient(135deg, var(--kt-info) 0%, #4b5563 100%);
+            box-shadow: 0 4px 12px rgba(107, 114, 128, 0.3);
+        }
+        
+        /* Typography */
+        .kt-heading {
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--kt-gray-900);
+        }
+        
+        /* Başlık Düzenlemeleri */
+        .kt-card-header .kt-card-title,
+        .kt-card-title,
+        h3.kt-card-title,
+        .kt-heading,
+        .kt-page-title-heading,
+        .fw-bold h2,
+        h1, h2, h3, h4, h5, h6 {
+            font-style: normal !important;
+            transform: none !important;
+            font-weight: 700 !important;
+            letter-spacing: 0 !important;
+            padding-left: 5px !important;
+            margin-left: 3px !important;
+            text-align: left !important;
+            font-family: Inter, Helvetica, "sans-serif" !important;
+            text-decoration: none !important;
+            text-shadow: none !important;
+        }
+
+        /* Card başlıklarını ortala */
+        .kt-card-header .kt-card-title,
+        h3.kt-card-title {
+            text-align: center !important;
+            padding-left: 0 !important;
+            margin-left: 0 !important;
+            width: 100% !important;
+        }
+
+        /* Son Başvurular başlığını da ortala */
+        .kt-card-header .kt-card-title.mb-3 h3,
+        .kt-card .kt-card-header h3.kt-heading {
+            text-align: center !important;
+            padding-left: 0 !important;
+            margin-left: 0 !important;
+            width: 100% !important;
+        }
+
+        .d-flex.my-2 h2,
+        .kt-page-title .kt-page-title-heading {
+            padding-left: 8px !important;
+            margin-left: 5px !important;
+            font-style: normal !important;
+            transform: none !important;
+        }
+
+        .kt-card-header h3.kt-card-title {
+            padding-left: 6px !important;
+            margin-left: 4px !important;
+            font-style: normal !important;
+            font-size: 1.25rem;
+            line-height: 1.3;
+        }
+
+        .kt-page-title .kt-page-title-description {
+            font-style: normal !important;
+            font-weight: 500 !important;
+            padding-left: 8px !important;
+        }
+
+        .kt-table > thead > tr > th {
+            font-style: normal !important;
+            font-weight: 700 !important;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding-left: 8px !important;
+        }
+
+        .text-muted {
+            color: var(--kt-gray-500) !important;
+        }
+        
+        .text-gray-400 {
+            color: var(--kt-gray-400) !important;
+        }
+        
+        .text-gray-600 {
+            color: var(--kt-gray-600) !important;
+        }
+        
+        .text-gray-900 {
+            color: var(--kt-gray-900) !important;
+        }
+        
+        .text-primary {
+            color: var(--kt-primary) !important;
+        }
+        
+        /* Background Colors */
+        .bg-light-primary {
+            background-color: var(--kt-primary-light) !important;
+        }
+        
+        .bg-light-success {
+            background-color: var(--kt-success-light) !important;
+        }
+        
+        .bg-light-warning {
+            background-color: var(--kt-warning-light) !important;
+        }
+        
+        .bg-light-danger {
+            background-color: var(--kt-danger-light) !important;
+        }
+        
+        .bg-light-info {
+            background-color: var(--kt-info-light) !important;
+        }
+        
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .header-search {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .header-nav {
+                display: none;
+            }
+            
+            .mobile-toggle {
+                display: block;
+            }
+            
+            .header-actions {
+                gap: 0.5rem;
+            }
+            
+            .header-subtitle {
+                display: none;
+            }
+
+            .kt-app-content-container {
+                padding: 1rem 2rem !important;
+            }
+
+            .kt-page-title .kt-page-title-heading {
+                font-size: 1.5rem;
+            }
+
+            .kt-statistics-widget-1 .kt-statistics-widget-1-number {
+                font-size: 1.75rem;
+            }
+
+            .kt-statistics-widget-1 .kt-statistics-widget-1-icon {
+                font-size: 2rem;
+            }
+
+            .kt-mixed-widget-2 .kt-mixed-widget-2-chart,
+            .chart-container {
+                padding: 1.5rem !important;
+                height: 250px;
+            }
+
+            .col-xl-4 .kt-card-body,
+            .col-xl-8 .kt-card-body {
+                padding: 1.5rem !important;
+            }
+
+            .table-responsive {
+                padding: 0 1.5rem !important;
+            }
+        }
+        
+        @media (max-width: 575.98px) {
+            .header .header-container {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+            
+            .kt-app-content-container {
+                padding: 0.75rem 1.5rem !important;
+            }
+            
+            .kt-card .kt-card-body {
+                padding: 1.5rem !important;
+            }
+
+            .kt-page-title .kt-page-title-heading {
+                font-size: 1.25rem;
+            }
+
+            .kt-page-title .kt-page-title-description {
+                font-size: 0.8rem;
+            }
+            
+            .kt-statistics-widget-1 .kt-statistics-widget-1-number {
+                font-size: 1.5rem;
+            }
+            
+            .kt-statistics-widget-1 .kt-statistics-widget-1-icon {
+                font-size: 1.75rem;
+                top: 1.25rem;
+                right: 1.25rem;
+            }
+
+            .kt-statistics-widget-1 .kt-statistics-widget-1-desc {
+                font-size: 0.8rem;
+            }
+
+            .kt-table > :not(caption) > * > * {
+                padding: 0.5rem;
+            }
+
+            .kt-table > thead > tr > th {
+                font-size: 0.75rem;
+                padding: 0.5rem;
+            }
+
+            .kt-table .text-gray-900 {
+                font-size: 0.8rem;
+            }
+
+            .kt-table .text-muted {
+                font-size: 0.75rem;
+            }
+
+            .px-9 {
+                padding-left: 1.5rem !important;
+                padding-right: 1.5rem !important;
+            }
+
+            .me-9 {
+                margin-right: 1.5rem !important;
+            }
+
+            .kt-mixed-widget-2 .kt-mixed-widget-2-chart,
+            .chart-container {
+                padding: 1rem !important;
+                height: 200px;
+            }
+
+            .col-xl-4 .kt-card-body,
+            .col-xl-8 .kt-card-body {
+                padding: 1.25rem !important;
+            }
+
+            .table-responsive {
+                padding: 0 1rem !important;
+            }
+
+            .kt-card-header {
+                padding: 1rem 1.5rem !important;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .kt-app-content-container {
+                padding: 1.5rem 4rem !important;
+            }
+
+            .kt-mixed-widget-2 .kt-mixed-widget-2-chart,
+            .chart-container {
+                padding: 2.5rem !important;
+            }
+
+            .col-xl-4 .kt-card-body,
+            .col-xl-8 .kt-card-body {
+                padding: 2.5rem !important;
+            }
+
+            .table-responsive {
+                padding: 0 2.5rem !important;
+            }
+        }
+        
+        /* Chart Container */
+        .kt-mixed-widget-2 .kt-mixed-widget-2-chart {
+            height: 300px;
+            padding: 2rem !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            margin: 0 auto !important;
+        }
+
+        .chart-container {
+            height: 280px;
+            padding: 2rem !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            margin: 0 auto !important;
+        }
+
+        canvas {
+            max-width: 100% !important;
+            height: auto !important;
+            margin: 0 auto !important;
+            display: block !important;
+        }
+
+        /* Progress bars ve separator */
+        .separator {
+            width: 100% !important;
+            height: 1px;
+            background: var(--kt-gray-200);
+            margin: 1rem auto !important;
+        }
+
+        .h-8px {
+            margin: 0 auto !important;
+            width: 100% !important;
+        }
+
+        /* Animations */
+        .kt-card {
+            animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .kt-card:nth-child(1) { animation-delay: 0.1s; }
+        .kt-card:nth-child(2) { animation-delay: 0.2s; }
+        .kt-card:nth-child(3) { animation-delay: 0.3s; }
+        
+        .d-flex.flex-wrap.flex-stack {
+            justify-content: center !important;
+            text-align: center !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            gap: 1rem;
+        }
+
+        .d-flex.flex-wrap.flex-stack h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--kt-gray-900);
+            text-align: center !important;
+            margin: 0 auto !important;
+        }
+
+        .d-flex.flex-wrap.flex-stack h2 span {
+            font-size: 0.875rem;
+            font-weight: 400;
+            display: block;
+            text-align: center !important;
+        }
+
+        .d-flex.my-2 {
+            justify-content: center !important;
+            gap: 1rem;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Progress bars enhancement */
+        .h-8px {
+            height: 10px !important;
+            border-radius: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bg-light-success {
+            background: linear-gradient(90deg, rgba(236, 253, 245, 0.5) 0%, rgba(236, 253, 245, 0.8) 100%) !important;
+        }
+
+        .bg-light-primary {
+            background: linear-gradient(90deg, rgba(254, 242, 242, 0.5) 0%, rgba(254, 242, 242, 0.8) 100%) !important;
+        }
+
+        .bg-light-warning {
+            background: linear-gradient(90deg, rgba(255, 251, 235, 0.5) 0%, rgba(255, 251, 235, 0.8) 100%) !important;
+        }
+
+        .bg-success {
+            background: linear-gradient(90deg, var(--kt-success) 0%, #059669 100%) !important;
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+        }
+
+        .bg-primary {
+            background: linear-gradient(90deg, var(--kt-primary) 0%, var(--kt-primary-active) 100%) !important;
+            box-shadow: 0 2px 8px rgba(227, 6, 19, 0.3);
+        }
+
+        .bg-warning {
+            background: linear-gradient(90deg, var(--kt-warning) 0%, #d97706 100%) !important;
+            box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+        }
+        
+        /* Loading State */
+        .kt-spinner {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(227, 6, 19, 0.1);
+            border-radius: 50%;
+            border-top: 4px solid var(--kt-primary);
+            animation: kt-spinner-spin 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+            position: relative;
+        }
+
+        .kt-spinner::before {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            right: 2px;
+            bottom: 2px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            border-top-color: rgba(227, 6, 19, 0.3);
+            animation: kt-spinner-spin 2s ease-in-out infinite reverse;
+        }
+        
+        @keyframes kt-spinner-spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Table enhancements */
+        .kt-table > thead > tr > th {
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--kt-gray-600);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid var(--kt-gray-200);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 250, 251, 0.9) 100%);
+        }
+
+        .kt-table tbody tr {
+            transition: all 0.3s ease;
+        }
+
+        .kt-table tbody tr:hover {
+            background: linear-gradient(135deg, rgba(227, 6, 19, 0.02) 0%, rgba(227, 6, 19, 0.05) 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        canvas {
+            display: block;
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        .kt-card-body > div {
+            height: 100% !important;
+        }
+
+
+        /* Butonlar ile altındaki kartlar arasına ekstra boşluk ekle */
+        .d-flex.flex-wrap.flex-stack.mb-10 {
+        margin-bottom: 2rem !important; /* Mevcut boşluğu artırır */
+        }
+
+        .d-flex.flex-wrap.flex-stack + .row {
+        margin-top: 1rem; /* Butonlardan sonra gelen ilk row'a boşluk ekler */
+        }
+
+        /* Footer Styles */
+        .footer {
+            background: var(--kt-gray-900);
+            color: var(--kt-white);
+            margin-top: 4rem;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            color: var(--kt-white);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-section h4::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 30px;
+            height: 2px;
+            background: var(--kt-primary);
+        }
+
+        .footer-brand {
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .footer-logo img {
+            height: 40px;
+            margin-right: 12px;
+            filter: brightness(0) invert(1);
+        }
+
+        .footer-logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--kt-white);
+        }
+
+        .footer-description {
+            color: var(--kt-gray-400);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-contact {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .footer-contact-item {
+            display: flex;
+            align-items: center;
+            color: var(--kt-gray-400);
+            font-size: 0.9rem;
+        }
+
+        .footer-contact-item i {
+            width: 20px;
+            color: var(--kt-primary);
+            margin-right: 10px;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: var(--kt-gray-400);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-links a:hover {
+            color: var(--kt-primary);
+            padding-left: 5px;
+        }
+
+        .footer-links a i {
+            margin-right: 8px;
+            width: 16px;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .footer-social a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: var(--kt-gray-800);
+            color: var(--kt-gray-400);
+            border-radius: 50%;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-social a:hover {
+            background: var(--kt-primary);
+            color: var(--kt-white);
+            transform: translateY(-2px);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--kt-gray-800);
+            padding-top: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-copyright {
+            color: var(--kt-gray-400);
+            font-size: 0.9rem;
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-bottom-links a {
+            color: var(--kt-gray-400);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s ease;
+        }
+
+        .footer-bottom-links a:hover {
+            color: var(--kt-primary);
+        }
+
+        /* Footer Responsive */
+        @media (max-width: 992px) {
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+                gap: 2rem;
+            }
+
+            .footer-container {
+                padding: 0 1rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .footer {
+                padding: 2rem 0 1rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                text-align: center;
+            }
+
+            .footer-section h4::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .footer-bottom-links {
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+
+            .footer-contact-item {
+                justify-content: center;
+            }
+        }
+
+    </style>
+</head>
+<body id="kt_app_body" data-kt-app-header-fixed="true" class="app-default">
+
+<!-- Header -->
+<div class="header">
+    <div class="header-container">
+        <!-- Brand -->
+        <div class="d-flex align-items-center">
+            <a href="#" class="header-brand">
+                <div class="header-logo">
+                    <img src="assets/media/godlogo.png" alt="Guide of Dubai" style="width: 120px; height: auto;">
+                </div>
+                <div class="ms-3">
+                    <p class="header-subtitle d-none d-lg-block">Vize Takip Sistemi</p>
+                </div>
+            </a>
+        </div>
+        
+        <!-- Desktop Navigation -->
+        <nav class="header-nav d-none d-lg-flex">
+            <div class="nav-item">
+                <a href="#" class="nav-link active">
+                    <i class="fas fa-chart-bar me-2"></i>
+                    Anasayfa
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="list.html" class="nav-link">
+                    <i class="fas fa-list me-2"></i>
+                    Başvurular
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="application-form.html" class="nav-link">
+                    <i class="fas fa-plus me-2"></i>
+                    Yeni Başvuru
+                </a>
+            </div>
+
+            <div class="nav-item">
+                <a href="settings.html" class="nav-link">
+                    <i class="fas fa-cog me-2"></i>
+                    Ayarlar
+                </a>
+            </div>
+        </nav>
+        
+        <!-- Header Actions -->
+        <div class="header-actions">
+            <!-- Search -->
+            <div class="header-search d-none d-xl-block">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" class="search-input" placeholder="Ara...">
+            </div>
+            
+            <!-- Notifications -->
+            <div class="notifications">
+                <i class="fas fa-bell"></i>
+                <span class="badge">3</span>
+            </div>
+            
+            <!-- User Menu -->
+            <div class="user-menu">
+                <div class="dropdown">
+                    <button class="btn dropdown-toggle user-menu-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <div class="user-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <span class="d-none d-md-inline">Menü</span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end user-dropdown">
+                        <li><h6 class="dropdown-header">Kullanıcı Menüsü</h6></li>
+                        <li>
+                            <a class="dropdown-item" href="settings.html">
+                                <i class="fas fa-user-circle me-2"></i>
+                                Profil
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="list.html">
+                                <i class="fas fa-list me-2"></i>
+                                Başvurularım
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="settings.html">
+                                <i class="fas fa-cog me-2"></i>
+                                Ayarlar
+                            </a>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <a class="dropdown-item text-danger" href="#" onclick="logout()">
+                                <i class="fas fa-sign-out-alt me-2"></i>
+                                Çıkış Yap
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Mobile Toggle -->
+            <button class="mobile-toggle d-lg-none" type="button" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </div>
+    
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <nav class="mobile-nav">
+            <a href="#" class="nav-link active">
+                <i class="fas fa-chart-bar me-2"></i>
+                Anasayfa
+            </a>
+            <a href="list.html" class="nav-link">
+                <i class="fas fa-list me-2"></i>
+                Başvurular
+            </a>
+            <a href="application-form.html" class="nav-link">
+                <i class="fas fa-plus me-2"></i>
+                Yeni Başvuru
+            </a>
+            <a href="#" class="nav-link">
+                <i class="fas fa-cog me-2"></i>
+                Ayarlar
+            </a>
+        </nav>
+    </div>
+</div>
+
+<!-- Content -->
+<div id="kt_app_content" class="app-content flex-column-fluid">
+    <div id="kt_app_content_container" class="kt-app-content-container container-xxl">
+        
+        <!-- Page Title -->
+        <div class="kt-page-title d-flex flex-column justify-content-center flex-wrap me-3 mb-5">
+            <h1 class="kt-page-title-heading kt-heading fw-bold">Dashboard</h1>
+            <span class="kt-page-title-description fw-semibold fs-6 text-muted">
+                Vize başvuruları özet raporu ve performans metrikleri
+            </span>
+        </div>
+        
+        <!-- Toolbar -->
+        <div class="d-flex flex-wrap flex-stack mb-10">
+            <h2 class="fw-bold my-2">Genel Bakış
+                <span class="fs-6 text-gray-400 fw-semibold ms-1">Anlık veriler</span>
+            </h2>
+            <div class="d-flex my-2">
+                <button class="kt-btn kt-btn-light-primary me-3" onclick="refreshData()">
+                    <i class="fas fa-refresh me-2"></i>Yenile
+                </button>
+                <a href="application-form.html" class="kt-btn kt-btn-primary">
+                    <i class="fas fa-plus me-2"></i>Yeni Başvuru
+                </a>
+            </div>
+        </div>
+        
+        <!-- Statistics Row -->
+        <div class="row g-5 g-xl-10 mb-5 mb-xl-10 mt-8">
+            
+            <!-- Total Applications -->
+            <div class="col-xl-4 col-xxl-4 mb-5 mb-xl-10">
+                <div class="kt-card kt-card-flush kt-statistics-card bgi-no-repeat bgi-size-contain bgi-position-x-end h-xl-100">
+                    <div class="kt-card-body kt-statistics-widget-1 d-flex justify-content-between flex-column px-0 pb-0">
+                        <div class="mb-4 px-9">
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="fs-2hx fw-bold text-gray-800 me-2 lh-1 kt-statistics-widget-1-number" id="totalApps">0</span>
+                                <span class="kt-badge kt-badge-light-success fs-base kt-statistics-widget-1-progress" id="totalChange">
+                                    <i class="fas fa-arrow-up fs-5 text-success ms-n1"></i>Bu ay +0
+                                </span>
+                            </div>
+                            <span class="fs-6 fw-semibold text-gray-400 kt-statistics-widget-1-desc">Toplam Vize Başvurusu </span>
+                        </div>
+                        <div class="kt-symbol kt-symbol-50 kt-symbol-circle bg-light-info ms-auto me-9 kt-statistics-widget-1-icon">
+                            <i class="fas fa-file-alt fs-2 text-info"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Pending Applications -->
+            <div class="col-xl-4 col-xxl-4 mb-5 mb-xl-10">
+                <div class="kt-card kt-card-flush kt-statistics-card warning h-xl-100">
+                    <div class="kt-card-body kt-statistics-widget-1 d-flex justify-content-between flex-column px-0 pb-0">
+                        <div class="mb-4 px-9">
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="fs-2hx fw-bold text-gray-800 me-2 lh-1 kt-statistics-widget-1-number" id="pendingApps">0</span>
+                                <span class="kt-badge kt-badge-light-warning fs-base kt-statistics-widget-1-progress" id="pendingChange">
+                                    <i class="fas fa-minus fs-5 ms-n1"></i>Değişiklik yok
+                                </span>
+                            </div>
+                            <span class="fs-6 fw-semibold text-gray-400 kt-statistics-widget-1-desc">Bekleyen Vize</span>
+                        </div>
+                        <div class="kt-symbol kt-symbol-50 kt-symbol-circle bg-light-warning ms-auto me-9 kt-statistics-widget-1-icon">
+                            <i class="fas fa-clock fs-2 text-warning"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Processing Applications -->
+            <div class="col-xl-4 col-xxl-4 mb-5 mb-xl-10">
+                <div class="kt-card kt-card-flush kt-statistics-card h-xl-100">
+                    <div class="kt-card-body kt-statistics-widget-1 d-flex justify-content-between flex-column px-0 pb-0">
+                        <div class="mb-4 px-9">
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="fs-2hx fw-bold text-gray-800 me-2 lh-1 kt-statistics-widget-1-number" id="processingApps">0</span>
+                                <span class="kt-badge kt-badge-light-info fs-base kt-statistics-widget-1-progress" id="processingChange">
+                                    <i class="fas fa-arrow-up fs-5 text-info ms-n1"></i>Bu hafta +0
+                                </span>
+                            </div>
+                            <span class="fs-6 fw-semibold text-gray-400 kt-statistics-widget-1-desc">İşleme Alınan Vize </span>
+                        </div>
+                        <div class="kt-symbol kt-symbol-50 kt-symbol-circle bg-light-info ms-auto me-9 kt-statistics-widget-1-icon">
+                            <i class="fas fa-cog fa-spin fs-2 text-info"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- Second Statistics Row -->
+        <div class="row g-5 g-xl-10 mb-5 mb-xl-10">
+            
+            <!-- Approved Applications -->
+            <div class="col-xl-4 col-xxl-4 mb-5 mb-xl-10">
+                <div class="kt-card kt-card-flush kt-statistics-card success h-xl-100">
+                    <div class="kt-card-body kt-statistics-widget-1 d-flex justify-content-between flex-column px-0 pb-0">
+                        <div class="mb-4 px-9">
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="fs-2hx fw-bold text-gray-800 me-2 lh-1 kt-statistics-widget-1-number" id="approvedApps">0</span>
+                                <span class="kt-badge kt-badge-light-success fs-base kt-statistics-widget-1-progress" id="approvedChange">
+                                    <i class="fas fa-arrow-up fs-5 text-success ms-n1"></i>Bu hafta +0
+                                </span>
+                            </div>
+                            <span class="fs-6 fw-semibold text-gray-400 kt-statistics-widget-1-desc">Onaylanan Vize</span>
+                        </div>
+                        <div class="kt-symbol kt-symbol-50 kt-symbol-circle bg-light-success ms-auto me-9 kt-statistics-widget-1-icon">
+                            <i class="fas fa-check-circle fs-2 text-success"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Rejected Applications -->
+            <div class="col-xl-4 col-xxl-4 mb-5 mb-xl-10">
+                <div class="kt-card kt-card-flush kt-statistics-card danger h-xl-100">
+                    <div class="kt-card-body kt-statistics-widget-1 d-flex justify-content-between flex-column px-0 pb-0">
+                        <div class="mb-4 px-9">
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="fs-2hx fw-bold text-gray-800 me-2 lh-1 kt-statistics-widget-1-number" id="rejectedApps">0</span>
+                                <span class="kt-badge kt-badge-light-danger fs-base kt-statistics-widget-1-progress" id="rejectedChange">
+                                    <i class="fas fa-arrow-down fs-5 text-danger ms-n1"></i>Bu hafta -0
+                                </span>
+                            </div>
+                            <span class="fs-6 fw-semibold text-gray-400 kt-statistics-widget-1-desc">Reddedilen Vize</span>
+                        </div>
+                        <div class="kt-symbol kt-symbol-50 kt-symbol-circle bg-light-danger ms-auto me-9 kt-statistics-widget-1-icon">
+                            <i class="fas fa-times-circle fs-2 text-danger"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Cancelled Applications -->
+            <div class="col-xl-4 col-xxl-4 mb-5 mb-xl-10">
+                <div class="kt-card kt-card-flush kt-statistics-card info h-xl-100">
+                    <div class="kt-card-body kt-statistics-widget-1 d-flex justify-content-between flex-column px-0 pb-0">
+                        <div class="mb-4 px-9">
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="fs-2hx fw-bold text-gray-800 me-2 lh-1 kt-statistics-widget-1-number" id="cancelledApps">0</span>
+                                <span class="kt-badge kt-badge-light-info fs-base kt-statistics-widget-1-progress" id="cancelledChange">
+                                    <i class="fas fa-minus fs-5 ms-n1"></i>Bu hafta 0
+                                </span>
+                            </div>
+                            <span class="fs-6 fw-semibold text-gray-400 kt-statistics-widget-1-desc">İptal Edilen Vize</span>
+                        </div>
+                        <div class="kt-symbol kt-symbol-50 kt-symbol-circle bg-light-info ms-auto me-9 kt-statistics-widget-1-icon">
+                            <i class="fas fa-ban fs-2 text-info"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- Charts Row -->
+        <div class="row g-5 g-xl-10 mb-5 mb-xl-10">
+            
+            <!-- Monthly Trends Chart -->
+            <div class="col-xl-8">
+                <div class="kt-card kt-card-flush h-xl-100">
+                    <div class="kt-card-header pt-5">
+                        <h3 class="kt-card-title text-gray-900 fw-bold">Aylık Başvuru Trendleri</h3>
+                        <div class="kt-card-toolbar">
+                            <span class="text-muted fs-7"> </span>
+                        </div>
+                    </div>
+                    <div class="kt-card-body pt-6">
+                        <div class="kt-mixed-widget-2-chart" style="height: 300px;">
+                            <canvas id="monthlyTrendChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Status Distribution Chart -->
+            <div class="col-xl-4">
+                <div class="kt-card kt-card-flush h-xl-100">
+                    <div class="kt-card-header pt-5">
+                        <h3 class="kt-card-title text-gray-900 fw-bold">Durum Dağılımı</h3>
+                    </div>
+                    <div class="kt-card-body pt-6">
+                        <div style="height: 300px;">
+                            <canvas id="statusPieChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            
+            <!-- Weekly Performance Chart -->
+            <div class="col-xl-8">
+                <div class="kt-card kt-card-flush h-xl-100">
+                    <div class="kt-card-header pt-5">
+                        <h3 class="kt-card-title text-gray-900 fw-bold">Haftalık Performans</h3>
+                        <div class="kt-card-toolbar">
+                            <span class="text-muted fs-7"></span>
+                        </div>
+                    </div>
+                    <div class="kt-card-body pt-6">
+                        <div style="height: 250px;">
+                            <canvas id="weeklyPerformanceChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- Recent Applications Table -->
+        <div class="kt-card kt-card-flush">
+            <div class="kt-card-header py-5">
+                <div class="d-flex flex-column w-100">
+                    <div class="kt-card-title mb-3 text-center w-100">
+                        <h3 class="kt-heading fw-bold text-gray-900">Son Başvurular</h3>
+                    </div>
+                    <div class="kt-card-toolbar text-center w-100">
+                        <a href="list.html" class="kt-btn kt-btn-light-primary">
+                            <i class="fas fa-external-link-alt me-2"></i>Tümünü Gör
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="kt-card-body py-3">
+                <div class="table-responsive">
+                    <table class="kt-table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4" id="recentApplicationsTable">
+                        <thead>
+                            <tr class="fw-bold text-muted">
+                                <th class="ps-4 min-w-300px rounded-start"> İsim Soyisim </th>
+                                <th class="min-w-200px">Email</th>
+                                <th class="min-w-150px">Vize Tipi</th>
+                                <th class="min-w-150px">Tarih</th>
+                                <th class="min-w-100px">Durum</th>
+                                <th class="min-w-100px text-end rounded-end">İşlemler</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Data will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Loading State -->
+        <div class="d-flex flex-column flex-center d-none" id="loadingState">
+            <div class="kt-spinner mb-5"></div>
+            <div class="text-muted fs-6 fw-semibold">Dashboard verileri yükleniyor...</div>
+        </div>
+        
+        <!-- Error State -->
+        <div class="d-flex flex-column flex-center d-none" id="errorState">
+            <div class="text-center">
+                <i class="fas fa-exclamation-triangle fs-2x text-danger mb-5"></i>
+                <h3 class="text-gray-900 fw-bold mb-5">Veri Yüklenemedi</h3>
+                <div class="text-muted fs-6 fw-semibold mb-7">Dashboard verileri yüklenirken bir hata oluştu.</div>
+                <button class="kt-btn kt-btn-primary" onclick="refreshData()">
+                    <i class="fas fa-refresh me-2"></i>Tekrar Dene
+                </button>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-content">
+            <!-- Company Info -->
+            <div class="footer-section">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <img src="assets/media/godlogo.png" alt="Guide of Dubai">
+                        <span class="footer-logo-text">Guide of Dubai</span>
+                    </div>
+                    <p class="footer-description">
+                        Dubai'nin güvenilir vize danışmanı. Profesyonel hizmet anlayışımızla, vize süreçlerinizi hızlı ve güvenli şekilde yönetiyoruz.
+                    </p>
+                </div>
+                <div class="footer-contact">
+                    <div class="footer-contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        İstanbul, Türkiye
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-phone"></i>
+                        +90 XXX XXX XX XX
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-envelope"></i>
+                        info@guideofdubai.com
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="footer-section">
+                <h4>Hızlı Linkler</h4>
+                <ul class="footer-links">
+                    <li><a href="dashboard.html"><i class="fas fa-chart-bar"></i>Dashboard</a></li>
+                    <li><a href="list.html"><i class="fas fa-list"></i>Başvurular</a></li>
+                    <li><a href="application-form.html"><i class="fas fa-plus"></i>Yeni Başvuru</a></li>
+                    <li><a href="settings.html"><i class="fas fa-cog"></i>Ayarlar</a></li>
+                </ul>
+            </div>
+
+            <!-- Services -->
+            <div class="footer-section">
+                <h4>Hizmetlerimiz</h4>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-passport"></i>Vize İşlemleri</a></li>
+                    <li><a href="#"><i class="fas fa-plane"></i>Uçak Bileti</a></li>
+                    <li><a href="#"><i class="fas fa-hotel"></i>Otel Rezervasyonu</a></li>
+                    <li><a href="#"><i class="fas fa-shield-alt"></i>Seyahat Sigortası</a></li>
+                </ul>
+            </div>
+
+            <!-- Support -->
+            <div class="footer-section">
+                <h4>Destek</h4>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-headset"></i>Müşteri Hizmetleri</a></li>
+                    <li><a href="#"><i class="fas fa-question-circle"></i>SSS</a></li>
+                    <li><a href="#"><i class="fas fa-file-alt"></i>Belgeler</a></li>
+                    <li><a href="#"><i class="fas fa-life-ring"></i>Yardım</a></li>
+                </ul>
+                <div class="footer-social">
+                    <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="footer-copyright">
+                © 2025 Guide of Dubai. Tüm hakları saklıdır.
+            </div>
+            <div class="footer-bottom-links">
+                <a href="#">Gizlilik Politikası</a>
+                <a href="#">Kullanım Şartları</a>
+                <a href="#">Çerez Politikası</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- JavaScript Libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    // Mobile menu toggle function
+    function toggleMobileMenu() {
+        const mobileMenu = document.getElementById('mobileMenu');
+        const toggleBtn = document.querySelector('.mobile-toggle i');
+        
+        if (mobileMenu.style.display === 'block') {
+            mobileMenu.style.display = 'none';
+            toggleBtn.className = 'fas fa-bars';
+        } else {
+            mobileMenu.style.display = 'block';
+            toggleBtn.className = 'fas fa-times';
+        }
+    }
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', function(event) {
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileToggle = document.querySelector('.mobile-toggle');
+        const header = document.querySelector('.header');
+        
+        if (!header.contains(event.target) && mobileMenu.style.display === 'block') {
+            mobileMenu.style.display = 'none';
+            document.querySelector('.mobile-toggle i').className = 'fas fa-bars';
+        }
+    });
+
+    // Header search functionality
+    document.querySelector('.search-input')?.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            console.log('Searching for:', this.value);
+        }
+    });
+</script>
+
+<script src="assets/js/dashboard.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <title>Kayıt Ol | Guide of Dubai B2B</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+    <style>
+        .text-red-custom {
+            color: #e30613 !important;
+            font-weight: 600;
+        }
+        .btn-red {
+            background-color: #e30613 !important;
+            border: none;
+            color: #fff !important;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: 0.3s ease;
+        }
+        .btn-red:hover {
+            background-color: #b3050f !important;
+        }
+    </style>
+</head>
+<body id="kt_body" class="bg-body">
+<div class="d-flex flex-column flex-root">
+    <div class="d-flex flex-column flex-xl-row flex-column-fluid">
+
+        <!-- ✅ Sol Panel -->
+        <div class="d-flex flex-column flex-center flex-lg-row-fluid">
+            <div class="d-flex align-items-start flex-column p-5 p-lg-15">
+                <h1 class="text-dark fs-2x mb-3">Guide Of Dubai</h1>
+                <a href="sign-in.html" class="text-red-custom fs-4 mb-10">
+                    Eğer daha önce kayıt olduysanız giriş yapmak için tıklayın!
+                </a>
+                <img src="assets/media/1.png" class="h-250px h-lg-350px" />
+            </div>
+        </div>
+
+        <!-- ✅ Sağ Panel -->
+        <div class="flex-row-fluid d-flex flex-center p-10">
+            <div class="d-flex flex-center p-15 shadow-sm bg-body rounded w-100 w-md-550px mx-auto ms-xl-20">
+                <form class="form" id="kt_free_trial_form">
+                    <div class="text-center mb-10">
+                        <h1 class="text-dark mb-3">Kayıt Ol</h1>
+                    </div>
+
+                    <!-- ✅ İsim Soyisim inputu düzeltildi -->
+                    <div class="fv-row mb-10">
+                        <label class="form-label fw-bolder text-dark fs-6">İsim Soyisim</label>
+                        <input class="form-control form-control-solid" name="name" required />
+                    </div>
+
+                    <div class="fv-row mb-10">
+                        <label class="form-label fw-bolder text-dark fs-6">Email</label>
+                        <input class="form-control form-control-solid" type="email" name="email" autocomplete="off" required />
+                    </div>
+
+                    <div class="mb-7 fv-row" data-kt-password-meter="true">
+                        <label class="form-label fw-bolder text-dark fs-6">Şifre</label>
+                        <div class="position-relative mb-3">
+                            <input class="form-control form-control-solid" type="password" name="password" autocomplete="off" required />
+                            <span class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2">
+                                <i class="bi bi-eye-slash fs-2"></i>
+                                <i class="bi bi-eye fs-2 d-none"></i>
+                            </span>
+                        </div>
+                        <div class="d-flex align-items-center mb-3" data-kt-password-meter-control="highlight">
+                            <div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2"></div>
+                            <div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2"></div>
+                            <div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2"></div>
+                            <div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px"></div>
+                        </div>
+                        <div class="text-muted">Harf, sayı ve simgelerin karışımından oluşan 8+ karakter kullanın.</div>
+                    </div>
+
+                    <!-- ✅ Kırmızı Kaydol butonu -->
+                    <div class="text-center pb-lg-0 pb-8">
+                        <button type="button" id="kt_free_trial_submit" class="btn btn-lg btn-red fw-bolder w-100">
+                            <span class="indicator-label">Kaydol</span>
+                            <span class="indicator-progress">Lütfen Bekleyin...
+                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                            </span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="assets/plugins/plugins.bundle.js"></script>
+<script src="assets/js/scripts.bundle.js"></script>
+<script src="assets/js/sign-up.js"></script>
+</body>
+</html>
