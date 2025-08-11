@@ -12,21 +12,37 @@ import (
 
 var DB *sql.DB
 
+func getenv(k, def string) string {
+	if v := os.Getenv(k); v != "" {
+		return v
+	}
+	return def
+}
+
 func ConnectDB() {
 	var err error
+	var dsn string
 
-	host := os.Getenv("MYSQLHOST")
-	port := os.Getenv("MYSQLPORT")
-	user := os.Getenv("MYSQLUSER")
-	pass := os.Getenv("MYSQLPASSWORD")
-	name := os.Getenv("MYSQLDATABASE")
+	// Option 1: Use DATABASE_URL if available (full connection string)
+	if databaseURL := os.Getenv("DATABASE_URL"); databaseURL != "" {
+		dsn = databaseURL + "?parseTime=true&charset=utf8mb4&tls=true"
+		fmt.Println("Using DATABASE_URL connection")
+	} else {
+		// Option 2: Use individual environment variables
+		host := getenv("MYSQLHOST", "maglev.proxy.rlwy.net")
+		port := getenv("MYSQLPORT", "3306")
+		user := getenv("MYSQLUSER", "root")
+		pass := os.Getenv("MYSQLPASSWORD")
+		name := getenv("MYSQLDATABASE", "vize")
 
-	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true&charset=utf8mb4&tls=skip-verify",
-		user, pass, host, port, name)
+		dsn = fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true&charset=utf8mb4&tls=true",
+			user, pass, host, port, name)
+		fmt.Println("Using individual MySQL environment variables")
+	}
 
 	DB, err = sql.Open("mysql", dsn)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("Database connection failed:", err)
 	}
 
 	DB.SetMaxOpenConns(10)
@@ -34,8 +50,8 @@ func ConnectDB() {
 	DB.SetConnMaxLifetime(time.Hour)
 
 	if err = DB.Ping(); err != nil {
-		log.Fatal(err)
+		log.Fatal("Database ping failed:", err)
 	}
 
-	fmt.Println("MySQL bağlantısı başarılı!")
+	fmt.Println("Railway MySQL bağlantısı başarılı! Database: vize")
 }
