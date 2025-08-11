@@ -67,8 +67,7 @@ func main() {
 	r.HandleFunc("/users/{id}/role", AuthenticateMiddleware(UpdateUserRole)).Methods("PUT", "OPTIONS")
 	r.HandleFunc("/users/{id}", AuthenticateMiddleware(DeleteUser)).Methods("DELETE", "OPTIONS")
 
-	// 🔹 SPA/Metronic dosyaları (en sonda kalsın)
-	r.PathPrefix("/").Handler(http.FileServer(http.Dir("./ui")))
+	// 🔹 SPA/Metronic dosyaları (en sonda kalsın)r.PathPrefix("/").Handler(http.FileServer(http.Dir("./ui")))
 
 	// ✅ Render PORT environment variable'ını kullan
 	port := os.Getenv("PORT")
