@@ -6,56 +6,85 @@ document.addEventListener('DOMContentLoaded', function() {
     addPerson();
 });
 
-// Check if user is authenticated
+// Check if user is authenticated (CORS SAFE VERSION)
 function checkAuthentication() {
     const token = localStorage.getItem('token');
-    const userRole = localStorage.getItem('userRole');
     
     if (!token) {
-        // Redirect to login if no token
-        if (confirm('Bu sayfaya erişmek için giriş yapmanız gerekiyor. Giriş sayfasına yönlendirilmek ister misiniz?')) {
-            window.location.href = 'sign-in.html';
-        }
+        console.log('Token bulunamadı');
+        // Yumuşak yönlendirme - confirm yerine setTimeout
+        showAuthWarning();
         return false;
     }
     
-    // Validate token with backend
-    fetch('/me', {
-        method: 'GET',
-        headers: {
-            'Authorization': 'Bearer ' + token,
-            'Content-Type': 'application/json'
-        }
-    })
-    .then(response => {
-        if (!response.ok) {
-            // Token is invalid
-            localStorage.removeItem('token');
-            localStorage.removeItem('userRole');
-            if (confirm('Oturum süreniz dolmuş. Giriş sayfasına yönlendirilmek ister misiniz?')) {
-                window.location.href = 'sign-in.html';
-            }
+    // Token var mı basit kontrol
+    try {
+        // JWT token'ı decode etmeyi dene
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        const currentTime = Math.floor(Date.now() / 1000);
+        
+        if (payload.exp && payload.exp < currentTime) {
+            console.log('Token süresi dolmuş');
+            showAuthWarning();
             return false;
         }
-        return response.json();
-    })
-    .then(data => {
-        if (data) {
-            console.log('Authenticated user:', data);
-            // Update localStorage with fresh data
-            localStorage.setItem('userRole', data.role);
-        }
-    })
-    .catch(error => {
-        console.error('Authentication check failed:', error);
-        localStorage.removeItem('token');
-        localStorage.removeItem('userRole');
-    });
-    
-    return true;
+        
+        console.log('Token mevcut ve geçerli görünüyor');
+        return true;
+        
+    } catch (error) {
+        console.log('Token decode hatası:', error);
+        showAuthWarning();
+        return false;
+    }
 }
 
-const API_BASE_URL = 'https://god-1-lsu5.onrender.com';
+// Yumuşak uyarı göster (modal değil)
+function showAuthWarning() {
+    // Sayfanın üstüne yumuşak bir uyarı banner'ı ekle
+    const warningBanner = document.createElement('div');
+    warningBanner.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: #fff3cd;
+        color: #856404;
+        padding: 12px 20px;
+        text-align: center;
+        z-index: 10000;
+        border-bottom: 1px solid #ffeaa7;
+        font-size: 14px;
+    `;
+    warningBanner.innerHTML = `
+        <div style="max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between;">
+            <span>
+                <i class="fas fa-exclamation-triangle" style="margin-right: 8px;"></i>
+                Güvenlik: Bu sayfaya erişmek için giriş yapmanız gerekiyor. 
+            </span>
+            <div>
+                <button onclick="window.location.href='sign-in.html'" style="background: #e30613; color: white; border: none; padding: 6px 16px; border-radius: 4px; margin-left: 12px; cursor: pointer; font-size: 12px;">
+                    Giriş Yap
+                </button>
+                <button onclick="this.parentElement.parentElement.parentElement.remove()" style="background: none; border: none; color: #856404; cursor: pointer; padding: 6px; margin-left: 8px;">
+                    ×
+                </button>
+            </div>
+        </div>
+    `;
+    
+    document.body.prepend(warningBanner);
+    
+    // 10 saniye sonra otomatik yönlendirme
+    setTimeout(() => {
+        if (document.body.contains(warningBanner)) {
+            window.location.href = 'sign-in.html';
+        }
+    }, 10000);
+}
+
+// API Base URL - farklı isim kullan
+const FORM_API_URL = 'https://god-1-lsu5.onrender.com';
 
 // Navigation functions - Header ile uyumlu
 function goToApplications() {
@@ -383,7 +412,7 @@ document.getElementById('applicationForm').addEventListener('submit', async func
     loading.classList.add('show');
     
     try {
-        // Check authentication first
+        // Check authentication first (soft check)
         const token = localStorage.getItem('token');
         if (!token) {
             throw new Error('Giriş yapmanız gerekiyor. Lütfen önce giriş yapın.');
@@ -468,7 +497,7 @@ document.getElementById('applicationForm').addEventListener('submit', async func
             }
             
             // Backend'e gönder - ÖNEMLİ: Content-Type header'ı EKLEMEYİN!
-            const response = await fetch(`${API_BASE_URL}/applications`, {
+            const response = await fetch(`${FORM_API_URL}/applications`, {
                 method: 'POST',
                 headers: {
                     'Authorization': 'Bearer ' + token,
@@ -497,11 +526,10 @@ document.getElementById('applicationForm').addEventListener('submit', async func
                     errorMessage = `Yetkisiz erişim (403) - ${i + 1}. kişi için.`;
                 } else if (response.status === 401) {
                     errorMessage = 'Kimlik doğrulama başarısız. Tekrar giriş yapın.';
-                    localStorage.removeItem('token');
-                    localStorage.removeItem('userRole');
+                    // Soft redirect
                     setTimeout(() => {
                         window.location.href = 'sign-in.html';
-                    }, 2000);
+                    }, 3000);
                 } else if (response.status === 500) {
                     errorMessage = `Sunucu hatası - ${i + 1}. kişi için.`;
                 } else if (response.status === 400) {
@@ -536,8 +564,7 @@ document.getElementById('applicationForm').addEventListener('submit', async func
             <strong>Hata!</strong><br>
             ${error.message}<br><br>
             <small class="text-muted">
-                Dosya yükleme problemi varsa, backend'inizin multipart/form-data 
-                desteklediğinden ve dosya upload middleware'inin çalıştığından emin olun.
+                Eğer sorun devam ederse, lütfen giriş yapıp tekrar deneyin.
             </small>
         `;
         errorAlert.style.display = 'block';
