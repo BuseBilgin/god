@@ -17,17 +17,33 @@
             background-repeat: no-repeat !important;
         }
         
-        /* Mavi renkler yerine kırmızı */
-        .btn-primary {
+        /* SÜPER GÜÇLÜ CSS - Bootstrap'i override et */
+        .btn.btn-primary,
+        .btn-primary,
+        button.btn-primary,
+        #kt_sign_in_submit,
+        .btn.btn-lg.btn-primary {
             background-color: #e30613 !important;
             border-color: #e30613 !important;
+            color: white !important;
         }
         
-        /* Giriş Yap butonu hover'ını kırmızı yap */
-        .btn-primary:hover {
-            background-color: #b3050f !important; /* Daha koyu kırmızı */
+        /* SÜPER GÜÇLÜ HOVER CSS */
+        .btn.btn-primary:hover,
+        .btn-primary:hover,
+        button.btn-primary:hover,
+        #kt_sign_in_submit:hover,
+        .btn.btn-lg.btn-primary:hover,
+        .btn.btn-primary:focus,
+        .btn-primary:focus,
+        .btn.btn-primary:active,
+        .btn-primary:active,
+        .btn.btn-primary.active,
+        .btn-primary.active {
+            background-color: #b3050f !important;
             border-color: #b3050f !important;
-            transform: translateY(-2px);
+            color: white !important;
+            transform: translateY(-2px) !important;
             box-shadow: 0 4px 8px rgba(227,6,19,0.3) !important;
         }
         
