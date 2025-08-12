@@ -20,14 +20,15 @@
         /* Mavi renkler yerine kırmızı */
         .btn-primary {
             background-color: #e30613 !important;
-            border-color: #e30613  !important;
+            border-color: #e30613 !important;
         }
         
+        /* Giriş Yap butonu hover'ını kırmızı yap */
         .btn-primary:hover {
-            background-color: #2f3235ff !important;
-            border-color: #2f3235ff !important;  /* ← Border da koyu gri */
+            background-color: #b3050f !important; /* Daha koyu kırmızı */
+            border-color: #b3050f !important;
             transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(47,50,53,0.3) !important; /* ← Gölge de koyu gri */
+            box-shadow: 0 4px 8px rgba(227,6,19,0.3) !important;
         }
         
         .link-primary {
@@ -35,8 +36,18 @@
             transition: all 0.3s ease;
         }
         
+        /* Link hover'larını kırmızı yap */
         .link-primary:hover {
-            color: #2f3235ff !important; /* ← Link hover da koyu gri */
+            color: #b3050f !important; /* Daha koyu kırmızı */
+        }
+        
+        /* Hakkında ve İletişim linklerini kırmızı yap */
+        .text-hover-primary:hover {
+            color: #e30613 !important;
+        }
+        
+        .text-muted:hover {
+            color: #e30613 !important;
         }
         
         /* Sağ tarafta da küçük illüstrasyon ekle */
@@ -90,7 +101,7 @@
 
                     <!-- Submit -->
                     <div class="text-center">
-                        <button type="button" id="kt_sign_in_submit" class="btn btn-lg btn-red w-100 mb-5">
+                        <button type="button" id="kt_sign_in_submit" class="btn btn-lg btn-primary w-100 mb-5">
                             <span class="indicator-label">Giriş Yap</span>
                             <span class="indicator-progress">Lütfen bekleyin...
                                 <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
