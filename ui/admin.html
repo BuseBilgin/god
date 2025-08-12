@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <title>Admin Paneli | Guide of Dubai B2B</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        :root {
+            --primary-red: #e30613;
+            --primary-red-hover: #b3050f;
+        }
+        
+        .header {
+            background: var(--primary-red);
+            color: white;
+            padding: 1rem 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-left: 5px solid var(--primary-red);
+            margin-bottom: 1.5rem;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-red);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-red);
+            border-color: var(--primary-red);
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-red-hover);
+            border-color: var(--primary-red-hover);
+        }
+        
+        .status-badge {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+        
+        .status-pending { background-color: #fff3cd; color: #856404; }
+        .status-processing { background-color: #cce7ff; color: #004085; }
+        .status-approved { background-color: #d4edda; color: #155724; }
+        .status-rejected { background-color: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="d-flex justify-content-between align-items-center">
+            <h2><i class="fas fa-shield-alt me-2"></i>Admin Paneli</h2>
+            <button class="btn btn-light" onclick="logout()">
+                <i class="fas fa-sign-out-alt me-2"></i>Çıkış
+            </button>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <!-- Stats Row -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalApplications">0</div>
+                    <div>Toplam Başvuru</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="stat-number" id="pendingApplications">0</div>
+                    <div>Bekleyen Başvuru</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalUsers">0</div>
+                    <div>Toplam Kullanıcı</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="stat-number" id="approvedApplications">0</div>
+                    <div>Onaylanan Başvuru</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <ul class="nav nav-tabs mb-4" id="adminTabs">
+            <li class="nav-item">
+                <a class="nav-link active" data-bs-toggle="tab" href="#applications">Başvurular</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#users">Kullanıcılar</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#logs">Giriş Logları</a>
+            </li>
+        </ul>
+
+        <!-- Tab Content -->
+        <div class="tab-content">
+            <!-- Applications Tab -->
+            <div class="tab-pane fade show active" id="applications">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between">
+                        <h5>Tüm Başvurular</h5>
+                        <button class="btn btn-primary btn-sm" onclick="exportToCSV('applications')">
+                            <i class="fas fa-download"></i> CSV İndir
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Ad Soyad</th>
+                                        <th>Email</th>
+                                        <th>Telefon</th>
+                                        <th>Vize Tipi</th>
+                                        <th>Durum</th>
+                                        <th>İşlemler</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="applicationsTable">
+                                    <!-- JavaScript ile doldurulacak -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Users Tab -->
+            <div class="tab-pane fade" id="users">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between">
+                        <h5>Sistem Kullanıcıları</h5>
+                        <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#userModal">
+                            <i class="fas fa-plus"></i> Yeni Kullanıcı
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Ad Soyad</th>
+                                        <th>Email</th>
+                                        <th>Rol</th>
+                                        <th>İşlemler</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="usersTable">
+                                    <!-- JavaScript ile doldurulacak -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Logs Tab -->
+            <div class="tab-pane fade" id="logs">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Giriş Logları</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Tarih/Saat</th>
+                                        <th>Kullanıcı ID</th>
+                                        <th>IP Adresi</th>
+                                        <th>Durum</th>
+                                        <th>Tip</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="logsTable">
+                                    <!-- JavaScript ile doldurulacak -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Modal -->
+    <div class="modal fade" id="userModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Yeni Kullanıcı Ekle</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="userForm">
+                        <div class="mb-3">
+                            <label class="form-label">Ad Soyad</label>
+                            <input type="text" class="form-control" name="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" name="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Şifre</label>
+                            <input type="password" class="form-control" name="password" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Rol</label>
+                            <select class="form-select" name="role" required>
+                                <option value="staff">Staff</option>
+                                <option value="admin">Admin</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+                    <button type="button" class="btn btn-primary" onclick="saveUser()">Kaydet</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // MEVCUt backend endpoint'lerinizi kullanıyoruz!
+        let authToken = localStorage.getItem('token');
+        let applications = [];
+        let users = [];
+        let logs = [];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuth();
+            loadData();
+        });
+
+        function checkAuth() {
+            if (!authToken) {
+                window.location.href = '/sign-in.html';
+                return;
+            }
+
+            // Token doğrulama - mevcut /me endpoint'inizi kullanıyoruz
+            fetch('/me', {
+                headers: {
+                    'Authorization': `Bearer ${authToken}`
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.role !== 'admin') {
+                    alert('Admin yetkisi gerekli!');
+                    window.location.href = '/list.html';
+                }
+            })
+            .catch(() => {
+                localStorage.removeItem('token');
+                window.location.href = '/sign-in.html';
+            });
+        }
+
+        function loadData() {
+            loadApplications();
+            loadUsers();
+            loadLogs();
+        }
+
+        // MEVCUt /applications endpoint'inizi kullanıyoruz
+        function loadApplications() {
+            fetch('/applications', {
+                headers: {
+                    'Authorization': `Bearer ${authToken}`
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                applications = data;
+                renderApplicationsTable();
+                updateStats();
+            })
+            .catch(console.error);
+        }
+
+        // MEVCUt /users endpoint'inizi kullanıyoruz
+        function loadUsers() {
+            fetch('/users', {
+                headers: {
+                    'Authorization': `Bearer ${authToken}`
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                users = data;
+                renderUsersTable();
+                updateStats();
+            })
+            .catch(console.error);
+        }
+
+        // MEVCUt /logs endpoint'inizi kullanıyoruz
+        function loadLogs() {
+            fetch('/logs', {
+                headers: {
+                    'Authorization': `Bearer ${authToken}`
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                logs = data;
+                renderLogsTable();
+            })
+            .catch(console.error);
+        }
+
+        function renderApplicationsTable() {
+            const tbody = document.getElementById('applicationsTable');
+            tbody.innerHTML = applications.map(app => `
+                <tr>
+                    <td>#${app.id}</td>
+                    <td>${app.ad} ${app.soyad}</td>
+                    <td>${app.email}</td>
+                    <td>${app.telefon}</td>
+                    <td>${app.vize_tipi}</td>
+                    <td><span class="status-badge status-${app.status}">${getStatusText(app.status)}</span></td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-primary" onclick="viewApplication(${app.id})">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger" onclick="deleteApplication(${app.id})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function renderUsersTable() {
+            const tbody = document.getElementById('usersTable');
+            tbody.innerHTML = users.map(user => `
+                <tr>
+                    <td>#${user.id}</td>
+                    <td>${user.name}</td>
+                    <td>${user.email}</td>
+                    <td><span class="badge bg-${user.role === 'admin' ? 'danger' : 'primary'}">${user.role}</span></td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-success" onclick="editUserRole(${user.id}, '${user.role}')">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger" onclick="deleteUser(${user.id})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function renderLogsTable() {
+            const tbody = document.getElementById('logsTable');
+            tbody.innerHTML = logs.map(log => `
+                <tr>
+                    <td>${log.log_time}</td>
+                    <td>User #${log.user_id}</td>
+                    <td>${log.ip}</td>
+                    <td><span class="badge bg-${log.status === 'success' ? 'success' : 'danger'}">${log.status}</span></td>
+                    <td><span class="badge bg-${log.user_type === 'admin' ? 'danger' : 'primary'}">${log.user_type}</span></td>
+                </tr>
+            `).join('');
+        }
+
+        // Frontend'de istatistikleri hesaplayıyoruz
+        function updateStats() {
+            document.getElementById('totalApplications').textContent = applications.length;
+            document.getElementById('pendingApplications').textContent = applications.filter(app => app.status === 'pending').length;
+            document.getElementById('totalUsers').textContent = users.length;
+            document.getElementById('approvedApplications').textContent = applications.filter(app => app.status === 'approved').length;
+        }
+
+        // MEVCUt API'larınızı kullanıyoruz
+        function deleteApplication(id) {
+            if (confirm('Bu başvuruyu silmek istediğinizden emin misiniz?')) {
+                fetch(`/applications/${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                })
+                .then(() => {
+                    alert('Başvuru silindi!');
+                    loadApplications();
+                })
+                .catch(console.error);
+            }
+        }
+
+        function deleteUser(id) {
+            if (confirm('Bu kullanıcıyı silmek istediğinizden emin misiniz?')) {
+                fetch(`/users/${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                })
+                .then(() => {
+                    alert('Kullanıcı silindi!');
+                    loadUsers();
+                })
+                .catch(console.error);
+            }
+        }
+
+        function editUserRole(id, currentRole) {
+            const newRole = currentRole === 'admin' ? 'staff' : 'admin';
+            if (confirm(`Kullanıcı rolünü ${newRole} olarak değiştirmek istediğinizden emin misiniz?`)) {
+                fetch(`/users/${id}/role`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ role: newRole })
+                })
+                .then(() => {
+                    alert('Rol güncellendi!');
+                    loadUsers();
+                })
+                .catch(console.error);
+            }
+        }
+
+        function saveUser() {
+            const form = document.getElementById('userForm');
+            const formData = new FormData(form);
+            
+            const userData = {
+                name: formData.get('name'),
+                email: formData.get('email'),
+                password: formData.get('password'),
+                role: formData.get('role')
+            };
+
+            fetch('/users', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${authToken}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(userData)
+            })
+            .then(() => {
+                alert('Kullanıcı eklendi!');
+                const modal = bootstrap.Modal.getInstance(document.getElementById('userModal'));
+                modal.hide();
+                form.reset();
+                loadUsers();
+            })
+            .catch(console.error);
+        }
+
+        function viewApplication(id) {
+            window.open(`/application-details.html?id=${id}`, '_blank');
+        }
+
+        // Basit CSV export (backend değişikliği gerektirmez)
+        function exportToCSV(type) {
+            let data, filename, headers;
+            
+            if (type === 'applications') {
+                data = applications;
+                filename = 'basvurular.csv';
+                headers = ['ID', 'Ad', 'Soyad', 'Email', 'Telefon', 'Vize Tipi', 'Durum'];
+                
+                const csvContent = [
+                    headers.join(','),
+                    ...data.map(app => [
+                        app.id,
+                        app.ad,
+                        app.soyad,
+                        app.email,
+                        app.telefon,
+                        app.vize_tipi,
+                        app.status
+                    ].join(','))
+                ].join('\n');
+                
+                downloadCSV(csvContent, filename);
+            }
+        }
+
+        function downloadCSV(content, filename) {
+            const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = filename;
+            link.click();
+        }
+
+        function getStatusText(status) {
+            const statusTexts = {
+                'pending': 'Bekleyen',
+                'processing': 'İşlemde',
+                'approved': 'Onaylandı',
+                'rejected': 'Reddedildi'
+            };
+            return statusTexts[status] || status;
+        }
+
+        function logout() {
+            localStorage.removeItem('token');
+            window.location.href = '/sign-in.html';
+        }
+    </script>
+</body>
+</html>
