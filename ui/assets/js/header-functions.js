@@ -8,8 +8,8 @@ let notificationCount = 0;
 let lastApplicationCount = 0;
 let notificationPollingInterval = null;
 
-// API Base URL
-const API_BASE_URL = 'https://god-1-lsu5.onrender.com';
+// API Base URL - Config'den al veya fallback
+const HEADER_API_URL = window.APP_CONFIG?.API_BASE_URL || 'https://god-1-lsu5.onrender.com';
 
 // Header fonksiyonları için init
 document.addEventListener('DOMContentLoaded', function() {
@@ -106,7 +106,7 @@ async function performSearch(query) {
         const token = localStorage.getItem('token');
         if (!token) return;
 
-        const response = await fetch(`${API_BASE_URL}/search?q=${encodeURIComponent(query)}`, {
+        const response = await fetch(`${HEADER_API_URL}/search?q=${encodeURIComponent(query)}`, {
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
@@ -132,7 +132,7 @@ async function searchInApplications(query) {
         const token = localStorage.getItem('token');
         if (!token) return;
 
-        const response = await fetch(`${API_BASE_URL}/applications`, {
+        const response = await fetch(`${HEADER_API_URL}/applications`, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -324,7 +324,7 @@ async function loadNotificationCount() {
         const token = localStorage.getItem('token');
         if (!token) return;
 
-        const response = await fetch(`${API_BASE_URL}/notifications/unread-count`, {
+        const response = await fetch(`${HEADER_API_URL}/notifications/unread-count`, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -348,7 +348,7 @@ async function calculateNotificationCount() {
         const token = localStorage.getItem('token');
         if (!token) return;
 
-        const response = await fetch(`${API_BASE_URL}/applications`, {
+        const response = await fetch(`${HEADER_API_URL}/applications`, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -570,7 +570,7 @@ async function checkStatusUpdates() {
         const token = localStorage.getItem('token');
         if (!token) return;
 
-        const response = await fetch(`${API_BASE_URL}/applications/recent-status-changes`, {
+        const response = await fetch(`${HEADER_API_URL}/applications/recent-status-changes`, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
