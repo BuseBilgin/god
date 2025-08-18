@@ -4,116 +4,743 @@
     <meta charset="utf-8" />
     <title>Admin Paneli | Guide of Dubai B2B</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <!-- Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
+    
+    <!-- CSS Libraries -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
+    
     <style>
+        /* Color Palette - Red & Gray */
         :root {
-            --primary-red: #e30613;
-            --primary-red-hover: #b3050f;
+            --kt-primary: #e30613;
+            --kt-primary-active: #b3050f;
+            --kt-red: #e30613;
+            --kt-red-active: #b3050f;
+            --kt-gray-900: #1e2129;
+            --kt-gray-800: #3f4254;
+            --kt-gray-700: #5e6278;
+            --kt-gray-600: #7e8299;
+            --kt-gray-500: #a1a5b7;
+            --kt-gray-400: #b5b5c3;
+            --kt-gray-300: #e4e6ea;
+            --kt-gray-200: #eff2f5;
+            --kt-gray-100: #f5f8fa;
+            --kt-white: #ffffff;
+            --kt-primary-light: #fef2f2;
+            --kt-primary-inverse: #ffffff;
+            --kt-success: #10b981;
+            --kt-success-light: #ecfdf5;
+            --kt-info: #6b7280;
+            --kt-info-light: #f9fafb;
+            --kt-warning: #f59e0b;
+            --kt-warning-light: #fffbeb;
+            --kt-danger: #ef4444;
+            --kt-danger-light: #fef2f2;
+            --kt-light: #f9fafb;
+            --kt-dark: #1f2937;
         }
-        
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Inter, Helvetica, "sans-serif";
+            font-weight: 400;
+            line-height: 1.5;
+            color: var(--kt-gray-700);
+            background-color: var(--kt-light);
+        }
+
+        /* Header Styles */
         .header {
-            background: var(--primary-red);
-            color: white;
-            padding: 1rem 2rem;
-            margin-bottom: 2rem;
+            background: var(--kt-white);
+            box-shadow: 0 0.5rem 1.5rem 0.5rem rgba(0, 0, 0, 0.075);
+            position: relative;
+            z-index: 100;
         }
         
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            min-height: 70px;
+        }
+        
+        .header-brand {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+        
+        .header-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .header-logo img {
+            max-height: 40px;
+            width: auto;
+            object-fit: contain;
+        }
+        
+        .header-title {
+            color: var(--kt-gray-900);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: -0.025em;
+        }
+        
+        .header-subtitle {
+            color: var(--kt-gray-600);
+            font-size: 0.875rem;
+            margin: 0;
+            margin-top: -2px;
+        }
+        
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .user-menu-btn {
+            background: var(--kt-white) !important;
+            border: 1px solid var(--kt-gray-200) !important;
+            border-radius: 8px !important;
+            padding: 8px 16px !important;
+            font-size: 14px !important;
+            font-weight: 500 !important;
+            color: var(--kt-gray-700) !important;
+            box-shadow: none !important;
+            transition: all 0.2s ease;
+        }
+        
+        .user-menu-btn:hover {
+            background: var(--kt-gray-100) !important;
+            border-color: var(--kt-primary) !important;
+            color: var(--kt-primary) !important;
+        }
+        
+        .user-avatar {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--kt-primary) 0%, var(--kt-primary-active) 100%);
+            border-radius: 6px;
+            margin-right: 8px;
+        }
+        
+        .user-avatar i {
+            font-size: 16px;
+            color: white;
+        }
+
+        /* Container */
+        .admin-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2.5rem;
+            width: 100%;
+        }
+
+        /* Page Title */
+        .page-title {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid var(--kt-gray-200);
+            position: relative;
+        }
+
+        .page-title::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: var(--kt-primary);
+            border-radius: 2px;
+        }
+
+        .page-title h1 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: var(--kt-gray-900);
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+        }
+
+        .page-title p {
+            font-size: 1rem;
+            color: var(--kt-gray-600);
+            margin: 0.5rem 0 0 0;
+        }
+
+        /* Stats Cards */
         .stat-card {
-            background: white;
+            background: var(--kt-white);
             padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            border-left: 5px solid var(--primary-red);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.075);
+            border-left: 4px solid var(--kt-primary);
             margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, rgba(227, 6, 19, 0.05) 0%, rgba(227, 6, 19, 0.02) 100%);
+            border-radius: 50%;
+            transform: translate(30px, -30px);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
         }
         
         .stat-number {
-            font-size: 2rem;
-            font-weight: bold;
-            color: var(--primary-red);
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--kt-primary);
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
         }
-        
+
+        .stat-label {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--kt-gray-600);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Cards */
+        .admin-card {
+            background: var(--kt-white);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.075);
+            border: 1px solid var(--kt-gray-200);
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .admin-card:hover {
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .admin-card-header {
+            background: linear-gradient(135deg, var(--kt-gray-100) 0%, var(--kt-white) 100%);
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid var(--kt-gray-200);
+            border-radius: 12px 12px 0 0;
+            display: flex;
+            justify-content: between;
+            align-items: center;
+        }
+
+        .admin-card-header h5 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--kt-gray-900);
+            margin: 0;
+        }
+
+        .admin-card-body {
+            padding: 2rem;
+        }
+
+        /* Buttons */
         .btn-primary {
-            background-color: var(--primary-red);
-            border-color: var(--primary-red);
+            background: linear-gradient(135deg, var(--kt-primary) 0%, var(--kt-primary-active) 100%);
+            border-color: var(--kt-primary);
+            color: var(--kt-white);
+            font-weight: 500;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(227, 6, 19, 0.3);
         }
         
         .btn-primary:hover {
-            background-color: var(--primary-red-hover);
-            border-color: var(--primary-red-hover);
+            background: linear-gradient(135deg, var(--kt-primary-active) 0%, #8b0000 100%);
+            border-color: var(--kt-primary-active);
+            transform: translateY(-1px);
+            box-shadow: 0 5px 15px rgba(227, 6, 19, 0.4);
+            color: var(--kt-white);
         }
-        
+
+        .btn-outline-primary {
+            border: 1px solid var(--kt-primary);
+            color: var(--kt-primary);
+            background: transparent;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-outline-primary:hover {
+            background: var(--kt-primary);
+            color: var(--kt-white);
+        }
+
+        .btn-outline-danger {
+            border: 1px solid var(--kt-danger);
+            color: var(--kt-danger);
+            background: transparent;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-outline-danger:hover {
+            background: var(--kt-danger);
+            color: var(--kt-white);
+        }
+
+        .btn-outline-success {
+            border: 1px solid var(--kt-success);
+            color: var(--kt-success);
+            background: transparent;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-outline-success:hover {
+            background: var(--kt-success);
+            color: var(--kt-white);
+        }
+
+        /* Tabs */
+        .nav-tabs {
+            border-bottom: 2px solid var(--kt-gray-200);
+            margin-bottom: 2rem;
+        }
+
+        .nav-tabs .nav-link {
+            color: var(--kt-gray-600);
+            border: none;
+            padding: 1rem 1.5rem;
+            font-weight: 500;
+            border-radius: 8px 8px 0 0;
+            transition: all 0.2s ease;
+        }
+
+        .nav-tabs .nav-link.active {
+            color: var(--kt-primary);
+            background: var(--kt-white);
+            border-bottom: 3px solid var(--kt-primary);
+        }
+
+        .nav-tabs .nav-link:hover {
+            color: var(--kt-primary);
+        }
+
+        /* Tables */
+        .table {
+            --bs-table-bg: transparent;
+            --bs-table-border-color: var(--kt-gray-200);
+        }
+
+        .table thead th {
+            font-weight: 600;
+            color: var(--kt-gray-600);
+            text-transform: uppercase;
+            font-size: 0.875rem;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid var(--kt-gray-200);
+            padding: 1rem;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 250, 251, 0.9) 100%);
+        }
+
+        .table tbody tr {
+            transition: all 0.2s ease;
+        }
+
+        .table tbody tr:hover {
+            background: linear-gradient(135deg, rgba(227, 6, 19, 0.02) 0%, rgba(227, 6, 19, 0.05) 100%);
+        }
+
+        .table tbody td {
+            padding: 1rem;
+            vertical-align: middle;
+            border-bottom: 1px solid var(--kt-gray-200);
+        }
+
+        /* Status badges */
         .status-badge {
             padding: 0.5rem 1rem;
             border-radius: 20px;
-            font-size: 0.875rem;
+            font-size: 0.8rem;
             font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         
-        .status-pending { background-color: #fff3cd; color: #856404; }
-        .status-processing { background-color: #cce7ff; color: #004085; }
-        .status-approved { background-color: #d4edda; color: #155724; }
-        .status-rejected { background-color: #f8d7da; color: #721c24; }
+        .status-pending { 
+            background: var(--kt-warning-light); 
+            color: var(--kt-warning); 
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+        
+        .status-processing { 
+            background: var(--kt-info-light); 
+            color: var(--kt-info); 
+            border: 1px solid rgba(107, 114, 128, 0.3);
+        }
+        
+        .status-approved { 
+            background: var(--kt-success-light); 
+            color: var(--kt-success); 
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+        
+        .status-rejected { 
+            background: var(--kt-danger-light); 
+            color: var(--kt-danger); 
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
 
-        .alert-info {
-            background: #e3f2fd;
-            border: 1px solid #2196F3;
-            color: #1976D2;
-            margin-bottom: 2rem;
+        /* Connection Status */
+        .connection-status {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            z-index: 1000;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .connection-status.connected {
+            background: var(--kt-success-light);
+            color: var(--kt-success);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .connection-status.disconnected {
+            background: var(--kt-danger-light);
+            color: var(--kt-danger);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        /* Loading spinner */
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--kt-gray-200);
+            border-radius: 50%;
+            border-top: 2px solid var(--kt-primary);
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--kt-gray-900);
+            color: var(--kt-white);
+            margin-top: 4rem;
+            padding: 2rem 0 1rem;
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .footer-logo img {
+            height: 30px;
+            filter: brightness(0) invert(1);
+        }
+
+        .footer-logo-text {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--kt-white);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .footer-links a {
+            color: var(--kt-gray-400);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--kt-primary);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--kt-gray-800);
+            padding-top: 1rem;
+            color: var(--kt-gray-400);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .admin-container {
+                padding: 1.5rem;
+            }
+
+            .page-title h1 {
+                font-size: 1.75rem;
+            }
+
+            .stat-card {
+                padding: 1.5rem;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            .admin-card-header {
+                padding: 1rem 1.5rem;
+            }
+
+            .admin-card-body {
+                padding: 1.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                padding: 0 1rem;
+            }
+
+            .admin-container {
+                padding: 1rem;
+            }
+
+            .page-title h1 {
+                font-size: 1.5rem;
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .stat-card {
+                padding: 1.25rem;
+            }
+
+            .stat-number {
+                font-size: 1.75rem;
+            }
+
+            .admin-card-header {
+                padding: 1rem;
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .admin-card-body {
+                padding: 1rem;
+            }
+
+            .table-responsive {
+                font-size: 0.875rem;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .footer-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+
+        /* Animations */
+        .admin-card,
+        .stat-card {
+            animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .admin-card:nth-child(1) { animation-delay: 0.1s; }
+        .admin-card:nth-child(2) { animation-delay: 0.2s; }
+        .admin-card:nth-child(3) { animation-delay: 0.3s; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Connection Status -->
+    <div class="connection-status connected" id="connectionStatus">
+        <i class="fas fa-wifi me-2"></i>Bağlı
+    </div>
+
+    <!-- Header -->
     <div class="header">
-        <div class="d-flex justify-content-between align-items-center">
-            <h2><i class="fas fa-shield-alt me-2"></i>Admin Paneli</h2>
-            <button class="btn btn-light" onclick="logout()">
-                <i class="fas fa-sign-out-alt me-2"></i>Çıkış
-            </button>
+        <div class="header-container">
+            <!-- Brand -->
+            <div class="d-flex align-items-center">
+                <a href="#" class="header-brand">
+                    <div class="header-logo">
+                       <img src="assets/media/godlogo.png" alt="Guide of Dubai">
+                    </div>
+                    <div class="ms-3">
+                        <div class="header-title">Admin Panel</div>
+                        <p class="header-subtitle d-none d-lg-block">Sistem Yönetimi</p>
+                    </div>
+                </a>
+            </div>
+            
+            <!-- Header Actions -->
+            <div class="header-actions">
+                <!-- User Menu -->
+                <div class="dropdown">
+                    <button class="btn dropdown-toggle user-menu-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <div class="user-avatar">
+                            <i class="fas fa-user-shield"></i>
+                        </div>
+                        <span class="d-none d-md-inline">Admin</span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><h6 class="dropdown-header">Admin Menüsü</h6></li>
+                        <li>
+                            <a class="dropdown-item" href="dashboard.html">
+                                <i class="fas fa-chart-bar me-2"></i>
+                                Dashboard
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="settings.html">
+                                <i class="fas fa-cog me-2"></i>
+                                Ayarlar
+                            </a>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <a class="dropdown-item text-danger" href="#" onclick="logout()">
+                                <i class="fas fa-sign-out-alt me-2"></i>
+                                Çıkış Yap
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 
-
+    <!-- Main Content -->
+    <div class="admin-container">
+        <!-- Page Title -->
+        <div class="page-title">
+            <h1>
+                <i class="fas fa-shield-alt text-primary"></i>
+                Admin Paneli
+            </h1>
+            <p>Sistem yönetimi ve veri analizi merkezi</p>
+        </div>
 
         <!-- Stats Row -->
         <div class="row mb-4">
             <div class="col-md-3">
                 <div class="stat-card">
                     <div class="stat-number" id="totalApplications">0</div>
-                    <div>Toplam Başvuru</div>
+                    <div class="stat-label">Toplam Başvuru</div>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="stat-card">
                     <div class="stat-number" id="pendingApplications">0</div>
-                    <div>Bekleyen Başvuru</div>
+                    <div class="stat-label">Bekleyen Başvuru</div>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="stat-card">
                     <div class="stat-number" id="totalUsers">0</div>
-                    <div>Toplam Kullanıcı</div>
+                    <div class="stat-label">Toplam Kullanıcı</div>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="stat-card">
                     <div class="stat-number" id="approvedApplications">0</div>
-                    <div>Onaylanan Başvuru</div>
+                    <div class="stat-label">Onaylanan Başvuru</div>
                 </div>
             </div>
         </div>
 
         <!-- Tabs -->
-        <ul class="nav nav-tabs mb-4" id="adminTabs">
+        <ul class="nav nav-tabs" id="adminTabs">
             <li class="nav-item">
-                <a class="nav-link active" data-bs-toggle="tab" href="#applications">Başvurular</a>
+                <a class="nav-link active" data-bs-toggle="tab" href="#applications">
+                    <i class="fas fa-file-alt me-2"></i>Başvurular
+                </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="tab" href="#users">Kullanıcılar</a>
+                <a class="nav-link" data-bs-toggle="tab" href="#users">
+                    <i class="fas fa-users me-2"></i>Kullanıcılar
+                </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="tab" href="#logs">Giriş Logları</a>
+                <a class="nav-link" data-bs-toggle="tab" href="#logs">
+                    <i class="fas fa-list-alt me-2"></i>Giriş Logları
+                </a>
             </li>
         </ul>
 
@@ -121,31 +748,31 @@
         <div class="tab-content">
             <!-- Applications Tab -->
             <div class="tab-pane fade show active" id="applications">
-                <div class="card">
-                    <div class="card-header d-flex justify-content-between">
-                        <h5>Tüm Başvurular</h5>
+                <div class="admin-card">
+                    <div class="admin-card-header">
+                        <h5><i class="fas fa-file-alt me-2"></i>Tüm Başvurular</h5>
                         <button class="btn btn-primary btn-sm" onclick="exportToCSV('applications')">
-                            <i class="fas fa-download"></i> CSV İndir
+                            <i class="fas fa-download me-2"></i>CSV İndir
                         </button>
                     </div>
-                    <div class="card-body">
+                    <div class="admin-card-body">
                         <div class="table-responsive">
                             <table class="table table-hover">
                                 <thead>
                                     <tr>
-                                        <th>#</th>
-                                        <th>Ad Soyad</th>
-                                        <th>Email</th>
-                                        <th>Telefon</th>
-                                        <th>Vize Tipi</th>
-                                        <th>Durum</th>
-                                        <th>İşlemler</th>
+                                        <th><i class="fas fa-hashtag me-1"></i>ID</th>
+                                        <th><i class="fas fa-user me-1"></i>Ad Soyad</th>
+                                        <th><i class="fas fa-envelope me-1"></i>Email</th>
+                                        <th><i class="fas fa-phone me-1"></i>Telefon</th>
+                                        <th><i class="fas fa-passport me-1"></i>Vize Tipi</th>
+                                        <th><i class="fas fa-info-circle me-1"></i>Durum</th>
+                                        <th><i class="fas fa-cogs me-1"></i>İşlemler</th>
                                     </tr>
                                 </thead>
                                 <tbody id="applicationsTable">
                                     <tr>
-                                        <td colspan="7" class="text-center">
-                                            <i class="fas fa-spinner fa-spin me-2"></i>Yükleniyor...
+                                        <td colspan="7" class="text-center py-4">
+                                            <div class="spinner me-2"></div>Veriler yükleniyor...
                                         </td>
                                     </tr>
                                 </tbody>
@@ -157,29 +784,29 @@
 
             <!-- Users Tab -->
             <div class="tab-pane fade" id="users">
-                <div class="card">
-                    <div class="card-header d-flex justify-content-between">
-                        <h5>Sistem Kullanıcıları</h5>
+                <div class="admin-card">
+                    <div class="admin-card-header">
+                        <h5><i class="fas fa-users me-2"></i>Sistem Kullanıcıları</h5>
                         <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#userModal">
-                            <i class="fas fa-plus"></i> Yeni Kullanıcı
+                            <i class="fas fa-plus me-2"></i>Yeni Kullanıcı
                         </button>
                     </div>
-                    <div class="card-body">
+                    <div class="admin-card-body">
                         <div class="table-responsive">
                             <table class="table table-hover">
                                 <thead>
                                     <tr>
-                                        <th>#</th>
-                                        <th>Ad Soyad</th>
-                                        <th>Email</th>
-                                        <th>Rol</th>
-                                        <th>İşlemler</th>
+                                        <th><i class="fas fa-hashtag me-1"></i>ID</th>
+                                        <th><i class="fas fa-user me-1"></i>Ad Soyad</th>
+                                        <th><i class="fas fa-envelope me-1"></i>Email</th>
+                                        <th><i class="fas fa-user-tag me-1"></i>Rol</th>
+                                        <th><i class="fas fa-cogs me-1"></i>İşlemler</th>
                                     </tr>
                                 </thead>
                                 <tbody id="usersTable">
                                     <tr>
-                                        <td colspan="5" class="text-center">
-                                            <i class="fas fa-spinner fa-spin me-2"></i>Yükleniyor...
+                                        <td colspan="5" class="text-center py-4">
+                                            <div class="spinner me-2"></div>Veriler yükleniyor...
                                         </td>
                                     </tr>
                                 </tbody>
@@ -191,26 +818,26 @@
 
             <!-- Logs Tab -->
             <div class="tab-pane fade" id="logs">
-                <div class="card">
-                    <div class="card-header">
-                        <h5>Giriş Logları</h5>
+                <div class="admin-card">
+                    <div class="admin-card-header">
+                        <h5><i class="fas fa-list-alt me-2"></i>Giriş Logları</h5>
                     </div>
-                    <div class="card-body">
+                    <div class="admin-card-body">
                         <div class="table-responsive">
                             <table class="table table-hover">
                                 <thead>
                                     <tr>
-                                        <th>Tarih/Saat</th>
-                                        <th>Kullanıcı ID</th>
-                                        <th>IP Adresi</th>
-                                        <th>Durum</th>
-                                        <th>Tip</th>
+                                        <th><i class="fas fa-clock me-1"></i>Tarih/Saat</th>
+                                        <th><i class="fas fa-user me-1"></i>Kullanıcı ID</th>
+                                        <th><i class="fas fa-globe me-1"></i>IP Adresi</th>
+                                        <th><i class="fas fa-info-circle me-1"></i>Durum</th>
+                                        <th><i class="fas fa-tag me-1"></i>Tip</th>
                                     </tr>
                                 </thead>
                                 <tbody id="logsTable">
                                     <tr>
-                                        <td colspan="5" class="text-center">
-                                            <i class="fas fa-spinner fa-spin me-2"></i>Yükleniyor...
+                                        <td colspan="5" class="text-center py-4">
+                                            <div class="spinner me-2"></div>Veriler yükleniyor...
                                         </td>
                                     </tr>
                                 </tbody>
@@ -223,29 +850,39 @@
     </div>
 
     <!-- User Modal -->
-    <div class="modal fade" id="userModal">
+    <div class="modal fade" id="userModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Yeni Kullanıcı Ekle</h5>
+                    <h5 class="modal-title">
+                        <i class="fas fa-user-plus me-2"></i>Yeni Kullanıcı Ekle
+                    </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <form id="userForm">
                         <div class="mb-3">
-                            <label class="form-label">Ad Soyad</label>
+                            <label class="form-label">
+                                <i class="fas fa-user me-2"></i>Ad Soyad
+                            </label>
                             <input type="text" class="form-control" name="name" required>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Email</label>
+                            <label class="form-label">
+                                <i class="fas fa-envelope me-2"></i>Email
+                            </label>
                             <input type="email" class="form-control" name="email" required>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Şifre</label>
+                            <label class="form-label">
+                                <i class="fas fa-lock me-2"></i>Şifre
+                            </label>
                             <input type="password" class="form-control" name="password" required>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Rol</label>
+                            <label class="form-label">
+                                <i class="fas fa-user-tag me-2"></i>Rol
+                            </label>
                             <select class="form-select" name="role" required>
                                 <option value="staff">Staff</option>
                                 <option value="admin">Admin</option>
@@ -254,13 +891,39 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
-                    <button type="button" class="btn btn-primary" onclick="saveUser()">Kaydet</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-times me-2"></i>İptal
+                    </button>
+                    <button type="button" class="btn btn-primary" onclick="saveUser()">
+                        <i class="fas fa-save me-2"></i>Kaydet
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="https://via.placeholder.com/120x40/e30613/ffffff?text=Guide+of+Dubai" alt="Guide of Dubai">
+                    <span class="footer-logo-text">Guide of Dubai</span>
+                </div>
+                <div class="footer-links">
+                    <a href="dashboard.html">Dashboard</a>
+                    <a href="list.html">Başvurular</a>
+                    <a href="settings.html">Ayarlar</a>
+                    <a href="#">Destek</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                © 2025 Guide of Dubai. Tüm hakları saklıdır.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script>
         // 🚀 RENDER BACKEND URL - TÜM API ÇAĞRILARI BURAYA GİDECEK
@@ -278,13 +941,13 @@
         });
 
         function updateConnectionStatus(connected) {
-            const badge = document.getElementById('connectionBadge');
+            const status = document.getElementById('connectionStatus');
             if (connected) {
-                badge.textContent = 'Bağlı';
-                badge.className = 'badge bg-success ms-2';
+                status.className = 'connection-status connected';
+                status.innerHTML = '<i class="fas fa-wifi me-2"></i>Bağlı';
             } else {
-                badge.textContent = 'Bağlantı Hatası';
-                badge.className = 'badge bg-danger ms-2';
+                status.className = 'connection-status disconnected';
+                status.innerHTML = '<i class="fas fa-wifi me-2"></i>Bağlantı Hatası';
             }
         }
 
@@ -366,7 +1029,7 @@
             .catch(error => {
                 console.error('❌ Başvuru yükleme hatası:', error);
                 document.getElementById('applicationsTable').innerHTML = 
-                    '<tr><td colspan="7" class="text-center text-danger">❌ Başvurular yüklenirken hata oluştu</td></tr>';
+                    '<tr><td colspan="7" class="text-center text-danger py-4">❌ Başvurular yüklenirken hata oluştu</td></tr>';
             });
         }
 
@@ -396,7 +1059,7 @@
             .catch(error => {
                 console.error('❌ Kullanıcı yükleme hatası:', error);
                 document.getElementById('usersTable').innerHTML = 
-                    '<tr><td colspan="5" class="text-center text-danger">❌ Kullanıcılar yüklenirken hata oluştu</td></tr>';
+                    '<tr><td colspan="5" class="text-center text-danger py-4">❌ Kullanıcılar yüklenirken hata oluştu</td></tr>';
             });
         }
 
@@ -425,7 +1088,7 @@
             .catch(error => {
                 console.error('❌ Log yükleme hatası:', error);
                 document.getElementById('logsTable').innerHTML = 
-                    '<tr><td colspan="5" class="text-center text-danger">❌ Loglar yüklenirken hata oluştu</td></tr>';
+                    '<tr><td colspan="5" class="text-center text-danger py-4">❌ Loglar yüklenirken hata oluştu</td></tr>';
             });
         }
 
@@ -433,23 +1096,23 @@
             const tbody = document.getElementById('applicationsTable');
             
             if (!applications || applications.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="7" class="text-center text-muted">📝 Henüz başvuru bulunmuyor</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="7" class="text-center text-muted py-4">📄 Henüz başvuru bulunmuyor</td></tr>';
                 return;
             }
             
             tbody.innerHTML = applications.map(app => `
                 <tr>
-                    <td>#${app.id}</td>
-                    <td>${app.ad || ''} ${app.soyad || ''}</td>
+                    <td><span class="badge bg-primary">#${app.id}</span></td>
+                    <td><strong>${app.ad || ''} ${app.soyad || ''}</strong></td>
                     <td>${app.email || ''}</td>
                     <td>${app.telefon || ''}</td>
-                    <td>${app.vize_tipi || ''}</td>
+                    <td><span class="badge bg-info">${app.vize_tipi || ''}</span></td>
                     <td><span class="status-badge status-${app.status}">${getStatusText(app.status)}</span></td>
                     <td>
-                        <button class="btn btn-sm btn-outline-primary" onclick="viewApplication(${app.id})" title="Görüntüle">
+                        <button class="btn btn-outline-primary btn-sm me-1" onclick="viewApplication(${app.id})" title="Görüntüle">
                             <i class="fas fa-eye"></i>
                         </button>
-                        <button class="btn btn-sm btn-outline-danger" onclick="deleteApplication(${app.id})" title="Sil">
+                        <button class="btn btn-outline-danger btn-sm" onclick="deleteApplication(${app.id})" title="Sil">
                             <i class="fas fa-trash"></i>
                         </button>
                     </td>
@@ -461,21 +1124,21 @@
             const tbody = document.getElementById('usersTable');
             
             if (!users || users.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted">👥 Henüz kullanıcı bulunmuyor</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted py-4">👥 Henüz kullanıcı bulunmuyor</td></tr>';
                 return;
             }
             
             tbody.innerHTML = users.map(user => `
                 <tr>
-                    <td>#${user.id}</td>
-                    <td>${user.name || ''}</td>
+                    <td><span class="badge bg-primary">#${user.id}</span></td>
+                    <td><strong>${user.name || ''}</strong></td>
                     <td>${user.email || ''}</td>
-                    <td><span class="badge bg-${user.role === 'admin' ? 'danger' : 'primary'}">${user.role || ''}</span></td>
+                    <td><span class="badge ${user.role === 'admin' ? 'bg-danger' : 'bg-success'}">${user.role || ''}</span></td>
                     <td>
-                        <button class="btn btn-sm btn-outline-success" onclick="editUserRole(${user.id}, '${user.role}')" title="Rol Değiştir">
+                        <button class="btn btn-outline-success btn-sm me-1" onclick="editUserRole(${user.id}, '${user.role}')" title="Rol Değiştir">
                             <i class="fas fa-edit"></i>
                         </button>
-                        <button class="btn btn-sm btn-outline-danger" onclick="deleteUser(${user.id})" title="Sil">
+                        <button class="btn btn-outline-danger btn-sm" onclick="deleteUser(${user.id})" title="Sil">
                             <i class="fas fa-trash"></i>
                         </button>
                     </td>
@@ -487,17 +1150,17 @@
             const tbody = document.getElementById('logsTable');
             
             if (!logs || logs.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted">📜 Henüz log kaydı bulunmuyor</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted py-4">📜 Henüz log kaydı bulunmuyor</td></tr>';
                 return;
             }
             
             tbody.innerHTML = logs.map(log => `
                 <tr>
                     <td>${log.log_time || ''}</td>
-                    <td>User #${log.user_id || 'N/A'}</td>
-                    <td>${log.ip || ''}</td>
-                    <td><span class="badge bg-${log.status === 'success' ? 'success' : 'danger'}">${log.status === 'success' ? 'Başarılı' : 'Başarısız'}</span></td>
-                    <td><span class="badge bg-${log.user_type === 'admin' ? 'danger' : 'primary'}">${log.user_type || ''}</span></td>
+                    <td><span class="badge bg-primary">User #${log.user_id || 'N/A'}</span></td>
+                    <td><code>${log.ip || ''}</code></td>
+                    <td><span class="badge ${log.status === 'success' ? 'bg-success' : 'bg-danger'}">${log.status === 'success' ? 'Başarılı' : 'Başarısız'}</span></td>
+                    <td><span class="badge ${log.user_type === 'admin' ? 'bg-danger' : 'bg-info'}">${log.user_type || ''}</span></td>
                 </tr>
             `).join('');
         }
