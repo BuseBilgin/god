@@ -55,6 +55,13 @@
         .status-processing { background-color: #cce7ff; color: #004085; }
         .status-approved { background-color: #d4edda; color: #155724; }
         .status-rejected { background-color: #f8d7da; color: #721c24; }
+
+        .alert-info {
+            background: #e3f2fd;
+            border: 1px solid #2196F3;
+            color: #1976D2;
+            margin-bottom: 2rem;
+        }
     </style>
 </head>
 <body>
@@ -68,6 +75,13 @@
     </div>
 
     <div class="container-fluid">
+        <!-- Connection Status -->
+        <div class="alert alert-info" id="connectionStatus">
+            <i class="fas fa-server me-2"></i>
+            Backend bağlantısı: <span id="backendUrl">https://god-1-lsu5.onrender.com</span>
+            <span class="badge bg-success ms-2" id="connectionBadge">Bağlı</span>
+        </div>
+
         <!-- Stats Row -->
         <div class="row mb-4">
             <div class="col-md-3">
@@ -135,7 +149,11 @@
                                     </tr>
                                 </thead>
                                 <tbody id="applicationsTable">
-                                    <!-- JavaScript ile doldurulacak -->
+                                    <tr>
+                                        <td colspan="7" class="text-center">
+                                            <i class="fas fa-spinner fa-spin me-2"></i>Yükleniyor...
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -165,7 +183,11 @@
                                     </tr>
                                 </thead>
                                 <tbody id="usersTable">
-                                    <!-- JavaScript ile doldurulacak -->
+                                    <tr>
+                                        <td colspan="5" class="text-center">
+                                            <i class="fas fa-spinner fa-spin me-2"></i>Yükleniyor...
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -192,7 +214,11 @@
                                     </tr>
                                 </thead>
                                 <tbody id="logsTable">
-                                    <!-- JavaScript ile doldurulacak -->
+                                    <tr>
+                                        <td colspan="5" class="text-center">
+                                            <i class="fas fa-spinner fa-spin me-2"></i>Yükleniyor...
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -243,110 +269,193 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script>
-        // MEVCUt backend endpoint'lerinizi kullanıyoruz!
+        // 🚀 RENDER BACKEND URL - TÜM API ÇAĞRILARI BURAYA GİDECEK
+        const API_BASE_URL = 'https://god-1-lsu5.onrender.com';
+        
         let authToken = localStorage.getItem('token');
         let applications = [];
         let users = [];
         let logs = [];
 
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('🔗 Backend URL:', API_BASE_URL);
             checkAuth();
             loadData();
         });
 
+        function updateConnectionStatus(connected) {
+            const badge = document.getElementById('connectionBadge');
+            if (connected) {
+                badge.textContent = 'Bağlı';
+                badge.className = 'badge bg-success ms-2';
+            } else {
+                badge.textContent = 'Bağlantı Hatası';
+                badge.className = 'badge bg-danger ms-2';
+            }
+        }
+
         function checkAuth() {
             if (!authToken) {
-                window.location.href = '/sign-in.html';
+                alert('Lütfen önce giriş yapın!');
+                window.location.href = 'https://god-1-lsu5.onrender.com/sign-in.html';
                 return;
             }
 
-            // Token doğrulama - mevcut /me endpoint'inizi kullanıyoruz
-            fetch('/me', {
+            console.log('🔒 Token kontrolü yapılıyor...');
+            
+            // Token doğrulama - RENDER BACKEND'E İSTEK
+            fetch(`${API_BASE_URL}/me`, {
+                method: 'GET',
                 headers: {
-                    'Authorization': `Bearer ${authToken}`
+                    'Authorization': `Bearer ${authToken}`,
+                    'Content-Type': 'application/json'
                 }
             })
-            .then(response => response.json())
+            .then(response => {
+                console.log('✅ Auth response:', response.status);
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                return response.json();
+            })
             .then(data => {
+                console.log('👤 User data:', data);
+                updateConnectionStatus(true);
+                
                 if (data.role !== 'admin') {
-                    alert('Admin yetkisi gerekli!');
-                    window.location.href = '/list.html';
+                    alert('Bu sayfaya sadece admin kullanıcıları erişebilir!');
+                    window.location.href = `${API_BASE_URL}/sign-in.html`;
+                    return;
                 }
+                
+                console.log('✅ Admin yetkisi doğrulandı');
             })
-            .catch(() => {
+            .catch(error => {
+                console.error('❌ Auth error:', error);
+                updateConnectionStatus(false);
+                alert('Giriş token\'ı geçersiz. Lütfen tekrar giriş yapın.');
                 localStorage.removeItem('token');
-                window.location.href = '/sign-in.html';
+                window.location.href = `${API_BASE_URL}/sign-in.html`;
             });
         }
 
         function loadData() {
+            console.log('📊 Veriler yükleniyor...');
             loadApplications();
             loadUsers();
             loadLogs();
         }
 
-        // MEVCUt /applications endpoint'inizi kullanıyoruz
+        // RENDER BACKEND'DEN başvuruları yükle
         function loadApplications() {
-            fetch('/applications', {
+            console.log('📋 Başvurular yükleniyor...');
+            
+            fetch(`${API_BASE_URL}/applications`, {
+                method: 'GET',
                 headers: {
-                    'Authorization': `Bearer ${authToken}`
+                    'Authorization': `Bearer ${authToken}`,
+                    'Content-Type': 'application/json'
                 }
             })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                return response.json();
+            })
             .then(data => {
-                applications = data;
+                console.log('✅ Başvurular yüklendi:', data.length);
+                applications = data || [];
                 renderApplicationsTable();
                 updateStats();
             })
-            .catch(console.error);
+            .catch(error => {
+                console.error('❌ Başvuru yükleme hatası:', error);
+                document.getElementById('applicationsTable').innerHTML = 
+                    '<tr><td colspan="7" class="text-center text-danger">❌ Başvurular yüklenirken hata oluştu</td></tr>';
+            });
         }
 
-        // MEVCUt /users endpoint'inizi kullanıyoruz
+        // RENDER BACKEND'DEN kullanıcıları yükle
         function loadUsers() {
-            fetch('/users', {
+            console.log('👥 Kullanıcılar yükleniyor...');
+            
+            fetch(`${API_BASE_URL}/users`, {
+                method: 'GET',
                 headers: {
-                    'Authorization': `Bearer ${authToken}`
+                    'Authorization': `Bearer ${authToken}`,
+                    'Content-Type': 'application/json'
                 }
             })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                return response.json();
+            })
             .then(data => {
-                users = data;
+                console.log('✅ Kullanıcılar yüklendi:', data.length);
+                users = data || [];
                 renderUsersTable();
                 updateStats();
             })
-            .catch(console.error);
+            .catch(error => {
+                console.error('❌ Kullanıcı yükleme hatası:', error);
+                document.getElementById('usersTable').innerHTML = 
+                    '<tr><td colspan="5" class="text-center text-danger">❌ Kullanıcılar yüklenirken hata oluştu</td></tr>';
+            });
         }
 
-        // MEVCUt /logs endpoint'inizi kullanıyoruz
+        // RENDER BACKEND'DEN logları yükle
         function loadLogs() {
-            fetch('/logs', {
+            console.log('📜 Loglar yükleniyor...');
+            
+            fetch(`${API_BASE_URL}/logs`, {
+                method: 'GET',
                 headers: {
-                    'Authorization': `Bearer ${authToken}`
+                    'Authorization': `Bearer ${authToken}`,
+                    'Content-Type': 'application/json'
                 }
             })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                return response.json();
+            })
             .then(data => {
-                logs = data;
+                console.log('✅ Loglar yüklendi:', data.length);
+                logs = data || [];
                 renderLogsTable();
             })
-            .catch(console.error);
+            .catch(error => {
+                console.error('❌ Log yükleme hatası:', error);
+                document.getElementById('logsTable').innerHTML = 
+                    '<tr><td colspan="5" class="text-center text-danger">❌ Loglar yüklenirken hata oluştu</td></tr>';
+            });
         }
 
         function renderApplicationsTable() {
             const tbody = document.getElementById('applicationsTable');
+            
+            if (!applications || applications.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" class="text-center text-muted">📝 Henüz başvuru bulunmuyor</td></tr>';
+                return;
+            }
+            
             tbody.innerHTML = applications.map(app => `
                 <tr>
                     <td>#${app.id}</td>
-                    <td>${app.ad} ${app.soyad}</td>
-                    <td>${app.email}</td>
-                    <td>${app.telefon}</td>
-                    <td>${app.vize_tipi}</td>
+                    <td>${app.ad || ''} ${app.soyad || ''}</td>
+                    <td>${app.email || ''}</td>
+                    <td>${app.telefon || ''}</td>
+                    <td>${app.vize_tipi || ''}</td>
                     <td><span class="status-badge status-${app.status}">${getStatusText(app.status)}</span></td>
                     <td>
-                        <button class="btn btn-sm btn-outline-primary" onclick="viewApplication(${app.id})">
+                        <button class="btn btn-sm btn-outline-primary" onclick="viewApplication(${app.id})" title="Görüntüle">
                             <i class="fas fa-eye"></i>
                         </button>
-                        <button class="btn btn-sm btn-outline-danger" onclick="deleteApplication(${app.id})">
+                        <button class="btn btn-sm btn-outline-danger" onclick="deleteApplication(${app.id})" title="Sil">
                             <i class="fas fa-trash"></i>
                         </button>
                     </td>
@@ -356,17 +465,23 @@
 
         function renderUsersTable() {
             const tbody = document.getElementById('usersTable');
+            
+            if (!users || users.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted">👥 Henüz kullanıcı bulunmuyor</td></tr>';
+                return;
+            }
+            
             tbody.innerHTML = users.map(user => `
                 <tr>
                     <td>#${user.id}</td>
-                    <td>${user.name}</td>
-                    <td>${user.email}</td>
-                    <td><span class="badge bg-${user.role === 'admin' ? 'danger' : 'primary'}">${user.role}</span></td>
+                    <td>${user.name || ''}</td>
+                    <td>${user.email || ''}</td>
+                    <td><span class="badge bg-${user.role === 'admin' ? 'danger' : 'primary'}">${user.role || ''}</span></td>
                     <td>
-                        <button class="btn btn-sm btn-outline-success" onclick="editUserRole(${user.id}, '${user.role}')">
+                        <button class="btn btn-sm btn-outline-success" onclick="editUserRole(${user.id}, '${user.role}')" title="Rol Değiştir">
                             <i class="fas fa-edit"></i>
                         </button>
-                        <button class="btn btn-sm btn-outline-danger" onclick="deleteUser(${user.id})">
+                        <button class="btn btn-sm btn-outline-danger" onclick="deleteUser(${user.id})" title="Sil">
                             <i class="fas fa-trash"></i>
                         </button>
                     </td>
@@ -376,18 +491,24 @@
 
         function renderLogsTable() {
             const tbody = document.getElementById('logsTable');
+            
+            if (!logs || logs.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted">📜 Henüz log kaydı bulunmuyor</td></tr>';
+                return;
+            }
+            
             tbody.innerHTML = logs.map(log => `
                 <tr>
-                    <td>${log.log_time}</td>
-                    <td>User #${log.user_id}</td>
-                    <td>${log.ip}</td>
-                    <td><span class="badge bg-${log.status === 'success' ? 'success' : 'danger'}">${log.status}</span></td>
-                    <td><span class="badge bg-${log.user_type === 'admin' ? 'danger' : 'primary'}">${log.user_type}</span></td>
+                    <td>${log.log_time || ''}</td>
+                    <td>User #${log.user_id || 'N/A'}</td>
+                    <td>${log.ip || ''}</td>
+                    <td><span class="badge bg-${log.status === 'success' ? 'success' : 'danger'}">${log.status === 'success' ? 'Başarılı' : 'Başarısız'}</span></td>
+                    <td><span class="badge bg-${log.user_type === 'admin' ? 'danger' : 'primary'}">${log.user_type || ''}</span></td>
                 </tr>
             `).join('');
         }
 
-        // Frontend'de istatistikleri hesaplayıyoruz
+        // Frontend'de istatistikleri hesapla
         function updateStats() {
             document.getElementById('totalApplications').textContent = applications.length;
             document.getElementById('pendingApplications').textContent = applications.filter(app => app.status === 'pending').length;
@@ -395,43 +516,67 @@
             document.getElementById('approvedApplications').textContent = applications.filter(app => app.status === 'approved').length;
         }
 
-        // MEVCUt API'larınızı kullanıyoruz
+        // RENDER BACKEND'E başvuru silme isteği
         function deleteApplication(id) {
             if (confirm('Bu başvuruyu silmek istediğinizden emin misiniz?')) {
-                fetch(`/applications/${id}`, {
+                console.log('🗑️ Başvuru siliniyor:', id);
+                
+                fetch(`${API_BASE_URL}/applications/${id}`, {
                     method: 'DELETE',
                     headers: {
-                        'Authorization': `Bearer ${authToken}`
+                        'Authorization': `Bearer ${authToken}`,
+                        'Content-Type': 'application/json'
                     }
                 })
-                .then(() => {
-                    alert('Başvuru silindi!');
-                    loadApplications();
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}`);
+                    }
+                    console.log('✅ Başvuru silindi');
+                    alert('Başvuru başarıyla silindi!');
+                    loadApplications(); // Tabloyu yenile
                 })
-                .catch(console.error);
+                .catch(error => {
+                    console.error('❌ Silme hatası:', error);
+                    alert('Silme işlemi başarısız!');
+                });
             }
         }
 
+        // RENDER BACKEND'E kullanıcı silme isteği
         function deleteUser(id) {
             if (confirm('Bu kullanıcıyı silmek istediğinizden emin misiniz?')) {
-                fetch(`/users/${id}`, {
+                console.log('🗑️ Kullanıcı siliniyor:', id);
+                
+                fetch(`${API_BASE_URL}/users/${id}`, {
                     method: 'DELETE',
                     headers: {
-                        'Authorization': `Bearer ${authToken}`
+                        'Authorization': `Bearer ${authToken}`,
+                        'Content-Type': 'application/json'
                     }
                 })
-                .then(() => {
-                    alert('Kullanıcı silindi!');
-                    loadUsers();
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}`);
+                    }
+                    console.log('✅ Kullanıcı silindi');
+                    alert('Kullanıcı başarıyla silindi!');
+                    loadUsers(); // Tabloyu yenile
                 })
-                .catch(console.error);
+                .catch(error => {
+                    console.error('❌ Silme hatası:', error);
+                    alert('Silme işlemi başarısız!');
+                });
             }
         }
 
+        // RENDER BACKEND'E kullanıcı rol güncelleme isteği
         function editUserRole(id, currentRole) {
             const newRole = currentRole === 'admin' ? 'staff' : 'admin';
             if (confirm(`Kullanıcı rolünü ${newRole} olarak değiştirmek istediğinizden emin misiniz?`)) {
-                fetch(`/users/${id}/role`, {
+                console.log('🔄 Rol güncelleniyor:', id, newRole);
+                
+                fetch(`${API_BASE_URL}/users/${id}/role`, {
                     method: 'PUT',
                     headers: {
                         'Authorization': `Bearer ${authToken}`,
@@ -439,14 +584,25 @@
                     },
                     body: JSON.stringify({ role: newRole })
                 })
-                .then(() => {
-                    alert('Rol güncellendi!');
-                    loadUsers();
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}`);
+                    }
+                    return response.json();
                 })
-                .catch(console.error);
+                .then(data => {
+                    console.log('✅ Rol güncellendi:', data);
+                    alert('Kullanıcı rolü başarıyla güncellendi!');
+                    loadUsers(); // Tabloyu yenile
+                })
+                .catch(error => {
+                    console.error('❌ Rol güncelleme hatası:', error);
+                    alert('Rol güncelleme başarısız!');
+                });
             }
         }
 
+        // RENDER BACKEND'E yeni kullanıcı ekleme isteği
         function saveUser() {
             const form = document.getElementById('userForm');
             const formData = new FormData(form);
@@ -458,7 +614,9 @@
                 role: formData.get('role')
             };
 
-            fetch('/users', {
+            console.log('➕ Yeni kullanıcı ekleniyor:', userData.email);
+
+            fetch(`${API_BASE_URL}/users`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${authToken}`,
@@ -466,43 +624,59 @@
                 },
                 body: JSON.stringify(userData)
             })
-            .then(() => {
-                alert('Kullanıcı eklendi!');
+            .then(response => {
+                if (!response.ok) {
+                    return response.text().then(text => {
+                        throw new Error(text);
+                    });
+                }
+                console.log('✅ Kullanıcı eklendi');
+                alert('Kullanıcı başarıyla eklendi!');
+                
+                // Modal'ı kapat
                 const modal = bootstrap.Modal.getInstance(document.getElementById('userModal'));
                 modal.hide();
+                
+                // Formu temizle
                 form.reset();
+                
+                // Tabloyu yenile
                 loadUsers();
             })
-            .catch(console.error);
+            .catch(error => {
+                console.error('❌ Kullanıcı ekleme hatası:', error);
+                alert('Kullanıcı ekleme başarısız: ' + error.message);
+            });
         }
 
         function viewApplication(id) {
-            window.open(`/application-details.html?id=${id}`, '_blank');
+            // Başvuru detayları yeni sekmede aç
+            window.open(`${API_BASE_URL}/application-details.html?id=${id}`, '_blank');
         }
 
-        // Basit CSV export (backend değişikliği gerektirmez)
+        // Basit CSV export
         function exportToCSV(type) {
-            let data, filename, headers;
-            
             if (type === 'applications') {
-                data = applications;
-                filename = 'basvurular.csv';
-                headers = ['ID', 'Ad', 'Soyad', 'Email', 'Telefon', 'Vize Tipi', 'Durum'];
+                if (!applications || applications.length === 0) {
+                    alert('Export edilecek başvuru bulunamadı!');
+                    return;
+                }
                 
+                const headers = ['ID', 'Ad', 'Soyad', 'Email', 'Telefon', 'Vize Tipi', 'Durum'];
                 const csvContent = [
                     headers.join(','),
-                    ...data.map(app => [
+                    ...applications.map(app => [
                         app.id,
-                        app.ad,
-                        app.soyad,
-                        app.email,
-                        app.telefon,
-                        app.vize_tipi,
-                        app.status
+                        app.ad || '',
+                        app.soyad || '',
+                        app.email || '',
+                        app.telefon || '',
+                        app.vize_tipi || '',
+                        app.status || ''
                     ].join(','))
                 ].join('\n');
                 
-                downloadCSV(csvContent, filename);
+                downloadCSV(csvContent, 'basvurular.csv');
             }
         }
 
@@ -511,7 +685,9 @@
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
             link.download = filename;
+            document.body.appendChild(link);
             link.click();
+            document.body.removeChild(link);
         }
 
         function getStatusText(status) {
@@ -519,14 +695,16 @@
                 'pending': 'Bekleyen',
                 'processing': 'İşlemde',
                 'approved': 'Onaylandı',
-                'rejected': 'Reddedildi'
+                'rejected': 'Reddedildi',
+                'cancelled': 'İptal Edildi'
             };
             return statusTexts[status] || status;
         }
 
         function logout() {
             localStorage.removeItem('token');
-            window.location.href = '/sign-in.html';
+            alert('Çıkış yapıldı!');
+            window.location.href = `${API_BASE_URL}/sign-in.html`;
         }
     </script>
 </body>
