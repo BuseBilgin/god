@@ -11,77 +11,308 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
     
     <style>
+        :root {
+            --kt-primary: #009ef7;
+            --kt-primary-active: #0095e8;
+            --kt-red: #e30613;
+            --kt-red-active: #b3050f;
+            --kt-gray-900: #1e2129;
+            --kt-gray-800: #3f4254;
+            --kt-gray-700: #5e6278;
+            --kt-gray-600: #7e8299;
+            --kt-gray-400: #a1a5b7;
+            --kt-gray-300: #e4e6ea;
+            --kt-gray-200: #eff2f5;
+            --kt-gray-100: #f5f8fa;
+            --kt-white: #ffffff;
+        }
+
         body {
             background-color: #f4f6f9;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: #1a1a1a;
         }
         
-        .header-section {
-            background: white;
-            padding: 20px 0;
-            border-bottom: 1px solid #e1e5e9;
+        /* Header Styles */
+        .header {
+            background: var(--kt-white);
+            box-shadow: 0 0.5rem 1.5rem 0.5rem rgba(0, 0, 0, 0.075);
+            position: relative;
+            z-index: 100;
         }
         
-        .logo {
-            color: #e30613;
-            font-weight: bold;
-            font-size: 1.2rem;
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            min-height: 70px;
+        }
+        
+        .header-brand {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+        
+        .header-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .header-logo img {
+            max-height: 40px;
+            width: auto;
+            object-fit: contain;
+        }
+        
+        .header-title {
+            color: var(--kt-gray-900);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: -0.025em;
+        }
+        
+        .header-subtitle {
+            color: var(--kt-gray-600);
+            font-size: 0.875rem;
+            margin: 0;
+            margin-top: -2px;
+        }
+        
+        .header-nav {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+        
+        .nav-item {
+            position: relative;
+        }
+        
+        .nav-link {
+            color: var(--kt-gray-700);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            padding: 0.5rem 0;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            color: var(--kt-red);
+        }
+        
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--kt-red);
+            border-radius: 2px;
+        }
+        
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .header-search {
+            position: relative;
+            display: none;
+        }
+        
+        .search-input {
+            background: var(--kt-gray-100);
+            border: 1px solid var(--kt-gray-200);
+            border-radius: 8px;
+            padding: 0.5rem 1rem 0.5rem 2.5rem;
+            font-size: 0.875rem;
+            color: var(--kt-gray-800);
+            width: 250px;
+            transition: all 0.2s ease;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: var(--kt-primary);
+            background: var(--kt-white);
+            box-shadow: 0 0 0 0.2rem rgba(0, 158, 247, 0.25);
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--kt-gray-600);
+            font-size: 0.875rem;
+        }
+        
+        .notifications {
+            position: relative;
+            background: var(--kt-gray-100);
+            border: 1px solid var(--kt-gray-200);
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--kt-gray-700);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .notifications:hover {
+            background: var(--kt-white);
+            border-color: var(--kt-primary);
+            color: var(--kt-primary);
+        }
+        
+        .notifications .badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--kt-red);
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 2px 6px;
+            border-radius: 10px;
+            min-width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .user-menu {
-            background: #f8f9fa;
-            border: 1px solid #e1e5e9;
-            border-radius: 8px;
-            padding: 8px 16px;
-            color: #5e6278;
+            position: relative;
         }
         
-        .user-menu .dropdown-toggle {
-            background: #f8f9fa !important;
-            border: 1px solid #e1e5e9 !important;
-            color: #5e6278 !important;
+        .user-menu-btn {
+            background: var(--kt-white) !important;
+            border: 1px solid var(--kt-gray-200) !important;
             border-radius: 8px !important;
+            padding: 8px 16px !important;
             font-size: 14px !important;
+            font-weight: 500 !important;
+            color: var(--kt-gray-700) !important;
+            box-shadow: none !important;
+            transition: all 0.2s ease;
         }
         
-        .user-menu .dropdown-toggle:hover {
-            background: #e9ecef !important;
-            border-color: #e30613 !important;
-            color: #e30613 !important;
+        .user-menu-btn:hover {
+            background: var(--kt-gray-100) !important;
+            border-color: var(--kt-primary) !important;
+            color: var(--kt-primary) !important;
         }
         
-        .user-menu .dropdown-menu {
+        .user-avatar {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--kt-red) 0%, var(--kt-red-active) 100%);
+            border-radius: 6px;
+            margin-right: 8px;
+        }
+        
+        .user-avatar i {
+            font-size: 16px;
+            color: white;
+        }
+        
+        .user-dropdown {
             border: none !important;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15) !important;
             border-radius: 8px !important;
-            min-width: 180px !important;
+            min-width: 200px !important;
+            padding: 8px 0 !important;
+            margin-top: 8px !important;
         }
         
-        .user-menu .dropdown-header {
-            color: #a1a5b7 !important;
+        .user-dropdown .dropdown-header {
+            color: var(--kt-gray-400) !important;
             font-size: 11px !important;
             font-weight: 600 !important;
             text-transform: uppercase !important;
+            padding: 8px 16px 4px !important;
+            margin-bottom: 4px !important;
         }
         
-        .user-menu .dropdown-item {
-            color: #5e6278 !important;
+        .user-dropdown .dropdown-item {
+            padding: 10px 16px !important;
             font-size: 14px !important;
+            color: var(--kt-gray-700) !important;
+            border-radius: 0 !important;
+            transition: all 0.15s ease !important;
         }
         
-        .user-menu .dropdown-item:hover {
-            background: #f5f8fa !important;
-            color: #181c32 !important;
+        .user-dropdown .dropdown-item:hover {
+            background: var(--kt-gray-100) !important;
+            color: var(--kt-red) !important;
         }
         
-        .user-menu .dropdown-item.text-danger {
-            color: #dc3545 !important;
+        .user-dropdown .dropdown-item.text-danger {
+            color:  #f1416c !important;
         }
         
-        .user-menu .dropdown-item.text-danger:hover {
-            background: #fef2f2 !important;
-            color: #dc3545 !important;
+        .user-dropdown .dropdown-item.text-danger:hover {
+            background: #fef3f2 !important;
+            color: #f1416c !important;
+        }
+        
+        .user-dropdown .dropdown-divider {
+            margin: 8px 0 !important;
+            border-color: var(--kt-gray-200) !important;
+        }
+        
+        /* Mobile Header */
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--kt-gray-700);
+            font-size: 1.25rem;
+            padding: 0.5rem;
+            cursor: pointer;
+        }
+        
+        .mobile-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--kt-white);
+            box-shadow: 0 0.5rem 1.5rem 0.5rem rgba(0, 0, 0, 0.075);
+            border-radius: 0 0 8px 8px;
+            padding: 1rem 2rem;
+            z-index: 99;
+        }
+        
+        .mobile-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .mobile-nav .nav-link {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--kt-gray-200);
+        }
+        
+        .mobile-nav .nav-link:last-child {
+            border-bottom: none;
         }
         
         .breadcrumb {
@@ -548,6 +779,178 @@
             margin: 0 auto;
             padding: 20px;
         }
+
+        /* Footer Styles */
+        .footer {
+            background: var(--kt-gray-900);
+            color: var(--kt-white);
+            margin-top: 4rem;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            color: var(--kt-white);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-section h4::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 30px;
+            height: 2px;
+            background: var(--kt-red);
+        }
+
+        .footer-brand {
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .footer-logo img {
+            height: 40px;
+            margin-right: 12px;
+            filter: brightness(0) invert(1);
+        }
+
+        .footer-logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--kt-white);
+        }
+
+        .footer-description {
+            color: var(--kt-gray-400);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-contact {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .footer-contact-item {
+            display: flex;
+            align-items: center;
+            color: var(--kt-gray-400);
+            font-size: 0.9rem;
+        }
+
+        .footer-contact-item i {
+            width: 20px;
+            color: var(--kt-red);
+            margin-right: 10px;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: var(--kt-gray-400);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-links a:hover {
+            color: var(--kt-red);
+            padding-left: 5px;
+        }
+
+        .footer-links a i {
+            margin-right: 8px;
+            width: 16px;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .footer-social a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: var(--kt-gray-800);
+            color: var(--kt-gray-400);
+            border-radius: 50%;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-social a:hover {
+            background: var(--kt-red);
+            color: var(--kt-white);
+            transform: translateY(-2px);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--kt-gray-800);
+            padding-top: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-copyright {
+            color: var(--kt-gray-400);
+            font-size: 0.9rem;
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-bottom-links a {
+            color: var(--kt-gray-400);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s ease;
+        }
+
+        .footer-bottom-links a:hover {
+            color: var(--kt-red);
+        }
         
         /* Responsive Design */
         @media (max-width: 1200px) {
@@ -555,6 +958,10 @@
                 max-width: 100%;
                 padding: 15px;
                 margin: 0 15px;
+            }
+            
+            .header-search {
+                display: none;
             }
         }
         
@@ -582,6 +989,31 @@
             .three-dots-menu {
                 top: 20px;
                 right: 20px;
+            }
+            
+            .header-nav {
+                display: none;
+            }
+            
+            .mobile-toggle {
+                display: block;
+            }
+            
+            .header-actions {
+                gap: 0.5rem;
+            }
+            
+            .header-subtitle {
+                display: none;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+                gap: 2rem;
+            }
+
+            .footer-container {
+                padding: 0 1rem;
             }
         }
         
@@ -630,6 +1062,20 @@
                 float: none;
                 margin-top: 10px;
             }
+            
+            .header-container {
+                padding: 0 1rem;
+                min-height: 60px;
+            }
+            
+            .header-title {
+                font-size: 1.25rem;
+            }
+            
+            .notifications {
+                width: 36px;
+                height: 36px;
+            }
         }
         
         @media (max-width: 576px) {
@@ -673,34 +1119,142 @@
                 padding: 10px 12px;
                 font-size: 13px;
             }
+            
+            .header-container {
+                padding: 0 0.75rem;
+            }
+            
+            .header-logo img {
+                max-height: 32px;
+            }
+            
+            .header-title {
+                font-size: 1.1rem;
+            }
+
+            .footer {
+                padding: 2rem 0 1rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                text-align: center;
+            }
+
+            .footer-section h4::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .footer-bottom-links {
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+
+            .footer-contact-item {
+                justify-content: center;
+            }
         }
     </style>
 </head>
 <body>
 
 <!-- Header -->
-<div class="header-section">
-    <div class="container-fluid">
-        <div class="d-flex justify-content-between align-items-center">
-            <div class="logo">
-                <i class="fas fa-map-marker-alt"></i> GUIDE OF DUBAI
+<div class="header">
+    <div class="header-container">
+        <!-- Brand -->
+        <div class="d-flex align-items-center">
+            <a href="#" class="header-brand">
+                <div class="header-logo">
+                    <img src="assets/media/godlogo.png" alt="Guide of Dubai" style="width: 120px; height: auto;">
+                </div>
+                <div class="ms-3">
+                    <p class="header-subtitle d-none d-lg-block">Vize Takip Sistemi</p>
+                </div>
+            </a>
+        </div>
+        
+        <!-- Desktop Navigation -->
+        <nav class="header-nav d-none d-lg-flex">
+            <div class="nav-item">
+                <a href="dashboard.html" class="nav-link">
+                    <i class="fas fa-chart-bar me-2"></i>
+                    Anasayfa
+                </a>
             </div>
+            <div class="nav-item">
+                <a href="list.html" class="nav-link active">
+                    <i class="fas fa-list me-2"></i>
+                    Başvurular
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="application-form.html" class="nav-link">
+                    <i class="fas fa-plus me-2"></i>
+                    Yeni Başvuru
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="settings.html" class="nav-link">
+                    <i class="fas fa-cog me-2"></i>
+                    Ayarlar
+                </a>
+            </div>
+        </nav>
+        
+        <!-- Header Actions -->
+        <div class="header-actions">
+            <!-- Search -->
+            <div class="header-search d-none d-xl-block">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" class="search-input" placeholder="Ara...">
+            </div>
+            
+            <!-- Notifications -->
+            <div class="notifications">
+                <i class="fas fa-bell"></i>
+                <span class="badge">3</span>
+            </div>
+            
+            <!-- User Menu -->
             <div class="user-menu">
                 <div class="dropdown">
-                    <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                        <i class="fas fa-user-circle"></i> Menü
+                    <button class="btn dropdown-toggle user-menu-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <div class="user-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <span class="d-none d-md-inline">Menü</span>
                     </button>
-                    <ul class="dropdown-menu dropdown-menu-end">
+                    <ul class="dropdown-menu dropdown-menu-end user-dropdown">
                         <li><h6 class="dropdown-header">Kullanıcı Menüsü</h6></li>
+                        <li>
+                            <a class="dropdown-item" href="settings.html">
+                                <i class="fas fa-user-circle me-2"></i>
+                                Profil
+                            </a>
+                        </li>
                         <li>
                             <a class="dropdown-item" href="list.html">
                                 <i class="fas fa-list me-2"></i>
-                                Başvurular
+                                Başvurularım
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="settings.html">
+                                <i class="fas fa-cog me-2"></i>
+                                Ayarlar
                             </a>
                         </li>
                         <li><hr class="dropdown-divider"></li>
                         <li>
-                            <a class="dropdown-item text-danger" href="sign-in.html">
+                            <a class="dropdown-item text-danger" href="#" onclick="signOut()">
                                 <i class="fas fa-sign-out-alt me-2"></i>
                                 Çıkış Yap
                             </a>
@@ -708,7 +1262,34 @@
                     </ul>
                 </div>
             </div>
+            
+            <!-- Mobile Toggle -->
+            <button class="mobile-toggle d-lg-none" type="button" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
         </div>
+    </div>
+    
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <nav class="mobile-nav">
+            <a href="dashboard.html" class="nav-link">
+                <i class="fas fa-chart-bar me-2"></i>
+                Anasayfa
+            </a>
+            <a href="list.html" class="nav-link active">
+                <i class="fas fa-list me-2"></i>
+                Başvurular
+            </a>
+            <a href="application-form.html" class="nav-link">
+                <i class="fas fa-plus me-2"></i>
+                Yeni Başvuru
+            </a>
+            <a href="settings.html" class="nav-link">
+                <i class="fas fa-cog me-2"></i>
+                Ayarlar
+            </a>
+        </nav>
     </div>
 </div>
 
@@ -1025,6 +1606,90 @@
     </div>
 </div>
 
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-content">
+            <!-- Company Info -->
+            <div class="footer-section">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <img src="assets/media/godlogo.png" alt="Guide of Dubai">
+                        <span class="footer-logo-text">Guide of Dubai</span>
+                    </div>
+                    <p class="footer-description">
+                        Dubai'nin güvenilir vize danışmanı. Profesyonel hizmet anlayışımızla, vize süreçlerinizi hızlı ve güvenli şekilde yönetiyoruz.
+                    </p>
+                </div>
+                <div class="footer-contact">
+                    <div class="footer-contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        İstanbul, Türkiye
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-phone"></i>
+                        +90 XXX XXX XX XX
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-envelope"></i>
+                        info@guideofdubai.com
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="footer-section">
+                <h4>Hızlı Linkler</h4>
+                <ul class="footer-links">
+                    <li><a href="dashboard.html"><i class="fas fa-chart-bar"></i>Dashboard</a></li>
+                    <li><a href="list.html"><i class="fas fa-list"></i>Başvurular</a></li>
+                    <li><a href="application-form.html"><i class="fas fa-plus"></i>Yeni Başvuru</a></li>
+                    <li><a href="settings.html"><i class="fas fa-cog"></i>Ayarlar</a></li>
+                </ul>
+            </div>
+
+            <!-- Services -->
+            <div class="footer-section">
+                <h4>Hizmetlerimiz</h4>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-passport"></i>Vize İşlemleri</a></li>
+                    <li><a href="#"><i class="fas fa-plane"></i>Uçak Bileti</a></li>
+                    <li><a href="#"><i class="fas fa-hotel"></i>Otel Rezervasyonu</a></li>
+                    <li><a href="#"><i class="fas fa-shield-alt"></i>Seyahat Sigortası</a></li>
+                </ul>
+            </div>
+
+            <!-- Support -->
+            <div class="footer-section">
+                <h4>Destek</h4>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-headset"></i>Müşteri Hizmetleri</a></li>
+                    <li><a href="#"><i class="fas fa-question-circle"></i>SSS</a></li>
+                    <li><a href="#"><i class="fas fa-file-alt"></i>Belgeler</a></li>
+                    <li><a href="#"><i class="fas fa-life-ring"></i>Yardım</a></li>
+                </ul>
+                <div class="footer-social">
+                    <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="footer-copyright">
+                © 2025 Guide of Dubai. Tüm hakları saklıdır.
+            </div>
+            <div class="footer-bottom-links">
+                <a href="#">Gizlilik Politikası</a>
+                <a href="#">Kullanım Şartları</a>
+                <a href="#">Çerez Politikası</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
 <!-- JavaScript Libraries -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
@@ -1066,6 +1731,48 @@ $(document).ready(function() {
         updateApplicationStatus(newStatus);
     });
 });
+
+// Mobile menu toggle function
+function toggleMobileMenu() {
+    const mobileMenu = document.getElementById('mobileMenu');
+    const toggleBtn = document.querySelector('.mobile-toggle i');
+    
+    if (mobileMenu.style.display === 'block') {
+        mobileMenu.style.display = 'none';
+        toggleBtn.className = 'fas fa-bars';
+    } else {
+        mobileMenu.style.display = 'block';
+        toggleBtn.className = 'fas fa-times';
+    }
+}
+
+// Close mobile menu when clicking outside
+document.addEventListener('click', function(event) {
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileToggle = document.querySelector('.mobile-toggle');
+    const header = document.querySelector('.header');
+    
+    if (!header.contains(event.target) && mobileMenu.style.display === 'block') {
+        mobileMenu.style.display = 'none';
+        document.querySelector('.mobile-toggle i').className = 'fas fa-bars';
+    }
+});
+
+// Header search functionality
+document.querySelector('.search-input')?.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        console.log('Searching for:', this.value);
+    }
+});
+
+// Sign out function
+function signOut() {
+    if (confirm('Çıkış yapmak istediğinizden emin misiniz?')) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('userRole');
+        window.location.href = 'sign-in.html';
+    }
+}
 
 // ✅ Load current user info - removed processor name display
 function loadCurrentUser() {
