@@ -71,7 +71,8 @@ func main() {
 		http.ServeFile(w, r, "./ui/admin.html")
 	}).Methods("GET")
 
-	// 🔹 SPA/Metronic dosyaları (en sonda kalsın)r.PathPrefix("/").Handler(http.FileServer(http.Dir("./ui")))
+	// 🔹 SPA/Metronic dosyaları (en sonda kalsın)
+	r.PathPrefix("/").Handler(http.FileServer(http.Dir("./ui")))
 
 	// ✅ Render PORT environment variable'ını kullan
 	port := os.Getenv("PORT")
