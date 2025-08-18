@@ -2,1072 +2,79 @@
 <html lang="tr">
 <head>
     <meta charset="utf-8" />
-    <title>Admin Paneli | Guide of Dubai</title>
+    <title>Admin Paneli | Guide of Dubai B2B</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
     <style>
         :root {
-            --kt-primary: #009ef7;
-            --kt-primary-active: #0095e8;
-            --kt-red: #e30613;
-            --kt-red-active: #b3050f;
-            --kt-gray-900: #1e2129;
-            --kt-gray-800: #3f4254;
-            --kt-gray-700: #5e6278;
-            --kt-gray-600: #7e8299;
-            --kt-gray-400: #a1a5b7;
-            --kt-gray-300: #e4e6ea;
-            --kt-gray-200: #eff2f5;
-            --kt-gray-100: #f5f8fa;
-            --kt-white: #ffffff;
+            --primary-red: #e30613;
+            --primary-red-hover: #b3050f;
         }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: #f8f9fa;
-            color: #333;
-            line-height: 1.5;
-            min-height: 100vh;
-        }
-
-        /* Header Styles - Diğer sayfalarla tutarlı */
+        
         .header {
-            background: var(--kt-white);
-            box-shadow: 0 0.5rem 1.5rem 0.5rem rgba(0, 0, 0, 0.075);
-            position: relative;
-            z-index: 100;
-        }
-        
-        .header-container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 2rem;
-            min-height: 70px;
-        }
-        
-        .header-brand {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-        }
-        
-        .header-logo {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .header-logo img {
-            max-height: 40px;
-            width: auto;
-            object-fit: contain;
-        }
-        
-        .header-subtitle {
-            color: var(--kt-gray-600);
-            font-size: 0.875rem;
-            margin: 0;
-            margin-top: -2px;
-        }
-        
-        .header-nav {
-            display: flex;
-            align-items: center;
-            gap: 2rem;
-        }
-        
-        .nav-item {
-            position: relative;
-        }
-        
-        .nav-link {
-            color: var(--kt-gray-700);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.95rem;
-            padding: 0.5rem 0;
-            transition: all 0.2s ease;
-            position: relative;
-        }
-        
-        .nav-link:hover, .nav-link.active {
-            color: var(--kt-red);
-        }
-        
-        .nav-link.active::after {
-            content: '';
-            position: absolute;
-            bottom: -15px;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: var(--kt-red);
-            border-radius: 2px;
-        }
-        
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        
-        .notifications {
-            position: relative;
-            background: var(--kt-gray-100);
-            border: 1px solid var(--kt-gray-200);
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--kt-gray-700);
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        
-        .notifications:hover {
-            background: var(--kt-white);
-            border-color: var(--kt-primary);
-            color: var(--kt-primary);
-        }
-        
-        .notifications .badge {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background: var(--kt-red);
+            background: var(--primary-red);
             color: white;
-            font-size: 0.7rem;
-            font-weight: 600;
-            padding: 2px 6px;
-            border-radius: 10px;
-            min-width: 18px;
-            height: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .user-menu {
-            position: relative;
-        }
-        
-        .user-menu-btn {
-            background: var(--kt-white) !important;
-            border: 1px solid var(--kt-gray-200) !important;
-            border-radius: 8px !important;
-            padding: 8px 16px !important;
-            font-size: 14px !important;
-            font-weight: 500 !important;
-            color: var(--kt-gray-700) !important;
-            box-shadow: none !important;
-            transition: all 0.2s ease;
-        }
-        
-        .user-menu-btn:hover {
-            background: var(--kt-gray-100) !important;
-            border-color: var(--kt-primary) !important;
-            color: var(--kt-primary) !important;
-        }
-        
-        .user-avatar {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 32px;
-            height: 32px;
-            background: linear-gradient(135deg, var(--kt-red) 0%, var(--kt-red-active) 100%);
-            border-radius: 6px;
-            margin-right: 8px;
-        }
-        
-        .user-avatar i {
-            font-size: 16px;
-            color: white;
-        }
-        
-        .user-dropdown {
-            border: none !important;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15) !important;
-            border-radius: 8px !important;
-            min-width: 200px !important;
-            padding: 8px 0 !important;
-            margin-top: 8px !important;
-        }
-        
-        .user-dropdown .dropdown-header {
-            color: var(--kt-gray-400) !important;
-            font-size: 11px !important;
-            font-weight: 600 !important;
-            text-transform: uppercase !important;
-            padding: 8px 16px 4px !important;
-            margin-bottom: 4px !important;
-        }
-        
-        .user-dropdown .dropdown-item {
-            padding: 10px 16px !important;
-            font-size: 14px !important;
-            color: var(--kt-gray-700) !important;
-            border-radius: 0 !important;
-            transition: all 0.15s ease !important;
-        }
-        
-        .user-dropdown .dropdown-item:hover {
-            background: var(--kt-gray-100) !important;
-            color: var(--kt-red) !important;
-        }
-        
-        .user-dropdown .dropdown-item.text-danger {
-            color: #f1416c !important;
-        }
-        
-        .user-dropdown .dropdown-item.text-danger:hover {
-            background: #fef3f2 !important;
-            color: #f1416c !important;
-        }
-        
-        .user-dropdown .dropdown-divider {
-            margin: 8px 0 !important;
-            border-color: var(--kt-gray-200) !important;
-        }
-        
-        /* Mobile Header */
-        .mobile-toggle {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--kt-gray-700);
-            font-size: 1.25rem;
-            padding: 0.5rem;
-            cursor: pointer;
-        }
-        
-        .mobile-menu {
-            display: none;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            background: var(--kt-white);
-            box-shadow: 0 0.5rem 1.5rem 0.5rem rgba(0, 0, 0, 0.075);
-            border-radius: 0 0 8px 8px;
             padding: 1rem 2rem;
-            z-index: 99;
-        }
-        
-        .mobile-nav {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-        
-        .mobile-nav .nav-link {
-            padding: 0.75rem 0;
-            border-bottom: 1px solid var(--kt-gray-200);
-        }
-        
-        .mobile-nav .nav-link:last-child {
-            border-bottom: none;
-        }
-
-        /* Main Container */
-        .main-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        /* Page Header */
-        .page-header {
             margin-bottom: 2rem;
-            text-align: center;
-            padding: 1rem 0;
-            border-bottom: 1px solid var(--kt-gray-200);
-            position: relative;
         }
-
-        .page-header::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 3px;
-            background: var(--kt-red);
-            border-radius: 2px;
+        
+        .stat-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-left: 5px solid var(--primary-red);
+            margin-bottom: 1.5rem;
         }
-
-        .page-title {
-            font-size: 2.25rem;
-            font-weight: 700;
-            color: var(--kt-gray-900);
-            margin: 0 0 0.5rem;
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-red);
         }
-
-        .page-subtitle {
-            color: var(--kt-gray-600);
-            font-size: 1rem;
-            margin: 0;
+        
+        .btn-primary {
+            background-color: var(--primary-red);
+            border-color: var(--primary-red);
         }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-red-hover);
+            border-color: var(--primary-red-hover);
+        }
+        
+        .status-badge {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+        
+        .status-pending { background-color: #fff3cd; color: #856404; }
+        .status-processing { background-color: #cce7ff; color: #004085; }
+        .status-approved { background-color: #d4edda; color: #155724; }
+        .status-rejected { background-color: #f8d7da; color: #721c24; }
 
-        /* Connection Status Alert */
         .alert-info {
             background: #e3f2fd;
             border: 1px solid #2196F3;
             color: #1976D2;
-            border-radius: 8px;
             margin-bottom: 2rem;
-            padding: 1rem;
-            display: flex;
-            align-items: center;
-        }
-
-        .alert-info i {
-            margin-right: 0.5rem;
-        }
-
-        /* Stats Cards */
-        .stats-row {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .stat-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 0.5rem 1.5rem 0.5rem rgba(0, 0, 0, 0.075);
-            border-left: 4px solid var(--kt-red);
-            position: relative;
-            transition: all 0.3s ease;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0.75rem 2rem 0.75rem rgba(0, 0, 0, 0.1);
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--kt-red);
-            margin-bottom: 0.5rem;
-            line-height: 1;
-        }
-
-        .stat-label {
-            color: var(--kt-gray-600);
-            font-size: 0.9rem;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .stat-icon {
-            position: absolute;
-            top: 1.5rem;
-            right: 1.5rem;
-            width: 50px;
-            height: 50px;
-            background: rgba(227, 6, 19, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--kt-red);
-            font-size: 1.5rem;
-        }
-
-        /* Tab Navigation */
-        .nav-tabs {
-            border-bottom: 2px solid var(--kt-gray-200);
-            margin-bottom: 2rem;
-        }
-
-        .nav-tabs .nav-link {
-            color: var(--kt-gray-600);
-            border: none;
-            border-bottom: 3px solid transparent;
-            padding: 1rem 1.5rem;
-            font-weight: 500;
-            transition: all 0.2s ease;
-        }
-
-        .nav-tabs .nav-link:hover {
-            border-color: transparent;
-            color: var(--kt-red);
-        }
-
-        .nav-tabs .nav-link.active {
-            color: var(--kt-red);
-            background: none;
-            border-bottom-color: var(--kt-red);
-        }
-
-        /* Card Styles */
-        .card {
-            border: none;
-            border-radius: 12px;
-            box-shadow: 0 0.5rem 1.5rem 0.5rem rgba(0, 0, 0, 0.075);
-            margin-bottom: 2rem;
-        }
-
-        .card-header {
-            background: white;
-            border-bottom: 1px solid var(--kt-gray-200);
-            padding: 1.5rem;
-            border-radius: 12px 12px 0 0;
-            display: flex;
-            justify-content: between;
-            align-items: center;
-        }
-
-        .card-header h5 {
-            margin: 0;
-            font-weight: 600;
-            color: var(--kt-gray-900);
-        }
-
-        .card-body {
-            padding: 1.5rem;
-        }
-
-        /* Table Styles */
-        .table {
-            margin: 0;
-        }
-
-        .table thead th {
-            border-bottom: 2px solid var(--kt-gray-200);
-            font-weight: 600;
-            color: var(--kt-gray-600);
-            text-transform: uppercase;
-            font-size: 0.8rem;
-            letter-spacing: 0.5px;
-            padding: 1rem 0.75rem;
-            background: #fafbfc;
-        }
-
-        .table tbody td {
-            padding: 1rem 0.75rem;
-            border-bottom: 1px solid var(--kt-gray-200);
-            vertical-align: middle;
-        }
-
-        .table tbody tr:hover {
-            background: rgba(227, 6, 19, 0.02);
-        }
-
-        /* Status Badges */
-        .status-badge {
-            padding: 0.4rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .status-pending { 
-            background-color: #fff3cd; 
-            color: #856404; 
-        }
-        
-        .status-processing { 
-            background-color: #cce7ff; 
-            color: #004085; 
-        }
-        
-        .status-approved { 
-            background-color: #d4edda; 
-            color: #155724; 
-        }
-        
-        .status-rejected { 
-            background-color: #f8d7da; 
-            color: #721c24; 
-        }
-
-        /* Buttons */
-        .btn {
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            font-weight: 500;
-            font-size: 0.875rem;
-            border: 1px solid transparent;
-            transition: all 0.2s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .btn-primary {
-            background: var(--kt-red);
-            color: white;
-            border-color: var(--kt-red);
-        }
-
-        .btn-primary:hover {
-            background: var(--kt-red-active);
-            border-color: var(--kt-red-active);
-            color: white;
-            transform: translateY(-1px);
-        }
-
-        .btn-outline-primary {
-            background: transparent;
-            color: var(--kt-red);
-            border-color: var(--kt-red);
-        }
-
-        .btn-outline-primary:hover {
-            background: var(--kt-red);
-            color: white;
-            transform: translateY(-1px);
-        }
-
-        .btn-outline-danger {
-            background: transparent;
-            color: #dc3545;
-            border-color: #dc3545;
-        }
-
-        .btn-outline-danger:hover {
-            background: #dc3545;
-            color: white;
-            transform: translateY(-1px);
-        }
-
-        .btn-success {
-            background: #198754;
-            color: white;
-            border-color: #198754;
-        }
-
-        .btn-success:hover {
-            background: #157347;
-            border-color: #157347;
-            color: white;
-            transform: translateY(-1px);
-        }
-
-        .btn-secondary {
-            background: var(--kt-gray-600);
-            color: white;
-            border-color: var(--kt-gray-600);
-        }
-
-        .btn-secondary:hover {
-            background: var(--kt-gray-700);
-            border-color: var(--kt-gray-700);
-            color: white;
-        }
-
-        .btn-sm {
-            padding: 0.375rem 0.75rem;
-            font-size: 0.75rem;
-        }
-
-        /* Loading Animation */
-        .loading {
-            display: none;
-            text-align: center;
-            padding: 2rem;
-        }
-
-        .loading.show {
-            display: block;
-        }
-
-        .spinner {
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid var(--kt-red);
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 1rem;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Responsive Design */
-        @media (max-width: 1200px) {
-            .main-container {
-                padding: 1rem;
-            }
-        }
-        
-        @media (max-width: 992px) {
-            .header-nav {
-                display: none;
-            }
-            
-            .mobile-toggle {
-                display: block;
-            }
-            
-            .header-actions {
-                gap: 0.5rem;
-            }
-            
-            .header-subtitle {
-                display: none;
-            }
-
-            .page-title {
-                font-size: 1.75rem;
-            }
-
-            .stats-row {
-                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-                gap: 1rem;
-            }
-
-            .stat-card {
-                padding: 1.5rem;
-            }
-
-            .stat-number {
-                font-size: 2rem;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .header-container {
-                padding: 0 1rem;
-                min-height: 60px;
-            }
-            
-            .notifications {
-                width: 36px;
-                height: 36px;
-            }
-
-            .main-container {
-                padding: 0.5rem;
-            }
-
-            .card-header {
-                padding: 1rem;
-                flex-direction: column;
-                gap: 1rem;
-                align-items: stretch;
-            }
-
-            .card-body {
-                padding: 1rem;
-            }
-
-            .table-responsive {
-                font-size: 0.8rem;
-            }
-
-            .btn {
-                font-size: 0.75rem;
-                padding: 0.4rem 0.8rem;
-            }
-
-            .stat-card {
-                text-align: center;
-            }
-
-            .stat-icon {
-                position: static;
-                margin: 0 auto 1rem;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .page-title {
-                font-size: 1.5rem;
-            }
-
-            .stats-row {
-                grid-template-columns: 1fr;
-            }
-
-            .nav-tabs .nav-link {
-                padding: 0.75rem 1rem;
-                font-size: 0.8rem;
-            }
-        }
-
-        /* Footer Styles */
-        .footer {
-            background: var(--kt-gray-900);
-            color: var(--kt-white);
-            margin-top: 4rem;
-            padding: 3rem 0 1rem;
-        }
-
-        .footer-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 3rem;
-            margin-bottom: 2rem;
-        }
-
-        .footer-section h4 {
-            color: var(--kt-white);
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            position: relative;
-            padding-bottom: 0.5rem;
-        }
-
-        .footer-section h4::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 30px;
-            height: 2px;
-            background: var(--kt-red);
-        }
-
-        .footer-brand {
-            margin-bottom: 1.5rem;
-        }
-
-        .footer-logo {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .footer-logo img {
-            height: 40px;
-            margin-right: 12px;
-            filter: brightness(0) invert(1);
-        }
-
-        .footer-logo-text {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--kt-white);
-        }
-
-        .footer-description {
-            color: var(--kt-gray-400);
-            line-height: 1.6;
-            margin-bottom: 1.5rem;
-        }
-
-        .footer-contact {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-        }
-
-        .footer-contact-item {
-            display: flex;
-            align-items: center;
-            color: var(--kt-gray-400);
-            font-size: 0.9rem;
-        }
-
-        .footer-contact-item i {
-            width: 20px;
-            color: var(--kt-red);
-            margin-right: 10px;
-        }
-
-        .footer-links {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .footer-links li {
-            margin-bottom: 0.75rem;
-        }
-
-        .footer-links a {
-            color: var(--kt-gray-400);
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-        }
-
-        .footer-links a:hover {
-            color: var(--kt-red);
-            padding-left: 5px;
-        }
-
-        .footer-links a i {
-            margin-right: 8px;
-            width: 16px;
-        }
-
-        .footer-social {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .footer-social a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            background: var(--kt-gray-800);
-            color: var(--kt-gray-400);
-            border-radius: 50%;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .footer-social a:hover {
-            background: var(--kt-red);
-            color: var(--kt-white);
-            transform: translateY(-2px);
-        }
-
-        .footer-bottom {
-            border-top: 1px solid var(--kt-gray-800);
-            padding-top: 1.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .footer-copyright {
-            color: var(--kt-gray-400);
-            font-size: 0.9rem;
-        }
-
-        .footer-bottom-links {
-            display: flex;
-            gap: 2rem;
-        }
-
-        .footer-bottom-links a {
-            color: var(--kt-gray-400);
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: color 0.2s ease;
-        }
-
-        .footer-bottom-links a:hover {
-            color: var(--kt-red);
-        }
-
-        /* Footer Responsive */
-        @media (max-width: 992px) {
-            .footer-content {
-                grid-template-columns: 1fr 1fr;
-                gap: 2rem;
-            }
-
-            .footer-container {
-                padding: 0 1rem;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .footer {
-                padding: 2rem 0 1rem;
-            }
-
-            .footer-content {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-                text-align: center;
-            }
-
-            .footer-section h4::after {
-                left: 50%;
-                transform: translateX(-50%);
-            }
-
-            .footer-bottom {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .footer-bottom-links {
-                justify-content: center;
-                flex-wrap: wrap;
-                gap: 1rem;
-            }
-
-            .footer-contact-item {
-                justify-content: center;
-            }
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
     <div class="header">
-        <div class="header-container">
-            <!-- Brand -->
-            <div class="d-flex align-items-center">
-                <a href="dashboard.html" class="header-brand">
-                    <div class="header-logo">
-                        <img src="assets/media/godlogo.png" alt="Guide of Dubai" style="width: 120px; height: auto;">
-                    </div>
-                    <div class="ms-3">
-                        <p class="header-subtitle d-none d-lg-block">Admin Paneli</p>
-                    </div>
-                </a>
-            </div>
-            
-            <!-- Desktop Navigation -->
-            <nav class="header-nav d-none d-lg-flex">
-                <div class="nav-item">
-                    <a href="dashboard.html" class="nav-link">
-                        <i class="fas fa-chart-bar me-2"></i>
-                        Dashboard
-                    </a>
-                </div>
-                <div class="nav-item">
-                    <a href="list.html" class="nav-link">
-                        <i class="fas fa-list me-2"></i>
-                        Başvurular
-                    </a>
-                </div>
-                <div class="nav-item">
-                    <a href="application-form.html" class="nav-link">
-                        <i class="fas fa-plus me-2"></i>
-                        Yeni Başvuru
-                    </a>
-                </div>
-                <div class="nav-item">
-                    <a href="#" class="nav-link active">
-                        <i class="fas fa-shield-alt me-2"></i>
-                        Admin Panel
-                    </a>
-                </div>
-                <div class="nav-item">
-                    <a href="settings.html" class="nav-link">
-                        <i class="fas fa-cog me-2"></i>
-                        Ayarlar
-                    </a>
-                </div>
-            </nav>
-            
-            <!-- Header Actions -->
-            <div class="header-actions">
-                <!-- Notifications -->
-                <div class="notifications">
-                    <i class="fas fa-bell"></i>
-                    <span class="badge">3</span>
-                </div>
-                
-                <!-- User Menu -->
-                <div class="user-menu">
-                    <div class="dropdown">
-                        <button class="btn dropdown-toggle user-menu-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <div class="user-avatar">
-                                <i class="fas fa-user-shield"></i>
-                            </div>
-                            <span class="d-none d-md-inline">Admin</span>
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-end user-dropdown">
-                            <li><h6 class="dropdown-header">Admin Menüsü</h6></li>
-                            <li>
-                                <a class="dropdown-item" href="settings.html">
-                                    <i class="fas fa-user-circle me-2"></i>
-                                    Profil
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="dashboard.html">
-                                    <i class="fas fa-chart-bar me-2"></i>
-                                    Dashboard
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="list.html">
-                                    <i class="fas fa-list me-2"></i>
-                                    Başvurular
-                                </a>
-                            </li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li>
-                                <a class="dropdown-item text-danger" href="#" onclick="logout()">
-                                    <i class="fas fa-sign-out-alt me-2"></i>
-                                    Çıkış Yap
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <!-- Mobile Toggle -->
-                <button class="mobile-toggle d-lg-none" type="button" onclick="toggleMobileMenu()">
-                    <i class="fas fa-bars"></i>
-                </button>
-            </div>
-        </div>
-        
-        <!-- Mobile Menu -->
-        <div class="mobile-menu" id="mobileMenu">
-            <nav class="mobile-nav">
-                <a href="dashboard.html" class="nav-link">
-                    <i class="fas fa-chart-bar me-2"></i>
-                    Dashboard
-                </a>
-                <a href="list.html" class="nav-link">
-                    <i class="fas fa-list me-2"></i>
-                    Başvurular
-                </a>
-                <a href="application-form.html" class="nav-link">
-                    <i class="fas fa-plus me-2"></i>
-                    Yeni Başvuru
-                </a>
-                <a href="#" class="nav-link active">
-                    <i class="fas fa-shield-alt me-2"></i>
-                    Admin Panel
-                </a>
-                <a href="settings.html" class="nav-link">
-                    <i class="fas fa-cog me-2"></i>
-                    Ayarlar
-                </a>
-            </nav>
+        <div class="d-flex justify-content-between align-items-center">
+            <h2><i class="fas fa-shield-alt me-2"></i>Admin Paneli</h2>
+            <button class="btn btn-light" onclick="logout()">
+                <i class="fas fa-sign-out-alt me-2"></i>Çıkış
+            </button>
         </div>
     </div>
 
-    <!-- Main Content -->
-    <div class="main-container">
-        <!-- Page Header -->
-        <div class="page-header">
-            <h1 class="page-title">
-                <i class="fas fa-shield-alt me-3"></i>
-                Admin Paneli
-            </h1>
-            <p class="page-subtitle">Sistem yönetimi, kullanıcı kontrolü ve güvenlik ayarları</p>
-        </div>
-
+    <div class="container-fluid">
         <!-- Connection Status -->
         <div class="alert alert-info" id="connectionStatus">
             <i class="fas fa-server me-2"></i>
@@ -1075,54 +82,44 @@
             <span class="badge bg-success ms-2" id="connectionBadge">Bağlı</span>
         </div>
 
-        <!-- Statistics Row -->
-        <div class="stats-row">
-            <div class="stat-card">
-                <div class="stat-number" id="totalApplications">0</div>
-                <div class="stat-label">Toplam Başvuru</div>
-                <div class="stat-icon">
-                    <i class="fas fa-file-alt"></i>
+        <!-- Stats Row -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalApplications">0</div>
+                    <div>Toplam Başvuru</div>
                 </div>
             </div>
-            <div class="stat-card">
-                <div class="stat-number" id="pendingApplications">0</div>
-                <div class="stat-label">Bekleyen Başvuru</div>
-                <div class="stat-icon">
-                    <i class="fas fa-clock"></i>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="stat-number" id="pendingApplications">0</div>
+                    <div>Bekleyen Başvuru</div>
                 </div>
             </div>
-            <div class="stat-card">
-                <div class="stat-number" id="totalUsers">0</div>
-                <div class="stat-label">Toplam Kullanıcı</div>
-                <div class="stat-icon">
-                    <i class="fas fa-users"></i>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalUsers">0</div>
+                    <div>Toplam Kullanıcı</div>
                 </div>
             </div>
-            <div class="stat-card">
-                <div class="stat-number" id="approvedApplications">0</div>
-                <div class="stat-label">Onaylanan Başvuru</div>
-                <div class="stat-icon">
-                    <i class="fas fa-check-circle"></i>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="stat-number" id="approvedApplications">0</div>
+                    <div>Onaylanan Başvuru</div>
                 </div>
             </div>
         </div>
 
-        <!-- Tab Navigation -->
-        <ul class="nav nav-tabs" id="adminTabs">
+        <!-- Tabs -->
+        <ul class="nav nav-tabs mb-4" id="adminTabs">
             <li class="nav-item">
-                <a class="nav-link active" data-bs-toggle="tab" href="#applications">
-                    <i class="fas fa-file-alt me-2"></i>Başvurular
-                </a>
+                <a class="nav-link active" data-bs-toggle="tab" href="#applications">Başvurular</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="tab" href="#users">
-                    <i class="fas fa-users me-2"></i>Kullanıcılar
-                </a>
+                <a class="nav-link" data-bs-toggle="tab" href="#users">Kullanıcılar</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="tab" href="#logs">
-                    <i class="fas fa-clipboard-list me-2"></i>Giriş Logları
-                </a>
+                <a class="nav-link" data-bs-toggle="tab" href="#logs">Giriş Logları</a>
             </li>
         </ul>
 
@@ -1131,13 +128,10 @@
             <!-- Applications Tab -->
             <div class="tab-pane fade show active" id="applications">
                 <div class="card">
-                    <div class="card-header">
-                        <h5>
-                            <i class="fas fa-file-alt me-2"></i>
-                            Tüm Başvurular
-                        </h5>
-                        <button class="btn btn-primary" onclick="exportToCSV('applications')">
-                            <i class="fas fa-download me-2"></i>CSV İndir
+                    <div class="card-header d-flex justify-content-between">
+                        <h5>Tüm Başvurular</h5>
+                        <button class="btn btn-primary btn-sm" onclick="exportToCSV('applications')">
+                            <i class="fas fa-download"></i> CSV İndir
                         </button>
                     </div>
                     <div class="card-body">
@@ -1150,18 +144,14 @@
                                         <th>Email</th>
                                         <th>Telefon</th>
                                         <th>Vize Tipi</th>
-                                        <th>Tarih</th>
                                         <th>Durum</th>
                                         <th>İşlemler</th>
                                     </tr>
                                 </thead>
                                 <tbody id="applicationsTable">
                                     <tr>
-                                        <td colspan="8" class="text-center py-4">
-                                            <div class="loading show">
-                                                <div class="spinner"></div>
-                                                <p>Başvurular yükleniyor...</p>
-                                            </div>
+                                        <td colspan="7" class="text-center">
+                                            <i class="fas fa-spinner fa-spin me-2"></i>Yükleniyor...
                                         </td>
                                     </tr>
                                 </tbody>
@@ -1174,13 +164,10 @@
             <!-- Users Tab -->
             <div class="tab-pane fade" id="users">
                 <div class="card">
-                    <div class="card-header">
-                        <h5>
-                            <i class="fas fa-users me-2"></i>
-                            Sistem Kullanıcıları
-                        </h5>
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#userModal">
-                            <i class="fas fa-plus me-2"></i>Yeni Kullanıcı
+                    <div class="card-header d-flex justify-content-between">
+                        <h5>Sistem Kullanıcıları</h5>
+                        <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#userModal">
+                            <i class="fas fa-plus"></i> Yeni Kullanıcı
                         </button>
                     </div>
                     <div class="card-body">
@@ -1192,17 +179,13 @@
                                         <th>Ad Soyad</th>
                                         <th>Email</th>
                                         <th>Rol</th>
-                                        <th>Kayıt Tarihi</th>
                                         <th>İşlemler</th>
                                     </tr>
                                 </thead>
                                 <tbody id="usersTable">
                                     <tr>
-                                        <td colspan="6" class="text-center py-4">
-                                            <div class="loading show">
-                                                <div class="spinner"></div>
-                                                <p>Kullanıcılar yükleniyor...</p>
-                                            </div>
+                                        <td colspan="5" class="text-center">
+                                            <i class="fas fa-spinner fa-spin me-2"></i>Yükleniyor...
                                         </td>
                                     </tr>
                                 </tbody>
@@ -1216,13 +199,7 @@
             <div class="tab-pane fade" id="logs">
                 <div class="card">
                     <div class="card-header">
-                        <h5>
-                            <i class="fas fa-clipboard-list me-2"></i>
-                            Giriş Logları
-                        </h5>
-                        <button class="btn btn-outline-primary" onclick="refreshLogs()">
-                            <i class="fas fa-sync-alt me-2"></i>Yenile
-                        </button>
+                        <h5>Giriş Logları</h5>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -1230,20 +207,16 @@
                                 <thead>
                                     <tr>
                                         <th>Tarih/Saat</th>
-                                        <th>Kullanıcı</th>
-                                        <th>Email</th>
+                                        <th>Kullanıcı ID</th>
                                         <th>IP Adresi</th>
                                         <th>Durum</th>
-                                        <th>Rol</th>
+                                        <th>Tip</th>
                                     </tr>
                                 </thead>
                                 <tbody id="logsTable">
                                     <tr>
-                                        <td colspan="6" class="text-center py-4">
-                                            <div class="loading show">
-                                                <div class="spinner"></div>
-                                                <p>Loglar yükleniyor...</p>
-                                            </div>
+                                        <td colspan="5" class="text-center">
+                                            <i class="fas fa-spinner fa-spin me-2"></i>Yükleniyor...
                                         </td>
                                     </tr>
                                 </tbody>
@@ -1260,182 +233,49 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">
-                        <i class="fas fa-user-plus me-2"></i>
-                        Yeni Kullanıcı Ekle
-                    </h5>
+                    <h5 class="modal-title">Yeni Kullanıcı Ekle</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <form id="userForm">
                         <div class="mb-3">
-                            <label class="form-label">
-                                <i class="fas fa-user me-2"></i>
-                                Ad Soyad
-                            </label>
-                            <input type="text" class="form-control" name="name" required placeholder="Kullanıcının tam adını girin">
+                            <label class="form-label">Ad Soyad</label>
+                            <input type="text" class="form-control" name="name" required>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">
-                                <i class="fas fa-envelope me-2"></i>
-                                Email
-                            </label>
-                            <input type="email" class="form-control" name="email" required placeholder="email@example.com">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" name="email" required>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">
-                                <i class="fas fa-lock me-2"></i>
-                                Şifre
-                            </label>
-                            <input type="password" class="form-control" name="password" required placeholder="Güçlü bir şifre girin">
-                            <small class="text-muted">En az 8 karakter, büyük/küçük harf ve sayı içermeli</small>
+                            <label class="form-label">Şifre</label>
+                            <input type="password" class="form-control" name="password" required>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">
-                                <i class="fas fa-user-tag me-2"></i>
-                                Rol
-                            </label>
+                            <label class="form-label">Rol</label>
                             <select class="form-select" name="role" required>
-                                <option value="">Rol seçiniz</option>
-                                <option value="staff">Staff (Çalışan)</option>
-                                <option value="admin">Admin (Yönetici)</option>
+                                <option value="staff">Staff</option>
+                                <option value="admin">Admin</option>
                             </select>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                        <i class="fas fa-times me-2"></i>
-                        İptal
-                    </button>
-                    <button type="button" class="btn btn-primary" onclick="saveUser()">
-                        <i class="fas fa-save me-2"></i>
-                        Kullanıcı Oluştur
-                    </button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+                    <button type="button" class="btn btn-primary" onclick="saveUser()">Kaydet</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-content">
-                <!-- Company Info -->
-                <div class="footer-section">
-                    <div class="footer-brand">
-                        <div class="footer-logo">
-                            <img src="assets/media/godlogo.png" alt="Guide of Dubai">
-                            <span class="footer-logo-text">Guide of Dubai</span>
-                        </div>
-                        <p class="footer-description">
-                            Dubai'nin güvenilir vize danışmanı. Profesyonel hizmet anlayışımızla, vize süreçlerinizi hızlı ve güvenli şekilde yönetiyoruz.
-                        </p>
-                    </div>
-                    <div class="footer-contact">
-                        <div class="footer-contact-item">
-                            <i class="fas fa-map-marker-alt"></i>
-                            İstanbul, Türkiye
-                        </div>
-                        <div class="footer-contact-item">
-                            <i class="fas fa-phone"></i>
-                            +90 XXX XXX XX XX
-                        </div>
-                        <div class="footer-contact-item">
-                            <i class="fas fa-envelope"></i>
-                            info@guideofdubai.com
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Quick Links -->
-                <div class="footer-section">
-                    <h4>Hızlı Linkler</h4>
-                    <ul class="footer-links">
-                        <li><a href="dashboard.html"><i class="fas fa-chart-bar"></i>Dashboard</a></li>
-                        <li><a href="list.html"><i class="fas fa-list"></i>Başvurular</a></li>
-                        <li><a href="application-form.html"><i class="fas fa-plus"></i>Yeni Başvuru</a></li>
-                        <li><a href="settings.html"><i class="fas fa-cog"></i>Ayarlar</a></li>
-                    </ul>
-                </div>
-
-                <!-- Admin Features -->
-                <div class="footer-section">
-                    <h4>Admin Özellikleri</h4>
-                    <ul class="footer-links">
-                        <li><a href="#"><i class="fas fa-users"></i>Kullanıcı Yönetimi</a></li>
-                        <li><a href="#"><i class="fas fa-shield-alt"></i>Güvenlik</a></li>
-                        <li><a href="#"><i class="fas fa-clipboard-list"></i>Sistem Logları</a></li>
-                        <li><a href="#"><i class="fas fa-chart-line"></i>Raporlar</a></li>
-                    </ul>
-                </div>
-
-                <!-- Support -->
-                <div class="footer-section">
-                    <h4>Destek</h4>
-                    <ul class="footer-links">
-                        <li><a href="#"><i class="fas fa-headset"></i>Müşteri Hizmetleri</a></li>
-                        <li><a href="#"><i class="fas fa-question-circle"></i>SSS</a></li>
-                        <li><a href="#"><i class="fas fa-book"></i>Dokümantasyon</a></li>
-                        <li><a href="#"><i class="fas fa-life-ring"></i>Yardım</a></li>
-                    </ul>
-                    <div class="footer-social">
-                        <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="#" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="footer-bottom">
-                <div class="footer-copyright">
-                    © 2025 Guide of Dubai. Tüm hakları saklıdır.
-                </div>
-                <div class="footer-bottom-links">
-                    <a href="#">Gizlilik Politikası</a>
-                    <a href="#">Kullanım Şartları</a>
-                    <a href="#">Güvenlik</a>
-                </div>
-            </div>
-        </div>
-    </footer>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script>
-        // RENDER BACKEND URL - TÜM API ÇAĞRILARI BURAYA GİDECEK
+        // 🚀 RENDER BACKEND URL - TÜM API ÇAĞRILARI BURAYA GİDECEK
         const API_BASE_URL = 'https://god-1-lsu5.onrender.com';
         
         let authToken = localStorage.getItem('token');
         let applications = [];
         let users = [];
         let logs = [];
-
-        // Mobile menu toggle function
-        function toggleMobileMenu() {
-            const mobileMenu = document.getElementById('mobileMenu');
-            const toggleBtn = document.querySelector('.mobile-toggle i');
-            
-            if (mobileMenu.style.display === 'block') {
-                mobileMenu.style.display = 'none';
-                toggleBtn.className = 'fas fa-bars';
-            } else {
-                mobileMenu.style.display = 'block';
-                toggleBtn.className = 'fas fa-times';
-            }
-        }
-
-        // Close mobile menu when clicking outside
-        document.addEventListener('click', function(event) {
-            const mobileMenu = document.getElementById('mobileMenu');
-            const mobileToggle = document.querySelector('.mobile-toggle');
-            const header = document.querySelector('.header');
-            
-            if (!header.contains(event.target) && mobileMenu.style.display === 'block') {
-                mobileMenu.style.display = 'none';
-                document.querySelector('.mobile-toggle i').className = 'fas fa-bars';
-            }
-        });
 
         document.addEventListener('DOMContentLoaded', function() {
             console.log('🔗 Backend URL:', API_BASE_URL);
@@ -1457,11 +297,11 @@
         function checkAuth() {
             if (!authToken) {
                 alert('Lütfen önce giriş yapın!');
-                window.location.href = 'sign-in.html';
+                window.location.href = 'https://god-1-lsu5.onrender.com/sign-in.html';
                 return;
             }
 
-            console.log('🔐 Token kontrolü yapılıyor...');
+            console.log('🔒 Token kontrolü yapılıyor...');
             
             // Token doğrulama - RENDER BACKEND'E İSTEK
             fetch(`${API_BASE_URL}/me`, {
@@ -1484,7 +324,7 @@
                 
                 if (data.role !== 'admin') {
                     alert('Bu sayfaya sadece admin kullanıcıları erişebilir!');
-                    window.location.href = 'dashboard.html';
+                    window.location.href = `${API_BASE_URL}/sign-in.html`;
                     return;
                 }
                 
@@ -1495,7 +335,7 @@
                 updateConnectionStatus(false);
                 alert('Giriş token\'ı geçersiz. Lütfen tekrar giriş yapın.');
                 localStorage.removeItem('token');
-                window.location.href = 'sign-in.html';
+                window.location.href = `${API_BASE_URL}/sign-in.html`;
             });
         }
 
@@ -1532,7 +372,7 @@
             .catch(error => {
                 console.error('❌ Başvuru yükleme hatası:', error);
                 document.getElementById('applicationsTable').innerHTML = 
-                    '<tr><td colspan="8" class="text-center text-danger py-4">❌ Başvurular yüklenirken hata oluştu</td></tr>';
+                    '<tr><td colspan="7" class="text-center text-danger">❌ Başvurular yüklenirken hata oluştu</td></tr>';
             });
         }
 
@@ -1562,7 +402,7 @@
             .catch(error => {
                 console.error('❌ Kullanıcı yükleme hatası:', error);
                 document.getElementById('usersTable').innerHTML = 
-                    '<tr><td colspan="6" class="text-center text-danger py-4">❌ Kullanıcılar yüklenirken hata oluştu</td></tr>';
+                    '<tr><td colspan="5" class="text-center text-danger">❌ Kullanıcılar yüklenirken hata oluştu</td></tr>';
             });
         }
 
@@ -1591,7 +431,7 @@
             .catch(error => {
                 console.error('❌ Log yükleme hatası:', error);
                 document.getElementById('logsTable').innerHTML = 
-                    '<tr><td colspan="6" class="text-center text-danger py-4">❌ Loglar yüklenirken hata oluştu</td></tr>';
+                    '<tr><td colspan="5" class="text-center text-danger">❌ Loglar yüklenirken hata oluştu</td></tr>';
             });
         }
 
@@ -1599,44 +439,25 @@
             const tbody = document.getElementById('applicationsTable');
             
             if (!applications || applications.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="8" class="text-center text-muted py-4">📋 Henüz başvuru bulunmuyor</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="7" class="text-center text-muted">📝 Henüz başvuru bulunmuyor</td></tr>';
                 return;
             }
             
-            tbody.innerHTML = applications.map((app, index) => `
+            tbody.innerHTML = applications.map(app => `
                 <tr>
-                    <td><strong>#${app.id || index + 1}</strong></td>
-                    <td>
-                        <div class="fw-bold">${app.ad || ''} ${app.soyad || ''}</div>
-                    </td>
-                    <td>
-                        <span class="text-muted">${app.email || ''}</span>
-                    </td>
+                    <td>#${app.id}</td>
+                    <td>${app.ad || ''} ${app.soyad || ''}</td>
+                    <td>${app.email || ''}</td>
                     <td>${app.telefon || ''}</td>
+                    <td>${app.vize_tipi || ''}</td>
+                    <td><span class="status-badge status-${app.status}">${getStatusText(app.status)}</span></td>
                     <td>
-                        <span class="badge bg-light text-dark">${app.vize_tipi || ''}</span>
-                    </td>
-                    <td>
-                        <small class="text-muted">${formatDate(app.created_at) || ''}</small>
-                    </td>
-                    <td>
-                        <span class="status-badge status-${app.status || 'pending'}">${getStatusText(app.status)}</span>
-                    </td>
-                    <td>
-                        <div class="d-flex gap-2">
-                            <button class="btn btn-sm btn-outline-primary" onclick="viewApplication(${app.id})" title="Görüntüle">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                            <button class="btn btn-sm btn-success" onclick="updateApplicationStatus(${app.id}, 'approved')" title="Onayla">
-                                <i class="fas fa-check"></i>
-                            </button>
-                            <button class="btn btn-sm btn-outline-danger" onclick="updateApplicationStatus(${app.id}, 'rejected')" title="Reddet">
-                                <i class="fas fa-times"></i>
-                            </button>
-                            <button class="btn btn-sm btn-outline-danger" onclick="deleteApplication(${app.id})" title="Sil">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
+                        <button class="btn btn-sm btn-outline-primary" onclick="viewApplication(${app.id})" title="Görüntüle">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger" onclick="deleteApplication(${app.id})" title="Sil">
+                            <i class="fas fa-trash"></i>
+                        </button>
                     </td>
                 </tr>
             `).join('');
@@ -1646,44 +467,23 @@
             const tbody = document.getElementById('usersTable');
             
             if (!users || users.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted py-4">👥 Henüz kullanıcı bulunmuyor</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted">👥 Henüz kullanıcı bulunmuyor</td></tr>';
                 return;
             }
             
             tbody.innerHTML = users.map(user => `
                 <tr>
-                    <td><strong>#${user.id}</strong></td>
+                    <td>#${user.id}</td>
+                    <td>${user.name || ''}</td>
+                    <td>${user.email || ''}</td>
+                    <td><span class="badge bg-${user.role === 'admin' ? 'danger' : 'primary'}">${user.role || ''}</span></td>
                     <td>
-                        <div class="d-flex align-items-center">
-                            <div class="user-avatar me-2" style="width: 32px; height: 32px; font-size: 12px;">
-                                <i class="fas fa-user"></i>
-                            </div>
-                            <div>
-                                <div class="fw-bold">${user.name || ''}</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <span class="text-muted">${user.email || ''}</span>
-                    </td>
-                    <td>
-                        <span class="badge ${user.role === 'admin' ? 'bg-danger' : 'bg-primary'}">${user.role || ''}</span>
-                    </td>
-                    <td>
-                        <small class="text-muted">${formatDate(user.created_at) || ''}</small>
-                    </td>
-                    <td>
-                        <div class="d-flex gap-2">
-                            <button class="btn btn-sm btn-outline-success" onclick="editUserRole(${user.id}, '${user.role}')" title="Rol Değiştir">
-                                <i class="fas fa-user-tag"></i>
-                            </button>
-                            <button class="btn btn-sm btn-outline-primary" onclick="resetUserPassword(${user.id})" title="Şifre Sıfırla">
-                                <i class="fas fa-key"></i>
-                            </button>
-                            <button class="btn btn-sm btn-outline-danger" onclick="deleteUser(${user.id})" title="Sil">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
+                        <button class="btn btn-sm btn-outline-success" onclick="editUserRole(${user.id}, '${user.role}')" title="Rol Değiştir">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger" onclick="deleteUser(${user.id})" title="Sil">
+                            <i class="fas fa-trash"></i>
+                        </button>
                     </td>
                 </tr>
             `).join('');
@@ -1693,32 +493,17 @@
             const tbody = document.getElementById('logsTable');
             
             if (!logs || logs.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted py-4">📜 Henüz log kaydı bulunmuyor</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted">📜 Henüz log kaydı bulunmuyor</td></tr>';
                 return;
             }
             
             tbody.innerHTML = logs.map(log => `
                 <tr>
-                    <td>
-                        <div class="fw-bold">${formatDateTime(log.log_time) || ''}</div>
-                    </td>
-                    <td>
-                        <span class="text-primary">User #${log.user_id || 'N/A'}</span>
-                    </td>
-                    <td>
-                        <span class="text-muted">${log.email || ''}</span>
-                    </td>
-                    <td>
-                        <code>${log.ip || ''}</code>
-                    </td>
-                    <td>
-                        <span class="badge ${log.status === 'success' ? 'bg-success' : 'bg-danger'}">
-                            ${log.status === 'success' ? 'Başarılı' : 'Başarısız'}
-                        </span>
-                    </td>
-                    <td>
-                        <span class="badge ${log.user_type === 'admin' ? 'bg-danger' : 'bg-primary'}">${log.user_type || ''}</span>
-                    </td>
+                    <td>${log.log_time || ''}</td>
+                    <td>User #${log.user_id || 'N/A'}</td>
+                    <td>${log.ip || ''}</td>
+                    <td><span class="badge bg-${log.status === 'success' ? 'success' : 'danger'}">${log.status === 'success' ? 'Başarılı' : 'Başarısız'}</span></td>
+                    <td><span class="badge bg-${log.user_type === 'admin' ? 'danger' : 'primary'}">${log.user_type || ''}</span></td>
                 </tr>
             `).join('');
         }
@@ -1754,32 +539,6 @@
                 .catch(error => {
                     console.error('❌ Silme hatası:', error);
                     alert('Silme işlemi başarısız!');
-                });
-            }
-        }
-
-        // Başvuru durumu güncelleme
-        function updateApplicationStatus(id, status) {
-            const statusText = status === 'approved' ? 'onaylamak' : 'reddetmek';
-            if (confirm(`Bu başvuruyu ${statusText} istediğinizden emin misiniz?`)) {
-                fetch(`${API_BASE_URL}/applications/${id}/status`, {
-                    method: 'PUT',
-                    headers: {
-                        'Authorization': `Bearer ${authToken}`,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ status: status })
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP ${response.status}`);
-                    }
-                    alert(`Başvuru ${status === 'approved' ? 'onaylandı' : 'reddedildi'}!`);
-                    loadApplications();
-                })
-                .catch(error => {
-                    console.error('❌ Durum güncelleme hatası:', error);
-                    alert('Durum güncelleme başarısız!');
                 });
             }
         }
@@ -1843,32 +602,6 @@
             }
         }
 
-        // Kullanıcı şifre sıfırlama
-        function resetUserPassword(id) {
-            if (confirm('Bu kullanıcının şifresini sıfırlamak istediğinizden emin misiniz?')) {
-                fetch(`${API_BASE_URL}/users/${id}/reset-password`, {
-                    method: 'POST',
-                    headers: {
-                        'Authorization': `Bearer ${authToken}`,
-                        'Content-Type': 'application/json'
-                    }
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    alert(`Şifre sıfırlandı! Yeni şifre: ${data.new_password}`);
-                })
-                .catch(error => {
-                    console.error('❌ Şifre sıfırlama hatası:', error);
-                    alert('Şifre sıfırlama başarısız!');
-                });
-            }
-        }
-
         // RENDER BACKEND'E yeni kullanıcı ekleme isteği
         function saveUser() {
             const form = document.getElementById('userForm');
@@ -1880,17 +613,6 @@
                 password: formData.get('password'),
                 role: formData.get('role')
             };
-
-            // Validation
-            if (!userData.name || !userData.email || !userData.password || !userData.role) {
-                alert('Lütfen tüm alanları doldurun!');
-                return;
-            }
-
-            if (userData.password.length < 8) {
-                alert('Şifre en az 8 karakter olmalıdır!');
-                return;
-            }
 
             console.log('➕ Yeni kullanıcı ekleniyor:', userData.email);
 
@@ -1929,13 +651,7 @@
 
         function viewApplication(id) {
             // Başvuru detayları yeni sekmede aç
-            window.open(`application-details.html?id=${id}`, '_blank');
-        }
-
-        // Logları yenile
-        function refreshLogs() {
-            loadLogs();
-            alert('Loglar yenilendi!');
+            window.open(`${API_BASE_URL}/application-details.html?id=${id}`, '_blank');
         }
 
         // Basit CSV export
@@ -1946,7 +662,7 @@
                     return;
                 }
                 
-                const headers = ['ID', 'Ad', 'Soyad', 'Email', 'Telefon', 'Vize Tipi', 'Durum', 'Tarih'];
+                const headers = ['ID', 'Ad', 'Soyad', 'Email', 'Telefon', 'Vize Tipi', 'Durum'];
                 const csvContent = [
                     headers.join(','),
                     ...applications.map(app => [
@@ -1956,8 +672,7 @@
                         app.email || '',
                         app.telefon || '',
                         app.vize_tipi || '',
-                        app.status || '',
-                        formatDate(app.created_at) || ''
+                        app.status || ''
                     ].join(','))
                 ].join('\n');
                 
@@ -1986,22 +701,10 @@
             return statusTexts[status] || status;
         }
 
-        function formatDate(dateString) {
-            if (!dateString) return '';
-            const date = new Date(dateString);
-            return date.toLocaleDateString('tr-TR');
-        }
-
-        function formatDateTime(dateString) {
-            if (!dateString) return '';
-            const date = new Date(dateString);
-            return date.toLocaleString('tr-TR');
-        }
-
         function logout() {
             localStorage.removeItem('token');
             alert('Çıkış yapıldı!');
-            window.location.href = 'sign-in.html';
+            window.location.href = `${API_BASE_URL}/sign-in.html`;
         }
     </script>
 </body>
