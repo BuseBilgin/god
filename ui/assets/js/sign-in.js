@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 }).then(() => {
                     // Yönlendirme yap
                     if (data.role === "admin") {
-                        window.location.href = "ui/admin.html";
+                        window.location.href = "admin.html";
                     } else {
                         window.location.href = "list.html";
                     }
